@@ -13,7 +13,7 @@
 #include <string>
 
 // How close the robot is allowed to get to the wall.
-#define ALLOWED_DISTANCE = 0.1
+#define ALLOWED_DISTANCE = 0.03
 
 class safe_cmd_vel
 {
@@ -26,7 +26,9 @@ public:
 
 		safe_base_velocities_publisher = node_handler.advertise<geometry_msgs::Twist>( "/cmd_vel", 1 );
 
-		ROS_INFO( "hbrs_safe_cmd_vel has started." );
+		service = node_handler.advertiseService( "is_robot_to_close_to_wall", &safe_cmd_vel::is_robot_to_close_to_wall, this );
+
+		ROS_INFO( "hbrs_safe_cmd_vel has started." );	
 	}
 
 	~safe_cmd_vel()
@@ -35,7 +37,7 @@ public:
 		safe_base_velocities_publisher.shutdown(); 
 	}
 
-	bool start( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
+	bool is_robot_to_close_to_wall( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
   	{
   		ROS_INFO( "hbrs_safe_cmd_vel status server has started" ); 
 
@@ -48,16 +50,13 @@ private:
 
 	void safe_cmd_vel_callback( const geometry_msgs::Twist& twist )
 	{
+		base_velocities = twist; 
+
 		if ( twist.linear.x > 0 ) 
 		{
-			if( !robot_to_close_to_wall )
-			{
-				safe_base_velocities_publisher.publish( twist ); 
-			}
-			else
+			if( robot_to_close_to_wall )
 			{
 				base_velocities.linear.x = 0.0; 
-				base_velocities.linear.y = twist.linear.y; 
 			}
 		}
 
@@ -66,7 +65,32 @@ private:
 
 	void laser_scanner_callback( const sensor_msgs::LaserScan &scan )
 	{
-		robot_to_close_to_wall = true;
+		double angle = scan.angle_min; 
+		double x, y; 
+		double min_x = DBL_MAX; 
+
+		for( int i = 0; i < scan.ranges.size(); i++, angle += scan.angle_increment )
+		{
+			x = scan.ranges[ i ] * cos( angle ); 
+			y = scan.ranges[ i ] * sin( angle ); 
+
+			if( y > -0.20 && y < 0.20 )
+			{
+				if( x < min_x )
+				{
+					min_x = x; 
+				}
+			}
+		}
+
+		if( min_x < ALLOWED_DISTANCE )
+		{
+			robot_to_close_to_wall = true;			
+		}
+		else
+		{
+			robot_to_close_to_wall = false; 
+		}
 	}
 
 protected:
@@ -80,8 +104,9 @@ protected:
 	// base movement topic.
 	geometry_msgs::Twist base_velocities;
 
-	bool robot_to_close_to_wall; 
+	ros::ServiceServer service; 
 
+	bool robot_to_close_to_wall; 
 };
   
 int main(int argc, char **argv)
@@ -90,6 +115,12 @@ int main(int argc, char **argv)
 
 	ros::NodeHandle n;
 
-	ros::spin();
+	ros::Rate looprate(10); 
+	while( ros::ok() )
+	{
+		ros::spinOnce(); 
+		looprate.sleep(); 
+	}
+
 	return 0;
 }
