@@ -48,8 +48,8 @@ BoundingBox BoundingBox::create(const typename pcl::PointCloud<PointT>::ConstPtr
   box.dimensions_[0] = max_z - min_z;
   box.dimensions_[1] = std::max(box2d.size.width, box2d.size.height) / SCALE;
   box.dimensions_[2] = std::min(box2d.size.width, box2d.size.height) / SCALE;
-  box.center_[0] = (box2d.center.x + box2d.size.width / 2.0) / SCALE;
-  box.center_[1] = (box2d.center.y + box2d.size.height / 2.0) / SCALE;
+  box.center_[0] = box2d.center.x / SCALE;
+  box.center_[1] = box2d.center.y / SCALE;
   box.center_[2] = min_z + box.dimensions_[0] / 2.0;
   box.center_ = inverse_transform * box.center_;
 
