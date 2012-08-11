@@ -1,0 +1,15 @@
+<package>
+  <description brief="hbrs_scene_segmentation">
+
+     hbrs_scene_segmentation
+
+  </description>
+  <author>Sergey Alexandrov</author>
+  <license>BSD</license>
+
+  <depend package="roscpp"/>
+  <depend package="pcl"/>
+
+</package>
+
+
