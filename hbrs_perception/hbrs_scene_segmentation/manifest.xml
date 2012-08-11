@@ -10,6 +10,10 @@
   <depend package="roscpp"/>
   <depend package="pcl"/>
 
+  <export>
+    <cpp cflags="-I${prefix}/common/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lscene_segmentation"/>
+  </export>
+
 </package>
 
 
