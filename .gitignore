@@ -26,3 +26,5 @@ srv_gen
 CMakeFiles
 CMakeCache.txt
 stack.xml.bak
+.vim
+.clang_complete
