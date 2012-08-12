@@ -50,6 +50,9 @@ protected:
       pcl::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
       viewer_.addPointCloud<PointT>(cloud_, single_color, "cloud");
 
+      if (plane_normal_)
+        displayNormal(*plane_normal_);
+
       displayPlanarPolygons(planar_polygons);
     }
 
@@ -63,6 +66,24 @@ protected:
                                     config.maximum_curvature,
                                     config.refinement_threshold,
                                     config.refinement_depth_independent));
+      if (config.apply_angular_constraints)
+      {
+        plane_normal_.reset(new Eigen::Vector3f(config.constraint_normal_x, config.constraint_normal_y, config.constraint_normal_z));
+        plane_normal_->normalize();
+        double threshold = pcl::deg2rad(config.constraint_angular_threshold);
+        if (config.apply_distance_constraints)
+        {
+          pe_->setPlaneConstraints(*plane_normal_, threshold, config.constraint_distance, config.constraint_distance_threshold);
+        }
+        else
+        {
+          pe_->setPlaneConstraints(*plane_normal_, threshold);
+        }
+      }
+      else
+      {
+        plane_normal_.reset();
+      }
       process();
     }
 
@@ -70,6 +91,8 @@ protected:
 
     std::unique_ptr<PlaneExtraction> pe_;
     PointCloud::ConstPtr cloud_;
+
+    std::unique_ptr<Eigen::Vector3f> plane_normal_;
 
 };
 
