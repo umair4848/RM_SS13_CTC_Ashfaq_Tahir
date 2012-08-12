@@ -23,7 +23,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     endif(GCC_VERSION VERSION_GREATER 4.6 OR GCC_VERSION VERSION_EQUAL 4.6)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-#...: treat warnings as errors
+#...: treat warnings as errors and disable centain warnings
 add_definitions(-Werror)
 add_definitions(-Wno-error=unused-variable)
 add_definitions(-Wno-error=unknown-pragmas)
@@ -50,7 +50,8 @@ include_directories(${PROJECT_SOURCE_DIR}/ros/include)
 
 #...: target libraries :........................................................
 
-rosbuild_add_library(scene_segmentation common/src/plane_extraction.cpp
+rosbuild_add_library(scene_segmentation
+  common/src/plane_extraction.cpp
 )
 #target_link_libraries(scene_segmentation ${POLYCLIPPING_LIBRARY}
 #)

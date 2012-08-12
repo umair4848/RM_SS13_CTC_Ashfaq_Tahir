@@ -1,4 +1,5 @@
 #include <pcl/ModelCoefficients.h>
+#include <pcl/common/angles.h>
 #include <pcl/console/print.h>
 #include <pcl/surface/convex_hull.h>
 
@@ -69,11 +70,23 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
     return;
   }
 
-  // Step 2: compute convex hull for each found region and build planar polygons.
-  // Prepare ProjectInliers module
+  // Step 2: compute convex hull for each found region that satisfies the
+  // constraints (if set), and build planar polygons.
   pi_.setInputCloud(input_);
   for (size_t i = 0; i < regions.size(); i++)
   {
+    if (apply_angular_constraints_)
+    {
+      Eigen::Vector3f region_normal = regions.at(i).getCoefficients().head<3>();
+      if (region_normal.dot(plane_normal_) < angular_threshold_)
+        continue;
+    }
+    if (apply_distance_constraints_)
+    {
+      double region_distance = regions.at(i).getCoefficients()(3);
+      if (std::abs(region_distance - distance_) > distance_threshold_)
+        continue;
+    }
     PointCloud::Ptr region_cloud(new PointCloud);
     PointCloud::Ptr region_hull(new PointCloud);
     // Project boundary points onto the plane
