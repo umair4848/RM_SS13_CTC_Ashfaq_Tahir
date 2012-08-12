@@ -46,20 +46,7 @@ protected:
       pcl::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
       viewer_.addPointCloud<PointT>(cloud_, single_color, "cloud");
 
-      displayPlanarPolygon(planar_polygon);
-    }
-
-    /** For the given PlanarPolygon draw a polyline through it points and also display the points themselves. */
-    void displayPlanarPolygon(const PlanarPolygon& polygon)
-    {
-      PointCloud::Ptr contour(new PointCloud);
-      contour->points = polygon.getContour();
-      if (!contour->points.size())
-        return;
-      viewer_.addPolygon<PointT>(contour, 255, 0, 0, "polygon");
-      pcl::visualization::PointCloudColorHandlerCustom<PointT> red_color(contour, 255, 0, 0);
-      viewer_.addPointCloud(contour, red_color, "polygon_points");
-      viewer_.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, "polygon_points");
+      displayPlanarPolygons(planar_polygons);
     }
 
     void reconfigure_callback(hbrs_perception_tests::PlaneExtractionTestConfig &config, uint32_t level)
