@@ -6,7 +6,6 @@
 #include <ros/console.h>
 #include <pcl/io/io.h>
 #include <pcl/io/pcd_io.h>
-#include <pcl/features/integral_image_normal.h>
 #include <pcl/filters/passthrough.h>
 #include <dynamic_reconfigure/server.h>
 
@@ -34,11 +33,16 @@ protected:
       PlanarPolygonVector planar_polygons;
 
       pe_->setInputCloud(cloud_);
+
       MEASURE_RUNTIME(pe_->extract(planar_polygons), "Plane extraction");
 
-      PlanarPolygon& planar_polygon = planar_polygons[0];
-      std::cout << "Number of points in plane contour: " << planar_polygon.getContour().size() << std::endl;
-      std::cout << "Plane coefficients:\n" << planar_polygon.getCoefficients() << std::endl;
+      std::cout << "Number of planes extracted: " << planar_polygons.size() << std::endl;
+      for (const auto& planar_polygon : planar_polygons)
+      {
+        std::cout << "---\n";
+        std::cout << "Points in contour: " << planar_polygon.getContour().size() << std::endl;
+        std::cout << "Plane coefficients:\n" << planar_polygon.getCoefficients() << std::endl;
+      }
 
       viewer_.removeAllPointClouds(0);
       viewer_.removeAllShapes(0);

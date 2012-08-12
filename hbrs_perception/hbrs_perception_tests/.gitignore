@@ -2,4 +2,4 @@
 *.cfgc
 cfg/cpp/
 docs/
-src/raw_perception_tests/cfg/
+src/hbrs_perception_tests/cfg/
