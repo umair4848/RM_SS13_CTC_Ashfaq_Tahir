@@ -58,8 +58,10 @@ rosbuild_add_library(scene_segmentation
 
 #...: target executables :......................................................
 
-#...: dominant_plane_extractor_node
-#rosbuild_add_executable(dominant_plane_extractor_node ros/src/nodes/dominant_plane_extractor_node.cpp
-#)
-#target_link_libraries(dominant_plane_extractor_node scene_segmentation
-#)
+#...: workspace_finder_node
+rosbuild_add_executable(workspace_finder_node
+  ros/src/workspace_finder_node.cpp
+)
+target_link_libraries(workspace_finder_node
+  scene_segmentation
+)
