@@ -8,6 +8,7 @@
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
 #include <std_srvs/Empty.h>
+#include "my_functional_class.h"
 
 bool serviceCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res)
 {
@@ -24,8 +25,11 @@ void laserScanCallback(const sensor_msgs::LaserScan::ConstPtr& msg_in)
 int main(int argc, char **argv)
 {
     double my_parameter = 0;
+    double data = 0;
     sensor_msgs::LaserScan my_scan;
     std_srvs::Empty empty_srv;
+
+    MyFunctionalClass* my_func_class = new MyFunctionalClass();
 
     /* init ROS node with a name and a node handle*/	
     ros::init(argc, argv, "raw_ros_node_example");
@@ -50,6 +54,9 @@ int main(int argc, char **argv)
 	{
         /* process topic callbacks and service request */
 		ros::spinOnce();
+
+        /* do your main computation */
+        data = my_func_class->computeMyData(data);
 
         /* publish an empty scan */
         pub_scan.publish(my_scan);

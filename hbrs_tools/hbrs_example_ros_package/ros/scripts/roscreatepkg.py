@@ -95,8 +95,10 @@ def create_package(package, author, depends, uses_roscpp=False, uses_rospy=False
     elif package.startswith('hbrs_'):
         pkg_name_without_prefix = package[5:]
 
-    # copy exmaple cpp file
+    # copy exmaple cpp and h files
     shutil.copy2(example_pkg_dir + '/ros/src/ros_node_example.cpp', p + '/ros/src/' + pkg_name_without_prefix + '.cpp')
+    shutil.copy2(example_pkg_dir + '/common/src/my_functional_class.cpp', p + '/common/src/my_functional_class.cpp')
+    shutil.copy2(example_pkg_dir + '/common/include/my_functional_class.h', p + '/common/include/my_functional_class.h')
 
     # create launch file
     #shutil.copy2(example_pkg_dir + '/ros/launch/ros_launch_example.launch', p + '/ros/launch/' + pkg_name_without_prefix + '.launch')
@@ -125,8 +127,16 @@ def create_package(package, author, depends, uses_roscpp=False, uses_rospy=False
 
     with open(p, 'a') as f:
         f.write("\n\n")
+        f.write("include_directories(\n")
+        f.write("   ${PROJECT_SOURCE_DIR}/common/include\n")
+        f.write("   ${PROJECT_SOURCE_DIR}/ros/include\n")
+        f.write(")\n\n")
+        f.write("#compile the class(es) into a library\n")
+        f.write("rosbuild_add_library(my_functionality_lib common/src/my_functional_class.cpp)\n\n")
         f.write("#create an executable for your ros node\n")
-        f.write("rosbuild_add_executable(" + pkg_name_without_prefix + " ros/src/" + pkg_name_without_prefix + ".cpp)")
+        f.write("rosbuild_add_executable(" + pkg_name_without_prefix + " ros/src/" + pkg_name_without_prefix + ".cpp)\n\n")
+        f.write("#link a executable against the previously created library\n")
+        f.write("target_link_libraries(" + pkg_name_without_prefix + " my_functionality_lib)\n")
         f.write("\n\n")
     
     print "\nPlease edit %s/manifest.xml to finish creating your package"%package
