@@ -1,13 +1,9 @@
 #ifndef OFFLINE_TEST_BASE_HPP_
 #define OFFLINE_TEST_BASE_HPP_
 
-#include <string>
-
-#include <boost/lexical_cast.hpp>
 #include <ros/ros.h>
 #include <pcl/io/io.h>
 #include <pcl/io/pcd_io.h>
-#include <pcl/filters/passthrough.h>
 #include <pcl/visualization/pcl_visualizer.h>
 
 #include "test_base.hpp"
@@ -42,19 +38,7 @@ public:
   {
     cloud_.reset(new PointCloud);
     pcl::io::loadPCDFile(name, *cloud_);
-  }
-
-  void applyPassThroughFilter(const char* min, const char* max)
-  {
-    float min_z = boost::lexical_cast<float>(min);
-    float max_z = boost::lexical_cast<float>(max);
-    pcl::PassThrough<PointT> pass_through;
-    pass_through.setFilterFieldName("z");
-    pass_through.setFilterLimits(min_z, max_z);
-    pass_through.setKeepOrganized(true);
-    pass_through.setInputCloud(cloud_);
-    pass_through.filter(*cloud_);
-    ROS_INFO("Keep points in %.2f to %.2f range.", min_z, max_z);
+    applyPassThroughFilter(cloud_);
   }
 
 protected:

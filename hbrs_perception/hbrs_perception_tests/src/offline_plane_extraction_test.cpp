@@ -19,6 +19,8 @@ protected:
 
   void process()
   {
+    if (!cloud_) return;
+
     PlanarPolygonVector planar_polygons;
     rpe_.plane_extraction_ptr->setInputCloud(cloud_);
     MEASURE_RUNTIME(rpe_.plane_extraction_ptr->extract(planar_polygons), "Plane extraction");
@@ -57,11 +59,11 @@ int main(int argc, char** argv)
   }
 
   TestNode tn;
-  tn.loadCloud(argv[1]);
 
   if (argc == 4)
-    tn.applyPassThroughFilter(argv[2], argv[3]);
+    tn.setupPassThroughFilter(argv[2], argv[3]);
 
+  tn.loadCloud(argv[1]);
   tn.run();
 
   return 0;
