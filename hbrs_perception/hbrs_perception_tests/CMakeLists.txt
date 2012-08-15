@@ -66,7 +66,10 @@ rosbuild_link_boost(offline_plane_extraction_test
 )
 
 #...: online_plane_extraction_test
-#rosbuild_add_executable(online_dominant_plane_extractor_test src/online_dominant_plane_extractor_test.cpp
-#)
-#target_link_libraries(online_dominant_plane_extractor_test scene_segmentation
-#)
+rosbuild_add_executable(online_plane_extraction_test
+  src/online_plane_extraction_test.cpp
+)
+target_link_libraries(online_plane_extraction_test
+  scene_segmentation
+)
+
