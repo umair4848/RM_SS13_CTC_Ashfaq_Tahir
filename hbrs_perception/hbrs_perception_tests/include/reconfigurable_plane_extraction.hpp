@@ -19,7 +19,7 @@ public:
 
   typedef std::function<void(void)> ReconfigureCallback;
 
-  ReconfigurablePlaneExtraction(ReconfigureCallback callback)
+  ReconfigurablePlaneExtraction(ReconfigureCallback callback = ReconfigureCallback())
   : callback_(callback)
   {
     server_.setCallback(boost::bind(&ReconfigurablePlaneExtraction::serverReconfigureCallback, this, _1, _2));
@@ -59,7 +59,8 @@ private:
     {
       plane_normal_ptr.reset();
     }
-    callback_();
+    if (callback_)
+      callback_();
   }
 
   dynamic_reconfigure::Server<hbrs_perception_tests::PlaneExtractionConfig> server_;
