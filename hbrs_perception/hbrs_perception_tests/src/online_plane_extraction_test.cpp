@@ -19,7 +19,7 @@ public:
   TestNode()
   {
     ros::NodeHandle nh;
-    marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("dominant_plane", 1);
+    marker_publisher_ = nh.advertise<visualization_msgs::MarkerArray>("planes", 1);
   }
 
 protected:
@@ -32,7 +32,12 @@ protected:
     rpe_.plane_extraction_ptr->setInputCloud(cloud_);
     MEASURE_RUNTIME(rpe_.plane_extraction_ptr->extract(planar_polygons), "Plane extraction");
 
-    std::cout << "Number of planes extracted: " << planar_polygons.size() << std::endl;
+    for (size_t i = 0; i < planar_polygons.size(); i++)
+    {
+      const auto& c = planar_polygons[i].getCoefficients();
+      ROS_INFO(" [%02zu] %.3f %.3f %.3f :: %.3f", i, c(0), c(1), c(2), c(3));
+    }
+
     visualization_msgs::MarkerArray ma;
     buildPolygonMarkerArray(planar_polygons, ma);
     marker_publisher_.publish(ma);

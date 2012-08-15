@@ -33,6 +33,7 @@ private:
 
   void serverReconfigureCallback(hbrs_perception_tests::PlaneExtractionConfig &config, uint32_t level)
   {
+    ROS_INFO("Reconfiguring PlaneExtraction module...");
     plane_extraction_ptr.reset(new PlaneExtraction(config.normal_max_depth_change_factor,
                                                    config.normal_smoothing_size,
                                                    config.min_inliers,
