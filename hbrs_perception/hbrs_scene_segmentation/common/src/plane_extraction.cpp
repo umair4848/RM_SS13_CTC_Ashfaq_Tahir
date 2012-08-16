@@ -6,6 +6,8 @@
 #include "plane_extraction.h"
 
 PlaneExtraction::PlaneExtraction()
+: apply_angular_constraints_(false)
+, apply_distance_constraints_(false)
 {
   // Setup IntegralImageNormalEstimation
   ne_.setNormalEstimationMethod(ne_.COVARIANCE_MATRIX);
@@ -28,6 +30,8 @@ PlaneExtraction::PlaneExtraction(double normal_max_depth_change_factor,
                                  double maximum_curvature,
                                  double refinement_threshold,
                                  double refinement_depth_dependent)
+: apply_angular_constraints_(false)
+, apply_distance_constraints_(false)
 {
   // Setup IntegralImageNormalEstimation
   ne_.setNormalEstimationMethod(ne_.COVARIANCE_MATRIX);
