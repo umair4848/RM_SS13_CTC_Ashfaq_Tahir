@@ -70,6 +70,7 @@ echo "-------------------------------------------------------"
 echo ""
 
 # installing dependencies and building
+export USE_NORMAL_SUDO=1    # for youbot_oodl
 cd $WORKSPACE
 rosdep install * -y
 rosmake -r * --skip-blacklist --profile
