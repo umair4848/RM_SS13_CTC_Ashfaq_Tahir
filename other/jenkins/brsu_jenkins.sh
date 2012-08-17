@@ -14,33 +14,6 @@ echo "-------------------------------------------------------"
 echo ""
 
 
-
-
-do_testing(){
-	# sleep to finish running tests
-	sleep 10
-
-	# export parameters
-	export ROBOT_ENV="$1"
-	export ROBOT="$2"
-
-	echo ""
-	echo "start testing for $ROBOT in $ROBOT_ENV..."
-	rm -rf ~/.ros/test_results # delete old rostest logs
-	while read myline
-	do
-		rostest $myline
-	done < $WORKSPACE/all.tests
-	rosrun rosunit clean_junit_xml.py # beautify xml files
-	mkdir -p $WORKSPACE/test_results
-	for i in ~/.ros/test_results/_hudson/*.xml ; do mv "$i" "$WORKSPACE/test_results/$ROBOT-$ROBOT_ENV-`basename $i`" ; done # copy test results and rename with ROBOT
-
-	# sleep to finish running tests
-	sleep 10
-
-	echo "...finished testing for $ROBOT in $ROBOT_ENV."
-}
-
 # installing ROS release
 sudo apt-get autoclean
 sudo apt-get update
@@ -50,6 +23,7 @@ sudo easy_install -U rosinstall vcstools
 # setup ROS environment
 . /opt/ros/$RELEASE/setup.bash
 
+# execute repository.rosinstall of each repository
 rosinstall $WORKSPACE/../ext_pkgs $WORKSPACE/repository.rosinstall --delete-changed-uris --rosdep-yes
 
 # define amount of ros prozesses during build for multi-prozessor machines
@@ -57,7 +31,7 @@ COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
 COUNT=$(echo "$COUNT*2" | bc)
 export ROS_PARALLEL_JOBS=-j$COUNT
 
-
+# add whole directory of the job the the ROS package path
 export ROS_PACKAGE_PATH=$WORKSPACE/..:$ROS_PACKAGE_PATH
 
 echo ""
@@ -86,23 +60,7 @@ echo ""
 echo "--------------------------------------------------------------------------------"
 echo "Rostest for $REPOSITORY"
 
-mkdir -p $WORKSPACE/test_results # create test_results directory
-rm -rf ~/.ros/test_results # delete old rostest logs
+mkdir -p $WORKSPACE/../test_results # create test_results directory
 
-if [ ! -s $WORKSPACE/all.tests ]; then
-	echo "all.tests-file not found or empty, creating dummy test result file"
-	# create dummy test result file
-	touch $WORKSPACE/test_results/dummy_test.xml
-	echo '<testsuite errors="0" failures="0" name="dummy_test" tests="1" time="0.01">
-	<testcase classname="DummyTest.DummyTest" name="dummy_test" time="0.01">
-	</testcase>
-	<system-out><![CDATA[]]></system-out>
-	<system-err><![CDATA[]]></system-err>
-</testsuite>' >> $WORKSPACE/test_results/dummy_test.xml
-else
-	do_testing ipa-kitchen cob3-1
-	do_testing ipa-kitchen cob3-2
-	do_testing ipa-kitchen cob3-3
-fi
 echo "--------------------------------------------------------------------------------"
 echo ""
