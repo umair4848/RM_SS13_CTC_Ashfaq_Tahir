@@ -1,9 +1,0 @@
-<stack>
-  <description brief="hbrs_manipulation">hbrs_manipulation</description>
-  <author>Maintained by Jan</author>
-  <license>BSD</license>  
-  <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/hbrs_manipulation</url>
-  <depend stack="ros" />
-
-</stack>
