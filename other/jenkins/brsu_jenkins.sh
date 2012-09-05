@@ -19,6 +19,8 @@ sudo apt-get autoclean
 sudo apt-get update
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
+sudo apt-get install ros-electric-*
+sudo apt-get autoremove
 
 # setup ROS environment
 . /opt/ros/$RELEASE/setup.bash
