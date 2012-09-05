@@ -23,12 +23,11 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     endif(GCC_VERSION VERSION_GREATER 4.6 OR GCC_VERSION VERSION_EQUAL 4.6)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-#...: treat warnings as errors and disable centain warnings
-add_definitions(-Werror)
-add_definitions(-Wno-error=unused-variable)
-add_definitions(-Wno-error=unknown-pragmas)
+#...: enable all but certain warnings
+add_definitions(-Wall)
 add_definitions(-Wno-unknown-pragmas)
 add_definitions(-Wno-deprecated)
+add_definitions(-fpermissive)
 
 #...: libpolyclipping :.........................................................
 
@@ -52,6 +51,7 @@ include_directories(${PROJECT_SOURCE_DIR}/ros/include)
 
 rosbuild_add_library(scene_segmentation
   common/src/plane_extraction.cpp
+  common/src/cloud_accumulation.cpp
 )
 #target_link_libraries(scene_segmentation ${POLYCLIPPING_LIBRARY}
 #)
