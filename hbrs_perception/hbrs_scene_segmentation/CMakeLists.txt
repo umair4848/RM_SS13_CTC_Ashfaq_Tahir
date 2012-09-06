@@ -65,3 +65,10 @@ rosbuild_add_executable(workspace_finder_node
 target_link_libraries(workspace_finder_node
   scene_segmentation
 )
+
+add_executable(tabletop_cloud_accumulator_node
+  ros/src/tabletop_cloud_accumulator_node.cpp
+)
+target_link_libraries(tabletop_cloud_accumulator_node
+  scene_segmentation
+)
