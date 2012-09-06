@@ -3,31 +3,37 @@
 #include "cloud_accumulation.h"
 
 CloudAccumulation::CloudAccumulation(double resolution)
-: octree_(resolution)
-, num_clouds_(0)
+: resolution_(resolution)
 {
+  reset();
 }
 
 void CloudAccumulation::addCloud(const PointCloud::ConstPtr& cloud)
 {
-  if (num_clouds_ == 0)
+  if (cloud_count_ == 0)
   {
-    octree_.setInputCloud(cloud);
-    octree_.addPointsFromInputCloud();
+    octree_->setInputCloud(cloud);
+    octree_->addPointsFromInputCloud();
   }
   else
   {
     for (const auto& point: cloud->points)
       if ((point.x == point.x) && (point.y == point.y) && (point.z == point.z)) // NaN check
-        octree_.setOccupiedVoxelAtPoint(point);
+        octree_->setOccupiedVoxelAtPoint(point);
   }
-  num_clouds_++;
+  cloud_count_++;
 }
 
 void CloudAccumulation::getAccumulatedCloud(PointCloud& cloud)
 {
-  octree_.getOccupiedVoxelCenters(cloud.points);
+  octree_->getOccupiedVoxelCenters(cloud.points);
   cloud.width = cloud.points.size();
   cloud.height = 1;
+}
+
+void CloudAccumulation::reset()
+{
+  octree_ = OctreeUPtr(new Octree(resolution_));
+  cloud_count_ = 0;
 }
 

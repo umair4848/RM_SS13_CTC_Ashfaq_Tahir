@@ -18,12 +18,21 @@ public:
 
   void getAccumulatedCloud(PointCloud& cloud);
 
+  int getCloudCount() const { return cloud_count_; }
+
+  void reset();
+
 private:
 
-  pcl::octree::OctreePointCloudOccupancy<PointT> octree_;
+  typedef pcl::octree::OctreePointCloudOccupancy<PointT> Octree;
+  typedef std::unique_ptr<Octree> OctreeUPtr;
 
-  int num_clouds_;
+  OctreeUPtr octree_;
+
+  int cloud_count_;
+  double resolution_;
 
 };
 
 #endif /* CLOUD_ACCUMULATION_H */
+
