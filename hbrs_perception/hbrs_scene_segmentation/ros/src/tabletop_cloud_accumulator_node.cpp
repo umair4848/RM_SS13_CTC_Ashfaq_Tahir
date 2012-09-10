@@ -8,6 +8,24 @@
 #include "cloud_accumulation.h"
 #include "helpers.hpp"
 
+/** This node provides a service to accumulate parts of pointclouds that are
+  * above some given planar polygon.
+  *
+  * In each pointcloud in the stream the algorithm extracts those points that
+  * are above the given planar polygon and merges them into an occupancy octree.
+  * The resulting cloud is then output to the user.
+  *
+  * Provides services:
+  *   1) "accumulate_tabletop_cloud"
+  *
+  * Publishes:
+  *   1) "accumulated_cloud"
+  *      The cloud output as a response to the user of the service is also
+  *      forwarded to this topic for the visualization purposes.
+  *
+  * Subscribes:
+  *   1) "/camera/rgb/points"
+  */
 class TabletopCloudAccumulatorNode
 {
 
@@ -17,6 +35,7 @@ public:
   {
     ros::NodeHandle nh;
     accumulate_service_ = nh.advertiseService("accumulate_tabletop_cloud", &TabletopCloudAccumulatorNode::accumulateCallback, this);
+    accumulated_cloud_publisher_ = nh.advertise<sensor_msgs::PointCloud2>("accumulated_cloud", 1);
     ROS_INFO("Accumulate tabletop cloud service started.");
   }
 
@@ -49,6 +68,10 @@ private:
     cloud.header.stamp = ros::Time::now();
     ca_.getAccumulatedCloud(cloud);
     pcl::toROSMsg(cloud, response.cloud);
+
+    // Forward to the "accumulated_cloud" topic (if there are subscribers)
+    if (accumulated_cloud_publisher_.getNumSubscribers())
+      accumulated_cloud_publisher_.publish(response.cloud);
 
     return ca_.getCloudCount() != 0;
   }
@@ -95,6 +118,7 @@ private:
   CloudAccumulation ca_;
   std::string frame_id_;
   ros::ServiceServer accumulate_service_;
+  ros::Publisher accumulated_cloud_publisher_;
 
   //PlanarPolygonPtr workspace_contour_;
   int accumulation_timeout_;
