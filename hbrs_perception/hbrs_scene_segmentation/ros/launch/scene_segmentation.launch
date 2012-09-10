@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="hbrs_scene_segmentation" type="workspace_finder" name="workspace_finder" output="screen">
+    <param name="min_z" value="0.3" type="double" />
+    <param name="max_z" value="1.3" type="double" />
+  </node>
+  <node pkg="hbrs_scene_segmentation" type="tabletop_cloud_accumulator" name="tabletop_cloud_accumulator" output="screen">
+    <param name="accumulate_clouds" value="30" type="int"/>
+  </node>
+</launch>
