@@ -1,0 +1,20 @@
+<package>
+  <description brief="hbrs_visualization">
+
+     Helper classes for displaying different (perception-related) stuff with Rviz.
+
+  </description>
+  <author>Sergey Alexandrov</author>
+  <license>BSD</license>
+
+  <depend package="roscpp"/>
+  <depend package="pcl"/>
+  <depend package="visualization_msgs"/>
+
+  <export>
+    <cpp cflags="-I${prefix}/ros/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lvisualization"/>
+  </export>
+
+</package>
+
+
