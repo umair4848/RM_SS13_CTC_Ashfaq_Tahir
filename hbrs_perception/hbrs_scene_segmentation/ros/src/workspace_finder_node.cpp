@@ -6,6 +6,7 @@
 
 #include <hbrs_srvs/FindWorkspace.h>
 #include "plane_extraction.h"
+#include "helpers.hpp"
 
 class WorkspaceFinderNode
 {
@@ -18,8 +19,6 @@ public:
     find_workspace_server_ = nh.advertiseService("find_workspace", &WorkspaceFinderNode::findWorkspaceCallback, this);
     ROS_INFO("Find workspace service started.");
   }
-
-  virtual ~WorkspaceFinderNode() { };
 
 private:
 
@@ -55,18 +54,7 @@ private:
 
     // TODO: find the one with the largest area
     response.stamp = ros_cloud->header.stamp;
-    for (int i = 0; i < 4; ++i)
-    {
-      response.coefficients[i] = planar_polygons[0].getCoefficients()[i];
-    }
-    for (const auto& point : planar_polygons[0].getContour())
-    {
-      geometry_msgs::Point32 pt;
-      pt.x = point.x;
-      pt.y = point.y;
-      pt.z = point.z;
-      response.contour.push_back(pt);
-    }
+    convertPlanarPolygon(planar_polygons[0], response.polygon);
     return true;
   }
 

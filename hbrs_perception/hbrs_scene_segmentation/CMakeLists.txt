@@ -59,9 +59,16 @@ rosbuild_add_library(scene_segmentation
 #...: target executables :......................................................
 
 #...: workspace_finder_node
-rosbuild_add_executable(workspace_finder_node
+rosbuild_add_executable(workspace_finder
   ros/src/workspace_finder_node.cpp
 )
-target_link_libraries(workspace_finder_node
+target_link_libraries(workspace_finder
+  scene_segmentation
+)
+
+add_executable(tabletop_cloud_accumulator
+  ros/src/tabletop_cloud_accumulator_node.cpp
+)
+target_link_libraries(tabletop_cloud_accumulator
   scene_segmentation
 )
