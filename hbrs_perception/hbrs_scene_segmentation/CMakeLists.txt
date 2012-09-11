@@ -52,7 +52,6 @@ include_directories(${PROJECT_SOURCE_DIR}/ros/include)
 rosbuild_add_library(scene_segmentation
   common/src/plane_extraction.cpp
   common/src/cloud_accumulation.cpp
-  common/src/object_clustering.cpp
 )
 #target_link_libraries(scene_segmentation ${POLYCLIPPING_LIBRARY}
 #)
@@ -72,5 +71,13 @@ rosbuild_add_executable(tabletop_cloud_accumulator
   ros/src/tabletop_cloud_accumulator_node.cpp
 )
 target_link_libraries(tabletop_cloud_accumulator
+  scene_segmentation
+)
+
+#...: tabletop_cloud_clusterer
+rosbuild_add_executable(tabletop_cloud_clusterer
+  ros/src/tabletop_cloud_clusterer_node.cpp
+)
+target_link_libraries(tabletop_cloud_clusterer
   scene_segmentation
 )

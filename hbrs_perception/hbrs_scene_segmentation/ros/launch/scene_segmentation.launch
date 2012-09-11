@@ -7,4 +7,5 @@
   <node pkg="hbrs_scene_segmentation" type="tabletop_cloud_accumulator" name="tabletop_cloud_accumulator" output="screen">
     <param name="accumulate_clouds" value="30" type="int"/>
   </node>
+  <node pkg="hbrs_scene_segmentation" type="tabletop_cloud_clusterer" name="tabletop_cloud_clusterer" output="screen"/>
 </launch>
