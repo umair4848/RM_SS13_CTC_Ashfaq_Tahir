@@ -1,8 +1,8 @@
 /*
- *  ros_node_example.cpp
+ *  FILE_NAME.cpp
  *
- *  Created on: Aug 08, 2012
- *      Author: Frederik Hegger
+ *  Created on: CURRENT DATE
+ *      Author: YOUR NAME
  */
 
 #include <ros/ros.h>

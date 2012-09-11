@@ -34,7 +34,7 @@
 # Revision $Id: roscreatepkg.py 16412 2012-02-28 18:50:18Z kwc $
 # 
 # modified by:  Frederik Hegger
-# date:         2012-08-08
+# date:         2012-09-11
 #
 
 import roslib; roslib.load_manifest('roscreate')
@@ -78,6 +78,7 @@ def create_package(package, author, depends, uses_roscpp=False, uses_rospy=False
     os.makedirs(p + "/ros/config")
     os.makedirs(p + "/ros/data")
     os.makedirs(p + "/ros/launch")
+    os.makedirs(p + "/ros/nodes")
     os.makedirs(p + "/common")
     os.makedirs(p + "/common/include")
     os.makedirs(p + "/common/src")
@@ -94,9 +95,10 @@ def create_package(package, author, depends, uses_roscpp=False, uses_rospy=False
         pkg_name_without_prefix = package[5:]
     elif package.startswith('hbrs_'):
         pkg_name_without_prefix = package[5:]
+    
 
     # copy exmaple cpp and h files
-    shutil.copy2(example_pkg_dir + '/ros/src/ros_node_example.cpp', p + '/ros/src/' + pkg_name_without_prefix + '.cpp')
+    shutil.copy2(example_pkg_dir + '/ros/nodes/ros_node_example.cpp', p + '/ros/nodes/' + pkg_name_without_prefix + '.cpp')
     shutil.copy2(example_pkg_dir + '/common/src/my_functional_class.cpp', p + '/common/src/my_functional_class.cpp')
     shutil.copy2(example_pkg_dir + '/common/include/my_functional_class.h', p + '/common/include/my_functional_class.h')
 
@@ -151,7 +153,7 @@ def roscreatepkg_main():
 
     ###### BRSU EXTENSION ###############################################################
     if (not package.startswith('raw_')) and (not package.startswith('brsu_')) and (not package.startswith('hbrs_')):
-        parser.error("illegal package name: %s\n\nPackage name must start either with 'raw_', 'brsu_' or 'hbrs_' "%package)
+        parser.error("illegal package name: %s\n\nPackage name must start either with 'raw_', 'brsu_' or 'hbrs_'"%package)
 
     if not roslib.names.is_legal_resource_base_name(package):
         parser.error("illegal package name: %s\n\nNames must start with a letter and contain only alphanumeric characters\nand underscores."%package)
