@@ -2,15 +2,41 @@
 #include <ros/console.h>
 #include <ros/topic.h>
 #include <sensor_msgs/PointCloud2.h>
+
 #include <pcl/filters/passthrough.h>
 
-#include <planar_polygon_visualizer.h>
 #include <hbrs_srvs/FindWorkspace.h>
-#include "plane_extraction.h"
+#include <planar_polygon_visualizer.h>
+
 #include "helpers.hpp"
+#include "plane_extraction.h"
 
 using namespace hbrs::visualization;
 
+/** This node provides a service to find a workspace in the data coming from
+  * a Kinect/Asus camera.
+  *
+  * Here "workspace" means a planar polygon. Since there might be multiple
+  * planar surfaces in the scene, the workspace is considered to be the one
+  * with the largest area.
+  *
+  * In order to avoid detection of floor as a workspace, additional constarints
+  * (normal orientation, and plane elevation) could be supplied via node
+  * parameters.
+  *
+  * Provides services:
+  *   1) "find_workspace"
+  *
+  * Publishes:
+  *   1) "workspace_polygon"
+  *      An RViz marker that visualizes the polygon that defines the detected
+  *      workspace.
+  *
+  * Subscribes:
+  *   1) "/camera/rgb/points"
+  *      The subscription is activated on demand, i.e. when the service is idle
+  *      the node unsubscribes to avoid bandwidth consumption.
+  */
 class WorkspaceFinderNode
 {
 
@@ -33,7 +59,7 @@ private:
     updateConfiguration();
 
     ROS_INFO("Waiting for a point cloud message...");
-    auto ros_cloud = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(cloud_topic_, ros::Duration(cloud_timeout_));
+    auto ros_cloud = ros::topic::waitForMessage<sensor_msgs::PointCloud2>("/camera/rgb/points", ros::Duration(cloud_timeout_));
     if (!ros_cloud)
     {
       ROS_ERROR("No point cloud messages during last %i seconds, aborting.", cloud_timeout_);
@@ -107,13 +133,13 @@ private:
 
     // Other settings
     pn.param("cloud_timeout", cloud_timeout_, 15);
-    pn.param("cloud_topic", cloud_topic_, std::string("/camera/rgb/points"));
     // TODO: frame_id in which the constraints are given
   }
 
-  ros::ServiceServer find_workspace_server_;
-  std::unique_ptr<pcl::PassThrough<PointT>> pass_through_;
   PlaneExtraction plane_extraction_;
+  std::unique_ptr<pcl::PassThrough<PointT>> pass_through_;
+
+  ros::ServiceServer find_workspace_server_;
 
   std::string cloud_topic_;
   int cloud_timeout_;

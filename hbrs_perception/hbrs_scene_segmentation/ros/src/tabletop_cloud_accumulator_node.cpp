@@ -1,9 +1,11 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <sensor_msgs/PointCloud2.h>
+
 #include <pcl/segmentation/extract_polygonal_prism_data.h>
 
 #include <hbrs_srvs/AccumulateTabletopCloud.h>
+
 #include "aliases.h"
 #include "cloud_accumulation.h"
 #include "helpers.hpp"
@@ -25,6 +27,8 @@
   *
   * Subscribes:
   *   1) "/camera/rgb/points"
+  *      The subscription is activated on demand, i.e. when the service is idle
+  *      the node unsubscribes to avoid bandwidth consumption.
   */
 class TabletopCloudAccumulatorNode
 {
@@ -36,14 +40,14 @@ public:
     ros::NodeHandle nh;
     accumulate_service_ = nh.advertiseService("accumulate_tabletop_cloud", &TabletopCloudAccumulatorNode::accumulateCallback, this);
     accumulated_cloud_publisher_ = nh.advertise<sensor_msgs::PointCloud2>("accumulated_cloud", 1);
-    ROS_INFO("Accumulate tabletop cloud service started.");
+    ROS_INFO("Service [accumulate_tabletop_cloud] started.");
   }
 
 private:
 
   bool accumulateCallback(hbrs_srvs::AccumulateTabletopCloud::Request& request, hbrs_srvs::AccumulateTabletopCloud::Response& response)
   {
-    ROS_INFO("Accumulate tabletop cloud service requested.");
+    ROS_INFO("Received [accumulate_tabletop_cloud] request.");
     updateConfiguration();
     PointCloud::Ptr polygon_cloud(new PointCloud);
     PlanarPolygon polygon;
@@ -116,11 +120,11 @@ private:
 
   pcl::ExtractPolygonalPrismData<PointT> eppd_;
   CloudAccumulation ca_;
-  std::string frame_id_;
+
   ros::ServiceServer accumulate_service_;
   ros::Publisher accumulated_cloud_publisher_;
 
-  //PlanarPolygonPtr workspace_contour_;
+  std::string frame_id_;
   int accumulation_timeout_;
   int accumulate_clouds_;
 
@@ -128,7 +132,7 @@ private:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "tabletop_cloud_accumulator_node");
+  ros::init(argc, argv, "tabletop_cloud_accumulator");
   TabletopCloudAccumulatorNode tcan;
   ros::spin();
   return 0;

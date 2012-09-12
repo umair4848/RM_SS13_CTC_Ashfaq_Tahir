@@ -1,13 +1,16 @@
+#include <boost/make_shared.hpp>
+
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <ros/topic.h>
 #include <sensor_msgs/PointCloud2.h>
-#include <boost/make_shared.hpp>
+
 #include <pcl/common/centroid.h>
 #include <pcl/segmentation/extract_clusters.h>
 
 #include <clustered_point_cloud_visualizer.h>
 #include <hbrs_srvs/ClusterTabletopCloud.h>
+
 #include "aliases.h"
 #include "helpers.hpp"
 
