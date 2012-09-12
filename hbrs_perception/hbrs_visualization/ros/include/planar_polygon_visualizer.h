@@ -24,12 +24,7 @@ public:
 
   PlanarPolygonVisualizer(const std::string& topic_name,
                           const std::string& frame_id,
-                          const Color& color,
-                          bool check_subscribers = true);
-
-  PlanarPolygonVisualizer(const std::string& topic_name,
-                          const std::string& frame_id,
-                          Color::Name color,
+                          Color color,
                           bool check_subscribers = true);
 
   template<typename PointT>

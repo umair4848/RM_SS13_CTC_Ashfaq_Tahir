@@ -7,16 +7,7 @@ namespace hbrs
 namespace visualization
 {
 
-PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, const std::string& frame_id, const Color& color, bool check_subscribers)
-: frame_id_(frame_id)
-, color_(color)
-, check_subscribers_(check_subscribers)
-{
-  ros::NodeHandle nh;
-  marker_publisher_ = nh.advertise<visualization_msgs::Marker>(topic_name, 1);
-}
-
-PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, const std::string& frame_id, Color::Name color, bool check_subscribers)
+PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, const std::string& frame_id, Color color, bool check_subscribers)
 : frame_id_(frame_id)
 , color_(color)
 , check_subscribers_(check_subscribers)

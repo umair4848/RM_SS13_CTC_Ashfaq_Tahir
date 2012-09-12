@@ -25,7 +25,7 @@ struct Color
   {
     switch (name)
     {
-      SALMON: r = 0.98, g = 0.50, b = 0.45; break;
+      case SALMON: r = 0.98, g = 0.50, b = 0.45; break;
     }
   }
 
