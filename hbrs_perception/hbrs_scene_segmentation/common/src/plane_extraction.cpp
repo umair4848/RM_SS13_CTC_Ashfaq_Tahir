@@ -4,10 +4,12 @@
 #include <pcl/surface/convex_hull.h>
 
 #include "plane_extraction.h"
+#include "helpers.hpp"
 
 PlaneExtraction::PlaneExtraction()
 : apply_angular_constraints_(false)
 , apply_distance_constraints_(false)
+, sort_by_area_(false)
 {
   // Setup IntegralImageNormalEstimation
   ne_.setNormalEstimationMethod(ne_.COVARIANCE_MATRIX);
@@ -77,6 +79,12 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
   // Step 2: compute convex hull for each found region that satisfies the
   // constraints (if set), and build planar polygons.
   pi_.setInputCloud(input_);
+  // Depending on whether we plan to sort the polygons by their area or not we
+  // will push the newly constructed polygons either to a temporary storage, or
+  // immediately to the output storage. In orded to avoid if/else in the loop,
+  // we create a reference.
+  PlanarPolygonVector temp_planar_polygons;
+  PlanarPolygonVector& storage = sort_by_area_ ? temp_planar_polygons : planar_polygons;
   for (size_t i = 0; i < regions.size(); i++)
   {
     if (apply_angular_constraints_)
@@ -103,7 +111,19 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
     convex_hull.setInputCloud(region_cloud);
     convex_hull.reconstruct(*region_hull);
     // Create and push planar polygon
-    planar_polygons.push_back(PlanarPolygon(region_hull->points, regions.at(i).getCoefficients()));
+    storage.push_back(PlanarPolygon(region_hull->points, regions.at(i).getCoefficients()));
+  }
+
+  // Step 3 (optional): sort the polygons by their area (in decreasing order).
+  if (sort_by_area_)
+  {
+    typedef std::pair<double, size_t> AreaIdPair;
+    std::vector<AreaIdPair> areas;
+    for (size_t i = 0; i < temp_planar_polygons.size(); i++)
+      areas.push_back(AreaIdPair(computePlanarPolygonArea(temp_planar_polygons[i]), i));
+    std::sort(areas.rbegin(), areas.rend());
+    for (size_t i = 0; i < areas.size(); i++)
+      planar_polygons.push_back(temp_planar_polygons[areas[i].second]);
   }
 }
 

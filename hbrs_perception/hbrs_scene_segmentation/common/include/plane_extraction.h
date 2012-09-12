@@ -72,6 +72,16 @@ public:
     apply_distance_constraints_ = false;
   }
 
+  inline void setSortByArea(bool sort)
+  {
+    sort_by_area_ = sort;
+  }
+
+  inline bool getSortByArea() const
+  {
+    return sort_by_area_;
+  }
+
   virtual ~PlaneExtraction()
   {
     input_.reset();
@@ -95,6 +105,8 @@ private:
 
   bool apply_angular_constraints_;
   bool apply_distance_constraints_;
+
+  bool sort_by_area_;
 
 };
 
