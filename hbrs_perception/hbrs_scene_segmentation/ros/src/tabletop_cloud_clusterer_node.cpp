@@ -29,7 +29,10 @@ using namespace hbrs::visualization;
   *   1) "cluster_tabletop_cloud"
   *
   * Publishes:
-  *   1) TODO: "clusters"
+  *   1) "tabletop_clusters"
+  *      The detected clusters are published for the visualization purposes via
+  *      this topic. All the points are colored according to the cluster where
+  *      they belong and are merged into a single cloud.
   */
 class TabletopCloudClustererNode
 {
@@ -41,14 +44,14 @@ public:
   {
     ros::NodeHandle nh;
     cluster_server_ = nh.advertiseService("cluster_tabletop_cloud", &TabletopCloudClustererNode::clusterCallback, this);
-    ROS_INFO("Cluster tabletop cloud service started.");
+    ROS_INFO("Service [cluster_tabletop_cloud] started.");
   }
 
 private:
 
   bool clusterCallback(hbrs_srvs::ClusterTabletopCloud::Request& request, hbrs_srvs::ClusterTabletopCloud::Response& response)
   {
-    ROS_INFO("Received cluster tabletop cloud request.");
+    ROS_INFO("Received [cluster_tabletop_cloud] request.");
     updateConfiguration();
 
     // Convert request fields into ROS datatypes
@@ -79,10 +82,7 @@ private:
     }
     ROS_INFO("Found %zu clusters, but rejected %zu due to low height.", clusters_indices.size(), rejected_count);
 
-    // Forward to the "clusters" topic (if there are subscribers)
     cluster_visualizer_.publish<PointT>(clusters);
-    //if (accumulated_cloud_publisher_.getNumSubscribers())
-      //accumulated_cloud_publisher_.publish(response.cloud);
 
     return true;
   }
