@@ -12,7 +12,7 @@
   <depend package="visualization_msgs"/>
 
   <export>
-    <cpp cflags="-I${prefix}/ros/include" lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lvisualization"/>
+    <cpp cflags="-I${prefix}/ros/include"/>
   </export>
 
 </package>
