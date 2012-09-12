@@ -99,6 +99,7 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
     pi_.filter(*region_cloud);
     // Compute convex hull around boundary points
     pcl::ConvexHull<PointT> convex_hull;
+    convex_hull.setDimension(2);
     convex_hull.setInputCloud(region_cloud);
     convex_hull.reconstruct(*region_hull);
     // Create and push planar polygon
