@@ -4,9 +4,12 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl/filters/passthrough.h>
 
+#include <planar_polygon_visualizer.h>
 #include <hbrs_srvs/FindWorkspace.h>
 #include "plane_extraction.h"
 #include "helpers.hpp"
+
+using namespace hbrs::visualization;
 
 class WorkspaceFinderNode
 {
@@ -14,6 +17,7 @@ class WorkspaceFinderNode
 public:
 
   WorkspaceFinderNode()
+  : polygon_visualizer_("workspace_polygon", "openni_rgb_optical_frame", Color::SALMON)
   {
     ros::NodeHandle nh;
     find_workspace_server_ = nh.advertiseService("find_workspace", &WorkspaceFinderNode::findWorkspaceCallback, this);
@@ -55,6 +59,7 @@ private:
     // TODO: find the one with the largest area
     response.stamp = ros_cloud->header.stamp;
     convertPlanarPolygon(planar_polygons[0], response.polygon);
+    polygon_visualizer_.publish(planar_polygons[0]);
     return true;
   }
 
@@ -113,6 +118,8 @@ private:
 
   std::string cloud_topic_;
   int cloud_timeout_;
+
+  PlanarPolygonVisualizer polygon_visualizer_;
 
 };
 
