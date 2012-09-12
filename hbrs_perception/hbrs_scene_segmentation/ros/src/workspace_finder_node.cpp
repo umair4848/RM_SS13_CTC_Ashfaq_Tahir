@@ -22,6 +22,7 @@ public:
     ros::NodeHandle nh;
     find_workspace_server_ = nh.advertiseService("find_workspace", &WorkspaceFinderNode::findWorkspaceCallback, this);
     ROS_INFO("Started [find_workspace] service.");
+    plane_extraction_.setSortByArea(true);
   }
 
 private:
@@ -49,12 +50,12 @@ private:
     PlanarPolygonVector planar_polygons;
     plane_extraction_.setInputCloud(cloud_filtered);
     plane_extraction_.extract(planar_polygons);
-    ROS_INFO("Plane extraction found %zu planes.", planar_polygons.size());
+    ROS_INFO("Plane extraction found %zu planar polygons.", planar_polygons.size());
 
     if (!planar_polygons.size())
       return false;
 
-    // TODO: find the one with the largest area
+    // The first polygon in the output vector has the largest area, so we take it.
     response.stamp = ros_cloud->header.stamp;
     convertPlanarPolygon(planar_polygons[0], response.polygon);
     polygon_visualizer_.publish(planar_polygons[0]);
@@ -123,7 +124,7 @@ private:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "workspace_finder_node");
+  ros::init(argc, argv, "workspace_finder");
   WorkspaceFinderNode wfn;
   ros::spin();
   return 0;
