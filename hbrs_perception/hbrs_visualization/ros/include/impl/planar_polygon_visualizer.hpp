@@ -38,9 +38,7 @@ void PlanarPolygonVisualizer::buildPolygonMarker(const typename pcl::PointCloud<
   marker.color.a = 1.0;
   marker.ns = "polygon";
   marker.id = id;
-  marker.color.r = color_.r;
-  marker.color.g = color_.g;
-  marker.color.b = color_.b;
+  marker.color = color_;
 
   geometry_msgs::Point first_point;
   first_point.x = points[0].x;
