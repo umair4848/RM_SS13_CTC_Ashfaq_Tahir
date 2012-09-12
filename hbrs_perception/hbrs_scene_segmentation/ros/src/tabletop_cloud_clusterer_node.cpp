@@ -6,9 +6,12 @@
 #include <pcl/common/centroid.h>
 #include <pcl/segmentation/extract_clusters.h>
 
+#include <clustered_point_cloud_visualizer.h>
 #include <hbrs_srvs/ClusterTabletopCloud.h>
 #include "aliases.h"
 #include "helpers.hpp"
+
+using namespace hbrs::visualization;
 
 /** This node provides a service to break a pointcloud into clusters.
   *
@@ -34,10 +37,10 @@ class TabletopCloudClustererNode
 public:
 
   TabletopCloudClustererNode()
+  : cluster_visualizer_("tabletop_clusters", "/openni_rgb_optical_frame")
   {
     ros::NodeHandle nh;
     cluster_server_ = nh.advertiseService("cluster_tabletop_cloud", &TabletopCloudClustererNode::clusterCallback, this);
-    //cluster_publisher_ = nh.advertise<sensor_msgs::PointCloud2>("clusters", 1);
     ROS_INFO("Cluster tabletop cloud service started.");
   }
 
@@ -55,27 +58,29 @@ private:
     convertPlanarPolygon(request.polygon, polygon);
 
     std::vector<pcl::PointIndices> clusters_indices;
-    std::vector<PointCloud::Ptr> clusters;
     ece_.setInputCloud(cloud);
     ece_.extract(clusters_indices);
 
+    std::vector<PointCloud::Ptr> clusters;
     size_t rejected_count = 0;
     for (const pcl::PointIndices& cluster_indices : clusters_indices)
     {
-      PointCloud cluster;
-      pcl::copyPointCloud(*cloud, cluster_indices, cluster);
-      if (getClusterCentroidHeight(cluster, polygon) < object_min_height_)
+      PointCloud::Ptr cluster(new PointCloud);
+      pcl::copyPointCloud(*cloud, cluster_indices, *cluster);
+      if (getClusterCentroidHeight(*cluster, polygon) < object_min_height_)
       {
         rejected_count++;
         continue;
       }
       sensor_msgs::PointCloud2 ros_cluster;
-      pcl::toROSMsg(cluster, ros_cluster);
+      pcl::toROSMsg(*cluster, ros_cluster);
       response.clusters.push_back(ros_cluster);
+      clusters.push_back(cluster);
     }
     ROS_INFO("Found %zu clusters, but rejected %zu due to low height.", clusters_indices.size(), rejected_count);
 
     // Forward to the "clusters" topic (if there are subscribers)
+    cluster_visualizer_.publish<PointT>(clusters);
     //if (accumulated_cloud_publisher_.getNumSubscribers())
       //accumulated_cloud_publisher_.publish(response.cloud);
 
@@ -113,7 +118,8 @@ private:
   }
 
   ros::ServiceServer cluster_server_;
-  //ros::Publisher cluster_publisher_;
+  ClusteredPointCloudVisualizer cluster_visualizer_;
+
   pcl::EuclideanClusterExtraction<PointT> ece_;
 
   double object_min_height_;
