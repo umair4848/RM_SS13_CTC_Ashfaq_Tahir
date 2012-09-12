@@ -17,25 +17,25 @@ class WorkspaceFinderNode
 public:
 
   WorkspaceFinderNode()
-  : polygon_visualizer_("workspace_polygon", "openni_rgb_optical_frame", Color::SALMON)
+  : polygon_visualizer_("workspace_polygon", "/openni_rgb_optical_frame", Color::SALMON)
   {
     ros::NodeHandle nh;
     find_workspace_server_ = nh.advertiseService("find_workspace", &WorkspaceFinderNode::findWorkspaceCallback, this);
-    ROS_INFO("Find workspace service started.");
+    ROS_INFO("Started [find_workspace] service.");
   }
 
 private:
 
   bool findWorkspaceCallback(hbrs_srvs::FindWorkspace::Request& request, hbrs_srvs::FindWorkspace::Response& response)
   {
-    ROS_INFO("Received find workspace request.");
+    ROS_INFO("Received [find_workspace] request.");
     updateConfiguration();
 
     ROS_INFO("Waiting for a point cloud message...");
     auto ros_cloud = ros::topic::waitForMessage<sensor_msgs::PointCloud2>(cloud_topic_, ros::Duration(cloud_timeout_));
     if (!ros_cloud)
     {
-      ROS_ERROR("No point cloud messages, aborting.");
+      ROS_ERROR("No point cloud messages during last %i seconds, aborting.", cloud_timeout_);
       return false;
     }
 
@@ -49,12 +49,10 @@ private:
     PlanarPolygonVector planar_polygons;
     plane_extraction_.setInputCloud(cloud_filtered);
     plane_extraction_.extract(planar_polygons);
-    ROS_INFO("Found %zu planes!", planar_polygons.size());
+    ROS_INFO("Plane extraction found %zu planes.", planar_polygons.size());
 
     if (!planar_polygons.size())
-    {
       return false;
-    }
 
     // TODO: find the one with the largest area
     response.stamp = ros_cloud->header.stamp;
