@@ -26,7 +26,7 @@ void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl::Poin
 {
   if (cloud_publisher_.getNumSubscribers() == 0) return;
   pcl::PointCloud<pcl::PointXYZRGB> composite;
-  Color::Name color = 0;
+  size_t color = 0;
   for (const auto& cloud : clusters)
   {
     for (const auto& point : cloud->points)
