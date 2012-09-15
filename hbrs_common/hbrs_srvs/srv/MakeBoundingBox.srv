@@ -1,0 +1,12 @@
+# Point cloud that should be "packed" into a box
+sensor_msgs/PointCloud2 cloud
+# Force one of the axes of the bounding box to be
+# colinear with this vector (optional)
+geometry_msgs/Vector3 axis
+# The "axis" parameter is useful when a cloud
+# (object) is supported by a plane with known
+# coefficients and therefore it makes sense to
+# make the bottom of the box parallel to it.
+---
+# Resulting bounding box
+hbrs_msgs/BoundingBox bounding_box
