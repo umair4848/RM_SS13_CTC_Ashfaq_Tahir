@@ -81,3 +81,8 @@ rosbuild_add_executable(tabletop_cloud_clusterer
 target_link_libraries(tabletop_cloud_clusterer
   scene_segmentation
 )
+
+#...: bounding_box_maker
+rosbuild_add_executable(bounding_box_maker
+  ros/src/bounding_box_maker_node.cpp
+)
