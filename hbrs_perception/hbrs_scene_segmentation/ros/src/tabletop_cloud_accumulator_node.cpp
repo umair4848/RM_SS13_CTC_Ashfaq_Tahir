@@ -59,13 +59,14 @@ private:
     ros::Subscriber subscriber = nh.subscribe("/camera/rgb/points", 1, &TabletopCloudAccumulatorNode::cloudCallback, this);
 
     // Wait some time while data is being accumulated.
-    ros::Time timeout = ros::Time::now() + ros::Duration(accumulation_timeout_);
-    while (ca_.getCloudCount() < accumulate_clouds_ && ros::Time::now() < timeout && ros::ok())
+    ros::Time start = ros::Time::now();
+    while (ca_.getCloudCount() < accumulate_clouds_ && ros::Time::now() < start + ros::Duration(accumulation_timeout_) && ros::ok())
     {
       ros::spinOnce();
     }
     subscriber.shutdown();
 
+    ROS_INFO("Accumulated %i clouds in %.2f seconds.", ca_.getCloudCount(), (ros::Time::now() - start).toSec());
     // Pack the response
     PointCloud cloud;
     cloud.header.frame_id = frame_id_;
