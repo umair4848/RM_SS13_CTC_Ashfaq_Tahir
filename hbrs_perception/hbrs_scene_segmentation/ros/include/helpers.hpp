@@ -2,31 +2,33 @@
 #define HELPERS_HPP
 
 #include <hbrs_msgs/PlanarPolygon.h>
+#include <hbrs_msgs/BoundingBox.h>
 #include "aliases.h"
+#include "bounding_box.h"
 
 /** Convert from PCL PlanarPolygon to ROS message. */
-void convertPlanarPolygon(const PlanarPolygon& pcl_polygon, hbrs_msgs::PlanarPolygon& ros_polygon)
+void convertPlanarPolygon(const PlanarPolygon& polygon, hbrs_msgs::PlanarPolygon& polygon_msg)
 {
   for (int i = 0; i < 4; ++i)
   {
-    ros_polygon.coefficients[i] = pcl_polygon.getCoefficients()[i];
+    polygon_msg.coefficients[i] = polygon.getCoefficients()[i];
   }
-  for (const auto& point : pcl_polygon.getContour())
+  for (const auto& point : polygon.getContour())
   {
     geometry_msgs::Point32 pt;
     pt.x = point.x;
     pt.y = point.y;
     pt.z = point.z;
-    ros_polygon.contour.push_back(pt);
+    polygon_msg.contour.push_back(pt);
   }
 }
 
 /** Convert from ROS message to PCL PlanarPolygon. */
-void convertPlanarPolygon(const hbrs_msgs::PlanarPolygon& ros_polygon, PlanarPolygon& pcl_polygon)
+void convertPlanarPolygon(const hbrs_msgs::PlanarPolygon& polygon_msg, PlanarPolygon& polygon)
 {
   PointCloud contour;
-  Eigen::Vector4f coefficients(ros_polygon.coefficients.elems);
-  for (const auto& point : ros_polygon.contour)
+  Eigen::Vector4f coefficients(polygon_msg.coefficients.elems);
+  for (const auto& point : polygon_msg.contour)
   {
     PointT pt;
     pt.x = point.x;
@@ -34,8 +36,8 @@ void convertPlanarPolygon(const hbrs_msgs::PlanarPolygon& ros_polygon, PlanarPol
     pt.z = point.z;
     contour.points.push_back(pt);
   }
-  pcl_polygon.setContour(contour);
-  pcl_polygon.setCoefficients(coefficients);
+  polygon.setContour(contour);
+  polygon.setCoefficients(coefficients);
 }
 
 double computePlanarPolygonArea(const PlanarPolygon& polygon)
@@ -60,6 +62,26 @@ double computePlanarPolygonArea(const PlanarPolygon& polygon)
   }
 
   return std::fabs(area) / (2 * std::fabs(normal[k0]));
+}
+
+/** Convert from BoundingBox object to ROS message. */
+void convertBoundingBox(const BoundingBox& bounding_box, hbrs_msgs::BoundingBox& bounding_box_msg)
+{
+  const auto& center = bounding_box.getCenter();
+  bounding_box_msg.center.x = center[0];
+  bounding_box_msg.center.y = center[1];
+  bounding_box_msg.center.z = center[2];
+  bounding_box_msg.length = bounding_box.getLength();
+  bounding_box_msg.width = bounding_box.getWidth();
+  bounding_box_msg.height = bounding_box.getHeight();
+  for (const auto& vertex : bounding_box.getVertices())
+  {
+    geometry_msgs::Point pt;
+    pt.x = vertex[0];
+    pt.y = vertex[1];
+    pt.z = vertex[2];
+    bounding_box_msg.vertices.push_back(pt);
+  }
 }
 
 #endif /* HELPERS_HPP */
