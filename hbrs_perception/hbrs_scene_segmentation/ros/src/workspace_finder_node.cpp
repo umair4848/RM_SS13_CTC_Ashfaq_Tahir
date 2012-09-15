@@ -10,6 +10,7 @@
 
 #include "helpers.hpp"
 #include "plane_extraction.h"
+#include "polyclipping.h"
 
 using namespace hbrs::visualization;
 
@@ -82,9 +83,20 @@ private:
       return false;
 
     // The first polygon in the output vector has the largest area, so we take it.
+    auto& polygon = planar_polygons[0];
+    // Before sending it to the user, we clip the polygon.
+    // Sometimes it fails due to wrong orientation of polygon faces.
+    try
+    {
+      clipPlanarPolygon(polygon, clip_polygon_by_);
+    }
+    catch(std::exception& e)
+    {
+      ROS_ERROR("Failed to clip polygon (%s), output original unclipped one.", e.what());
+    }
     response.stamp = ros_cloud->header.stamp;
-    convertPlanarPolygon(planar_polygons[0], response.polygon);
-    polygon_visualizer_.publish(planar_polygons[0]);
+    convertPlanarPolygon(polygon, response.polygon);
+    polygon_visualizer_.publish(polygon);
     return true;
   }
 
@@ -133,7 +145,7 @@ private:
 
     // Other settings
     pn.param("cloud_timeout", cloud_timeout_, 15);
-    // TODO: frame_id in which the constraints are given
+    pn.param("clip_polygon_by", clip_polygon_by_, 0.03);
   }
 
   PlaneExtraction plane_extraction_;
@@ -143,6 +155,7 @@ private:
 
   std::string cloud_topic_;
   int cloud_timeout_;
+  double clip_polygon_by_;
 
   PlanarPolygonVisualizer polygon_visualizer_;
 
