@@ -12,6 +12,22 @@
 
 using namespace hbrs::visualization;
 
+/** This node provides a service to create bounding boxes around point clouds.
+  *
+  * The input is a list of point clouds, each of which should be wrapped by a
+  * bounding box. Additionally, the user can supply an axis, which will force
+  * the produced bounding boxes to be parallel to it. This is useful when the
+  * clouds (objects) stand on some planar surface, and the user wants the
+  * bottoms of the boxes to be parallel to the surface.
+  *
+  * Provides services:
+  *   1) "make_bounding_boxes"
+  *
+  * Publishes:
+  *   1) "bounding_boxes"
+  *      An RViz marker with lines that visualize the edges of the produced
+  *      bounding boxes.
+  */
 class BoundingBoxMakerNode
 {
 
