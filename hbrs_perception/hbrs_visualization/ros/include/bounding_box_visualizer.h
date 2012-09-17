@@ -25,6 +25,8 @@ public:
 
   void publish(const hbrs_msgs::BoundingBox& box);
 
+  void publish(const std::vector<hbrs_msgs::BoundingBox>& boxes);
+
 private:
 
   ros::Publisher marker_publisher_;

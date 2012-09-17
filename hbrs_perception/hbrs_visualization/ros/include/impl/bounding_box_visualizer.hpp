@@ -19,6 +19,13 @@ BoundingBoxVisualizer::BoundingBoxVisualizer(const std::string& topic_name, Colo
 
 void BoundingBoxVisualizer::publish(const hbrs_msgs::BoundingBox& box)
 {
+  std::vector<hbrs_msgs::BoundingBox> boxes;
+  boxes.push_back(box);
+  publish(boxes);
+}
+
+void BoundingBoxVisualizer::publish(const std::vector<hbrs_msgs::BoundingBox>& boxes)
+{
   if (check_subscribers_ && marker_publisher_.getNumSubscribers() == 0) return;
   visualization_msgs::Marker lines;
   lines.header.frame_id = "/openni_rgb_optical_frame";
@@ -28,21 +35,24 @@ void BoundingBoxVisualizer::publish(const hbrs_msgs::BoundingBox& box)
   lines.scale.x = 0.001;
   lines.scale.y = 0.001;
   lines.color = color_;
-  lines.ns = "bounding_box";
+  lines.ns = "bounding_boxes";
   lines.id = 1;
-  const auto& pt = box.vertices;
-  lines.points.push_back(pt[0]); lines.points.push_back(pt[1]);
-  lines.points.push_back(pt[0]); lines.points.push_back(pt[3]);
-  lines.points.push_back(pt[0]); lines.points.push_back(pt[4]);
-  lines.points.push_back(pt[1]); lines.points.push_back(pt[2]);
-  lines.points.push_back(pt[1]); lines.points.push_back(pt[5]);
-  lines.points.push_back(pt[2]); lines.points.push_back(pt[3]);
-  lines.points.push_back(pt[2]); lines.points.push_back(pt[6]);
-  lines.points.push_back(pt[3]); lines.points.push_back(pt[7]);
-  lines.points.push_back(pt[4]); lines.points.push_back(pt[5]);
-  lines.points.push_back(pt[4]); lines.points.push_back(pt[7]);
-  lines.points.push_back(pt[5]); lines.points.push_back(pt[6]);
-  lines.points.push_back(pt[6]); lines.points.push_back(pt[7]);
+  for (const auto& box : boxes)
+  {
+    const auto& pt = box.vertices;
+    lines.points.push_back(pt[0]); lines.points.push_back(pt[1]);
+    lines.points.push_back(pt[0]); lines.points.push_back(pt[3]);
+    lines.points.push_back(pt[0]); lines.points.push_back(pt[4]);
+    lines.points.push_back(pt[1]); lines.points.push_back(pt[2]);
+    lines.points.push_back(pt[1]); lines.points.push_back(pt[5]);
+    lines.points.push_back(pt[2]); lines.points.push_back(pt[3]);
+    lines.points.push_back(pt[2]); lines.points.push_back(pt[6]);
+    lines.points.push_back(pt[3]); lines.points.push_back(pt[7]);
+    lines.points.push_back(pt[4]); lines.points.push_back(pt[5]);
+    lines.points.push_back(pt[4]); lines.points.push_back(pt[7]);
+    lines.points.push_back(pt[5]); lines.points.push_back(pt[6]);
+    lines.points.push_back(pt[6]); lines.points.push_back(pt[7]);
+  }
   marker_publisher_.publish(lines);
 }
 
