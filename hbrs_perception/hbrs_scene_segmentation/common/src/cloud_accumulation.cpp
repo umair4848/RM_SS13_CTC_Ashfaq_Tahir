@@ -10,23 +10,13 @@ CloudAccumulation::CloudAccumulation(double resolution)
 
 void CloudAccumulation::addCloud(const PointCloud::ConstPtr& cloud)
 {
-  if (cloud_count_ == 0)
-  {
-    octree_->setInputCloud(cloud);
-    octree_->addPointsFromInputCloud();
-  }
-  else
-  {
-    for (const auto& point: cloud->points)
-      if ((point.x == point.x) && (point.y == point.y) && (point.z == point.z)) // NaN check
-        octree_->setOccupiedVoxelAtPoint(point);
-  }
+  octree_->setOccupiedVoxelsAtPointsFromCloud(cloud);
   cloud_count_++;
 }
 
 void CloudAccumulation::getAccumulatedCloud(PointCloud& cloud)
 {
-  octree_->getOccupiedVoxelCenters(cloud.points);
+  octree_->getOccupiedVoxelCentersWithColor(cloud.points);
   cloud.width = cloud.points.size();
   cloud.height = 1;
 }

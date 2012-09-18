@@ -4,6 +4,7 @@
 #include <pcl/octree/octree_pointcloud_occupancy.h>
 
 #include "aliases.h"
+#include "octree_pointcloud_occupancy_colored.h"
 
 /** This class accumulates input point clouds in the occupancy octree with a
   * given spatial resolution. */
@@ -26,7 +27,7 @@ public:
 
 private:
 
-  typedef pcl::octree::OctreePointCloudOccupancy<PointT> Octree;
+  typedef OctreePointCloudOccupancyColored<PointT> Octree;
   typedef std::unique_ptr<Octree> OctreeUPtr;
 
   OctreeUPtr octree_;

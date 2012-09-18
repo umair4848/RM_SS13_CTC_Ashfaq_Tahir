@@ -7,7 +7,7 @@
 #include <pcl/point_cloud.h>
 #include <pcl/geometry/planar_polygon.h>
 
-typedef pcl::PointXYZRGBA PointT;
+typedef pcl::PointXYZRGB PointT;
 typedef pcl::Normal PointNT;
 typedef pcl::Label PointLT;
 
