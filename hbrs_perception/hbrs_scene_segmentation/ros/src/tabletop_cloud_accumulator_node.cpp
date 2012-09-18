@@ -54,31 +54,31 @@ private:
     convertPlanarPolygon(request.polygon, polygon);
     polygon_cloud->points = polygon.getContour();
     eppd_.setInputPlanarHull(polygon_cloud);
-    ca_.reset();
+    ca_ = CloudAccumulation::UPtr(new CloudAccumulation(octree_resolution_));
     ros::NodeHandle nh;
     ros::Subscriber subscriber = nh.subscribe("/camera/rgb/points", 1, &TabletopCloudAccumulatorNode::cloudCallback, this);
 
     // Wait some time while data is being accumulated.
     ros::Time start = ros::Time::now();
-    while (ca_.getCloudCount() < accumulate_clouds_ && ros::Time::now() < start + ros::Duration(accumulation_timeout_) && ros::ok())
+    while (ca_->getCloudCount() < accumulate_clouds_ && ros::Time::now() < start + ros::Duration(accumulation_timeout_) && ros::ok())
     {
       ros::spinOnce();
     }
     subscriber.shutdown();
 
-    ROS_INFO("Accumulated %i clouds in %.2f seconds.", ca_.getCloudCount(), (ros::Time::now() - start).toSec());
+    ROS_INFO("Accumulated %i clouds in %.2f seconds.", ca_->getCloudCount(), (ros::Time::now() - start).toSec());
     // Pack the response
     PointCloud cloud;
     cloud.header.frame_id = frame_id_;
     cloud.header.stamp = ros::Time::now();
-    ca_.getAccumulatedCloud(cloud);
+    ca_->getAccumulatedCloud(cloud);
     pcl::toROSMsg(cloud, response.cloud);
 
     // Forward to the "accumulated_cloud" topic (if there are subscribers)
     if (accumulated_cloud_publisher_.getNumSubscribers())
       accumulated_cloud_publisher_.publish(response.cloud);
 
-    return ca_.getCloudCount() != 0;
+    return ca_->getCloudCount() != 0;
   }
 
   void cloudCallback(const sensor_msgs::PointCloud2::ConstPtr &ros_cloud)
@@ -99,7 +99,7 @@ private:
 
     PointCloud::Ptr tabletop_cloud(new PointCloud);
     pcl::copyPointCloud(*cloud, *tabletop_indices, *tabletop_cloud);
-    ca_.addCloud(tabletop_cloud);
+    ca_->addCloud(tabletop_cloud);
   }
 
   void updateConfiguration()
@@ -112,15 +112,14 @@ private:
     pn.param("max_height", max_height, 0.20);
     eppd_.setHeightLimits(min_height, max_height);
 
-    // TODO: octree resolution parameter
-
     // Other settings
     pn.param("accumulation_timeout", accumulation_timeout_, 10);
     pn.param("accumulate_clouds", accumulate_clouds_, 1);
+    pn.param("octree_resolution", octree_resolution_, 0.0025);
   }
 
   pcl::ExtractPolygonalPrismData<PointT> eppd_;
-  CloudAccumulation ca_;
+  CloudAccumulation::UPtr ca_;
 
   ros::ServiceServer accumulate_service_;
   ros::Publisher accumulated_cloud_publisher_;
@@ -128,6 +127,7 @@ private:
   std::string frame_id_;
   int accumulation_timeout_;
   int accumulate_clouds_;
+  double octree_resolution_;
 
 };
 

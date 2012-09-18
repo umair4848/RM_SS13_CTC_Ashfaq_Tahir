@@ -12,6 +12,8 @@ class CloudAccumulation
 
 public:
 
+  typedef std::unique_ptr<CloudAccumulation> UPtr;
+
   explicit CloudAccumulation(double resolution = 0.0025);
 
   void addCloud(const PointCloud::ConstPtr& cloud);
