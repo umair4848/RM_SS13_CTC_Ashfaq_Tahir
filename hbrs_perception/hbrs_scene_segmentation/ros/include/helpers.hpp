@@ -71,9 +71,9 @@ void convertBoundingBox(const BoundingBox& bounding_box, hbrs_msgs::BoundingBox&
   bounding_box_msg.center.x = center[0];
   bounding_box_msg.center.y = center[1];
   bounding_box_msg.center.z = center[2];
-  bounding_box_msg.length = bounding_box.getLength();
-  bounding_box_msg.width = bounding_box.getWidth();
-  bounding_box_msg.height = bounding_box.getHeight();
+  bounding_box_msg.dimensions.x = bounding_box.getDimensions()[0];
+  bounding_box_msg.dimensions.y = bounding_box.getDimensions()[1];
+  bounding_box_msg.dimensions.z = bounding_box.getDimensions()[2];
   for (const auto& vertex : bounding_box.getVertices())
   {
     geometry_msgs::Point pt;

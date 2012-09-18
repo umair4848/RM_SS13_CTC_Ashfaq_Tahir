@@ -15,13 +15,9 @@ class BoundingBox
 
     inline const Points& getVertices() const { return vertices_; }
 
-    inline float getLength() const { return length_; }
+    inline Eigen::Vector3f getDimensions() const { return dimensions_; }
 
-    inline float getWidth() const { return width_; }
-
-    inline float getHeight() const { return height_; }
-
-    inline float getVolume() const { return length_ * width_ * height_; }
+    inline float getVolume() const { return dimensions_[0] * dimensions_[1] * dimensions_[2]; }
 
     /** Create a bounding box around the cloud, restricting it to be parallel to
       * the plane defined by the normal. */
@@ -41,10 +37,7 @@ class BoundingBox
 
     Point center_;
     Points vertices_;
-
-    float length_;
-    float width_;
-    float height_;
+    Eigen::Vector3f dimensions_;
 
 };
 
