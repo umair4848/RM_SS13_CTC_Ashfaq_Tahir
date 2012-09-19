@@ -7,6 +7,7 @@
 
 #include <pcl/common/centroid.h>
 #include <pcl/segmentation/extract_clusters.h>
+#include <pcl/filters/radius_outlier_removal.h>
 
 #include <clustered_point_cloud_visualizer.h>
 #include <hbrs_srvs/ClusterTabletopCloud.h>
@@ -26,7 +27,8 @@ using namespace hbrs::visualization;
   * knowledge about the plane that supports the clusters is used to improve
   * the results. For now the detected clusters are filtered to remove those
   * that are too short (and are likely to be some garbage remaining from the
-  * table plane).
+  * table plane). Additionaly a radius outlier removal algorithm is applied
+  * before clustering to remove single garbage points.
   *
   * Provides services:
   *   1) "cluster_tabletop_cloud"
@@ -63,6 +65,14 @@ private:
     pcl::fromROSMsg(request.cloud, *cloud);
     convertPlanarPolygon(request.polygon, polygon);
 
+    // Step 1: radius outlier removal
+    // TODO: promote to node parameters?
+    ror_.setInputCloud(cloud);
+    ror_.setRadiusSearch(0.07);
+    ror_.setMinNeighborsInRadius(7);
+    ror_.filter(*cloud);
+
+    // Step 2: euclidean clustering
     std::vector<pcl::PointIndices> clusters_indices;
     ece_.setInputCloud(cloud);
     ece_.extract(clusters_indices);
@@ -121,11 +131,13 @@ private:
   }
 
   ros::ServiceServer cluster_server_;
-  ClusteredPointCloudVisualizer cluster_visualizer_;
 
+  pcl::RadiusOutlierRemoval<PointT> ror_;
   pcl::EuclideanClusterExtraction<PointT> ece_;
 
   double object_min_height_;
+
+  ClusteredPointCloudVisualizer cluster_visualizer_;
 
 };
 
