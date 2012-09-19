@@ -15,4 +15,6 @@
 
   <node pkg="hbrs_scene_segmentation" type="tabletop_cloud_clusterer" name="tabletop_cloud_clusterer" output="screen"/>
 
+  <node pkg="hbrs_scene_segmentation" type="bounding_box_maker" name="bounding_box_maker" output="screen"/>
+
 </launch>
