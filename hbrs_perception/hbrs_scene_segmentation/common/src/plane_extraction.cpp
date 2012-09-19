@@ -13,8 +13,8 @@ PlaneExtraction::PlaneExtraction()
 {
   // Setup IntegralImageNormalEstimation
   ne_.setNormalEstimationMethod(ne_.COVARIANCE_MATRIX);
-  ne_.setMaxDepthChangeFactor(0.02);
-  ne_.setNormalSmoothingSize(10.0);
+  ne_.setMaxDepthChangeFactor(0.03);
+  ne_.setNormalSmoothingSize(12.0);
   // Setup OrganizedMultiPlaneSegmentation
   mps_.setMinInliers(1000);
   mps_.setAngularThreshold(pcl::deg2rad(3.0));

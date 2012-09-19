@@ -109,7 +109,7 @@ private:
     int min_cluster_size;
     int max_cluster_size;
     pn.param("cluster_tolerance", cluster_tolerance, 0.01);
-    pn.param("min_cluster_size", min_cluster_size, 15);
+    pn.param("min_cluster_size", min_cluster_size, 25);
     pn.param("max_cluster_size", max_cluster_size, 5000);
     ece_.setSearchMethod(boost::make_shared<pcl::search::KdTree<PointT>>());
     ece_.setClusterTolerance(cluster_tolerance);
@@ -117,7 +117,7 @@ private:
     ece_.setMaxClusterSize(max_cluster_size);
 
     // Other settings
-    pn.param("object_min_height", object_min_height_, 0.01);
+    pn.param("object_min_height", object_min_height_, 0.011);
   }
 
   ros::ServiceServer cluster_server_;
