@@ -1,0 +1,17 @@
+<package>
+  <description brief="hbrs_wall_distance_check">
+
+     hbrs_wall_distance_check
+
+  </description>
+  <author>Matthew Roscoe</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_wall_distance_check</url>
+  <depend package="roscpp"/>
+  <depend package="sensor_msgs"/>
+  <depend package="std_srvs"/>
+
+</package>
+
+
