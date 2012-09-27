@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node pkg="hbrs_wall_distance_check" type="wall_distance_check" name="hbrs_wall_distance_check" output="screen">
-        <param name="my_param" type="double" value="1.5" />
-    </node>
-</launch>
