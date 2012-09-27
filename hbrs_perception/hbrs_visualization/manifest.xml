@@ -8,6 +8,7 @@
   <license>BSD</license>
 
   <depend package="roscpp"/>
+  <depend package="rospy"/>
   <depend package="pcl"/>
   <depend package="visualization_msgs"/>
   <depend package="sensor_msgs"/>
@@ -17,6 +18,7 @@
 
   <export>
     <cpp cflags="-I${prefix}/ros/include"/>
+    <python path="${prefix}/ros/src"/>
   </export>
 
 </package>
