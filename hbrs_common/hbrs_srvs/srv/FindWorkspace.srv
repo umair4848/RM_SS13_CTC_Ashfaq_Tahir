@@ -1,7 +1,5 @@
 ---
 # Time stamp when the workspace has been found
 time stamp
-# Plane coefficients
-float32[4] coefficients
-# List of points in the workspace contour
-geometry_msgs/Point32[] contour
+# Planar polygon that defines the workspace
+hbrs_msgs/PlanarPolygon polygon

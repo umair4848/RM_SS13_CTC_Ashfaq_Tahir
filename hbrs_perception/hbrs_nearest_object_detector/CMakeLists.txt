@@ -26,14 +26,11 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
+#rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-include_directories(
-    ${PROJECT_SOURCE_DIR}/common/include
-    ${PROJECT_SOURCE_DIR}/ros/include
+rosbuild_add_executable(nearest_object_detector ros/src/nearest_object_detector_node.cpp)
+target_link_libraries(nearest_object_detector
+	hbrs_segmentation
+	hbrs_geometry
 )
-
-rosbuild_add_library(my_functionality_lib common/src/my_functional_class.cpp)
-
-rosbuild_add_executable(ros_node_example ros/nodes/ros_node_example.cpp)
-target_link_libraries(ros_node_example my_functionality_lib)
