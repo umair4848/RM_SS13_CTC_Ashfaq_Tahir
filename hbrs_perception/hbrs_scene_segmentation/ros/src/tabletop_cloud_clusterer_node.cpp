@@ -66,10 +66,7 @@ private:
     convertPlanarPolygon(request.polygon, polygon);
 
     // Step 1: radius outlier removal
-    // TODO: promote to node parameters?
     ror_.setInputCloud(cloud);
-    ror_.setRadiusSearch(0.07);
-    ror_.setMinNeighborsInRadius(7);
     ror_.filter(*cloud);
 
     // Step 2: euclidean clustering
@@ -125,6 +122,14 @@ private:
     ece_.setClusterTolerance(cluster_tolerance);
     ece_.setMinClusterSize(min_cluster_size);
     ece_.setMaxClusterSize(max_cluster_size);
+
+    // Radius outlier removal settings
+    double radius;
+    int neighbors;
+    pn.param("outlier_radius", radius, 0.01);
+    pn.param("outlier_neighbors", neighbors, 20);
+    ror_.setRadiusSearch(radius);
+    ror_.setMinNeighborsInRadius(neighbors);
 
     // Other settings
     pn.param("object_min_height", object_min_height_, 0.011);
