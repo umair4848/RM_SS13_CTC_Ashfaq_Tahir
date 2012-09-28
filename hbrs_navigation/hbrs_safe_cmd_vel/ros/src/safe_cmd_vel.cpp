@@ -2,6 +2,7 @@
 #include "ros/ros.h"
 #include "sensor_msgs/LaserScan.h"
 #include "geometry_msgs/Twist.h"
+#include <float.h>
 
 // RAW 
 #include "raw_srvs/ReturnBool.h"
@@ -13,25 +14,25 @@
 #include <string>
 
 // How close the robot is allowed to get to the wall.
-#define ALLOWED_DISTANCE = 0.03
+#define ALLOWED_DISTANCE    0.03
 
-class safe_cmd_vel
+class SafeCmdVel
 {
 public:
 
-	safe_cmd_vel( ros::NodeHandle &n ) : node_handler( n )
+	SafeCmdVel( ros::NodeHandle &n ) : node_handler( n )
 	{
-		base_velocities_subscriber = node_handler.subscribe( "/safe_cmd_vel", 1, &safe_cmd_vel::safe_cmd_vel_callback, this );
-		laser_scanner_subscriber = node_handler.subscribe( "/scan_front", 1, &safe_cmd_vel::laser_scanner_callback, this );
+		base_velocities_subscriber = node_handler.subscribe( "/safe_cmd_vel", 1, &SafeCmdVel::safe_cmd_vel_callback, this );
+		laser_scanner_subscriber = node_handler.subscribe( "/scan_front", 1, &SafeCmdVel::laser_scanner_callback, this );
 
 		safe_base_velocities_publisher = node_handler.advertise<geometry_msgs::Twist>( "/cmd_vel", 1 );
 
-		service = node_handler.advertiseService( "is_robot_to_close_to_wall", &safe_cmd_vel::is_robot_to_close_to_wall, this );
+		service = node_handler.advertiseService( "is_robot_to_close_to_wall", &SafeCmdVel::is_robot_to_close_to_wall, this );
 
-		ROS_INFO( "hbrs_safe_cmd_vel has started." );	
+		ROS_INFO( "hbrs_SafeCmdVel has started." );	
 	}
 
-	~safe_cmd_vel()
+	~SafeCmdVel()
 	{
 		base_velocities_subscriber.shutdown(); 
 		safe_base_velocities_publisher.shutdown(); 
@@ -39,7 +40,7 @@ public:
 
 	bool is_robot_to_close_to_wall( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
   	{
-  		ROS_INFO( "hbrs_safe_cmd_vel status server has started" ); 
+  		ROS_INFO( "hbrs_SafeCmdVel status server has started" ); 
 
   		res.value = robot_to_close_to_wall; 
 
@@ -64,24 +65,29 @@ private:
 	}
 
 	void laser_scanner_callback( const sensor_msgs::LaserScan &scan )
-	{
+	{      
 		double angle = scan.angle_min; 
 		double x, y; 
 		double min_x = DBL_MAX; 
 
 		for( int i = 0; i < scan.ranges.size(); i++, angle += scan.angle_increment )
 		{
+            if (scan.ranges[ i ] <= 0.01)
+                continue;
+
 			x = scan.ranges[ i ] * cos( angle ); 
 			y = scan.ranges[ i ] * sin( angle ); 
 
 			if( y > -0.20 && y < 0.20 )
 			{
-				if( x < min_x )
+     			if( x < min_x )
 				{
 					min_x = x; 
 				}
 			}
 		}
+
+        //std::cout << "min_x: " << min_x << std::endl;
 
 		if( min_x < ALLOWED_DISTANCE )
 		{
@@ -115,7 +121,9 @@ int main(int argc, char **argv)
 
 	ros::NodeHandle n;
 
-	ros::Rate looprate(10); 
+    SafeCmdVel safe_cmd_vel = SafeCmdVel(n);
+
+	ros::Rate looprate(15); 
 	while( ros::ok() )
 	{
 		ros::spinOnce(); 
