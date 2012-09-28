@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="hbrs_marker_detection" type="marker_detection" name="hbrs_marker_detection" ns="hbrs_perception" respawn="false" output="screen">
+		<param name="marker_pattern_list" type="string" value="$(find hbrs_marker_detection)/ros/config/marker.cfg"/>
+		<param name="marker_data_directory" type="string" value="$(find ar_pose)"/>
+		<param name="threshold" type="int" value="100"/>
+	</node>
+</launch>

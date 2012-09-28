@@ -1,0 +1,21 @@
+<package>
+  <description brief="hbrs_marker_detection">
+
+     hbrs_marker_detection
+
+  </description>
+  <author>fred</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_marker_detection</url>
+  <depend package="roscpp"/>
+  <depend package="sensor_msgs"/>
+  <depend package="std_srvs"/>
+  <depend package="ar_kinect"/>
+  <depend package="hbrs_srvs"/>
+  <depend package="hbrs_msgs"/>
+  
+
+</package>
+
+
