@@ -7,15 +7,16 @@ roslib.load_manifest(PACKAGE)
 import rospy
 
 from visualization_msgs.msg import Marker, MarkerArray
+from color import colors
 
 
 class LabelVisualizer:
     def __init__(self, topic_name, color, check_subscribers=True):
         self.marker_pub = rospy.Publisher(topic_name, MarkerArray)
         self.check_subs = check_subscribers
+        self.color = colors[color].to_msg()
 
     def publish(self, labels, positions):
-        rospy.loginfo('Publishing %i labels' % (len(labels)))
         if self.check_subs and not self.marker_pub.get_num_connections():
             return
         ma = MarkerArray()
@@ -25,10 +26,7 @@ class LabelVisualizer:
             m.type = Marker.TEXT_VIEW_FACING
             m.action = Marker.ADD
             m.scale.z = 0.04
-            m.color.a = 1.0
-            m.color.r = 1.0
-            m.color.g = 0.5
-            m.color.b = 0.5
+            m.color = self.color
             m.ns = 'labels'
             m.id = i
             m.pose.position.x = p.x
