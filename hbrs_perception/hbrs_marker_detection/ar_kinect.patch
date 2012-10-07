@@ -1,0 +1,34 @@
+Index: include/ar_kinect/ar_kinect.h
+===================================================================
+--- include/ar_kinect/ar_kinect.h	(revision 311)
++++ include/ar_kinect/ar_kinect.h	(working copy)
+@@ -47,6 +47,7 @@
+ #include <pcl/point_types.h>
+ #include <pcl/registration/icp.h>
+ #include <pcl/registration/registration.h>
++#include <pcl/registration/transformation_estimation_svd.h>
+ 
+ #include <opencv/cv.h>
+ #include <cv_bridge/CvBridge.h>
+@@ -59,6 +60,7 @@
+ 
+ const double AR_TO_ROS = 0.001;
+ typedef pcl::PointCloud<pcl::PointXYZRGB> PointCloud;
++typedef pcl::registration::TransformationEstimationSVD<pcl::PointXYZRGB, pcl::PointXYZRGB> TransformationEstimationSVD;
+ 
+ namespace ar_pose
+ {
+Index: src/ar_kinect.cpp
+===================================================================
+--- src/ar_kinect.cpp	(revision 311)
++++ src/ar_kinect.cpp	(working copy)
+@@ -227,7 +227,8 @@
+ 
+       /* get transformation */
+       Eigen::Matrix4f t;
+-      pcl::estimateRigidTransformationSVD( marker, ideal, t );
++      TransformationEstimationSVD obj;
++      obj.estimateRigidTransformation( marker, ideal, t );
+       
+       /* get final transformation */
+       tf::Transform transform = tfFromEigen(t.inverse());
