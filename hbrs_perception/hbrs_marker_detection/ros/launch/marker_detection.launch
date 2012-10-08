@@ -11,4 +11,8 @@
     <param name="accumulate_time" value="2" type="int"/>
   </node>
 
+  <node pkg="hbrs_marker_detection" type="tf_goal.py" name="tf_goal">
+    <param name="source_frame_id" value="base_link" type="str"/>
+    <param name="target_frame_id" value="drawer_1" type="str"/>
+  </node>
 </launch>
