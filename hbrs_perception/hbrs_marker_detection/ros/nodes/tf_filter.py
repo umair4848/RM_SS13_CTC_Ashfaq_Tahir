@@ -25,7 +25,7 @@ def transform_to_list(tf):
 
 
 class TfFilter:
-    def __init__(self, frame_id, buffer_size):
+    def __init__(self, frame_id, buffer_size, filter_position):
         self.frame_id = frame_id
         self.buffer = np.zeros((buffer_size, 6))
         self.buffer_ptr = 0
@@ -33,11 +33,13 @@ class TfFilter:
         self.tf_sub = rospy.Subscriber('tf', tfMessage, self.tf_cb)
         self.tf_pub = rospy.Publisher('tf', tfMessage)
         self.buffer_filled = False
+        self.filter_position = filter_position
 
     def tf_cb(self, msg):
         for t in msg.transforms:
             if t.child_frame_id == self.frame_id:
-                self.buffer[self.buffer_ptr] = transform_to_list(t.transform)
+                self.last_transform = transform_to_list(t.transform)
+                self.buffer[self.buffer_ptr] = self.last_transform
                 self.buffer_ptr = (self.buffer_ptr + 1) % self.buffer_size
                 if self.buffer_filled:
                     self.publish_filtered_tf(t.header)
@@ -46,6 +48,8 @@ class TfFilter:
 
     def publish_filtered_tf(self, header):
         m = np.median(self.buffer, axis=0)
+        if not self.filter_position:
+            m[0:3] = self.last_transform[0:3]
         q = quaternion_from_euler(m[3], m[4], m[5])
         ts = TransformStamped()
         ts.header = header
@@ -65,7 +69,8 @@ class TfFilter:
 if __name__ == '__main__':
     rospy.init_node(NODE)
     target_frame_id = rospy.get_param('~target_frame_id')
-    filter_window = rospy.get_param('~filter_window', 30)
-    tf_filer = TfFilter(target_frame_id, filter_window)
+    filter_window_length = rospy.get_param('~filter_window_length', 30)
+    filter_position = rospy.get_param('~filter_position', False)
+    tf_filer = TfFilter(target_frame_id, filter_window_length, filter_position)
     rospy.loginfo('Started [%s] node.' % NODE)
     rospy.spin()
