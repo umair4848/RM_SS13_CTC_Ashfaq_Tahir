@@ -27,9 +27,9 @@ public:
 
 		safe_base_velocities_publisher = node_handler.advertise<geometry_msgs::Twist>( "/cmd_vel", 1 );
 
-		service = node_handler.advertiseService( "is_robot_to_close_to_wall", &SafeCmdVel::is_robot_to_close_to_wall, this );
+		service = node_handler.advertiseService( "is_robot_to_close_to_obstacle", &SafeCmdVel::is_robot_to_close_to_obstacle, this );
 
-		ROS_INFO( "hbrs_SafeCmdVel has started." );	
+		ROS_INFO( "hbrs_safe_cmd_vel successfully initalized" );	
 	}
 
 	~SafeCmdVel()
@@ -38,10 +38,8 @@ public:
 		safe_base_velocities_publisher.shutdown(); 
 	}
 
-	bool is_robot_to_close_to_wall( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
+	bool is_robot_to_close_to_obstacle( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
   	{
-  		ROS_INFO( "hbrs_SafeCmdVel status server has started" ); 
-
   		res.value = robot_to_close_to_wall; 
 
   		return true; 
@@ -70,7 +68,7 @@ private:
 		double x, y; 
 		double min_x = DBL_MAX; 
 
-		for( int i = 0; i < scan.ranges.size(); i++, angle += scan.angle_increment )
+		for( unsigned int i = 0; i < scan.ranges.size(); i++, angle += scan.angle_increment )
 		{
             if (scan.ranges[ i ] <= 0.01)
                 continue;
