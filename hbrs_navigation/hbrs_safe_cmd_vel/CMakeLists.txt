@@ -31,9 +31,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 
 include_directories(
-   ${PROJECT_SOURCE_DIR}/common/include
    ${PROJECT_SOURCE_DIR}/ros/include
 )
 
 #create an executable for your ros node
-rosbuild_add_executable(safe_cmd_vel ros/src/safe_cmd_vel.cpp)
+rosbuild_add_executable(safe_cmd_vel ros/nodes/safe_cmd_vel_node.cpp ros/src/safe_cmd_vel.cpp)

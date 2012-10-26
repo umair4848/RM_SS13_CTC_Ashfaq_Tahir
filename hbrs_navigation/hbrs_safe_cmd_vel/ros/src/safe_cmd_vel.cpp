@@ -1,132 +1,120 @@
-// ROS Includes.
-#include "ros/ros.h"
-#include "sensor_msgs/LaserScan.h"
-#include "geometry_msgs/Twist.h"
-#include <float.h>
+#include "safe_cmd_vel.h"
 
-// RAW 
-#include "raw_srvs/ReturnBool.h"
 
-// Standard C++ Includes.
-#include <stdio.h>
-#include <iostream>
-#include <sstream>
-#include <string>
-
-// How close the robot is allowed to get to the wall.
-#define ALLOWED_DISTANCE    0.03
-
-class SafeCmdVel
+SafeCmdVel::SafeCmdVel(ros::NodeHandle &n) : nh_(n)
 {
-public:
+	// Publisher / Subscriber
+	sub_base_cmd_ = nh_.subscribe("/cmd_vel_safe", 1, &SafeCmdVel::baseCommandCallback, this);
+	sub_laser_front_ = nh_.subscribe("/scan_front", 1, &SafeCmdVel::laserFrontCallback, this);
+	//sub_laser_rear_ = nh_.subscribe("/scan_rear", 1, &SafeCmdVel::laserRearCallback, this);
 
-	SafeCmdVel( ros::NodeHandle &n ) : node_handler( n )
+	pub_safe_base_cmd_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+
+	// Services
+	srv_close_to_obstacle_ = nh_.advertiseService("is_robot_to_close_to_obstacle", &SafeCmdVel::is_robot_to_close_to_obstacle, this);
+
+	// Parameter
+	soft_padding_distance_ = 0.05;
+	soft_padding_xy_velocity_ = 0.01;
+	soft_padding_theta_velocity_ = 0.05;
+	hard_padding_distance_ = 0.01;
+
+	// TODO read in from urdf or as parameter
+	robot_footprint_width_ = 0.40;
+	robot_footprint_length_ = 0.60;
+
+    if (nh_.getParam("soft_padding_distance", soft_padding_distance_) == false)
+		ROS_WARN("Parameter \"soft_padding_distance\" not available on parameter server, use default value: %lf ", soft_padding_distance_);
+    if (nh_.getParam("soft_padding_xy_velocity", soft_padding_xy_velocity_) == false)
+    		ROS_WARN("Parameter \"soft_padding_xy_velocity\" not available on parameter server, use default value: %lf ", soft_padding_xy_velocity_);
+    if (nh_.getParam("soft_padding_theta_velocity", soft_padding_theta_velocity_) == false)
+    		ROS_WARN("Parameter \"soft_padding_theta_velocity\" not available on parameter server, use default value: %lf ", soft_padding_theta_velocity_);
+    if (nh_.getParam("hard_padding_distance", hard_padding_distance_) == false)
+    		ROS_WARN("Parameter \"hard_padding_distance\" not available on parameter server, use default value: %lf ", hard_padding_distance_);
+
+
+	ROS_INFO("hbrs_safe_cmd_vel successfully initialized");
+}
+
+SafeCmdVel::~SafeCmdVel()
+{
+	sub_base_cmd_.shutdown();
+	sub_laser_front_.shutdown();
+	sub_laser_rear_.shutdown();
+	pub_safe_base_cmd_.shutdown();
+	srv_close_to_obstacle_.shutdown();
+}
+
+bool SafeCmdVel::is_robot_to_close_to_obstacle(raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res)
+{
+	res.value = is_robot_in_hard_padding_back_ || is_robot_in_hard_padding_front_ || is_robot_in_hard_padding_left_ || is_robot_in_hard_padding_right_;
+
+	return true;
+}
+
+void SafeCmdVel::baseCommandCallback(const geometry_msgs::Twist& desired_velocities)
+{
+	base_vel_to_set_ = desired_velocities;
+
+	//std::cout << "base vel: " << base_vel_to_set_ << " hard: " << is_robot_in_hard_padding_front_ << " soft: " << is_robot_in_soft_padding_front_ << std::endl;
+
+	if (base_vel_to_set_.linear.x > 0.0)
 	{
-		base_velocities_subscriber = node_handler.subscribe( "/safe_cmd_vel", 1, &SafeCmdVel::safe_cmd_vel_callback, this );
-		laser_scanner_subscriber = node_handler.subscribe( "/scan_front", 1, &SafeCmdVel::laser_scanner_callback, this );
+		if(is_robot_in_hard_padding_front_)
+			base_vel_to_set_.linear.x = 0.0;
 
-		safe_base_velocities_publisher = node_handler.advertise<geometry_msgs::Twist>( "/cmd_vel", 1 );
+		else if(is_robot_in_soft_padding_front_)
+			base_vel_to_set_.linear.x = soft_padding_xy_velocity_;
 
-		service = node_handler.advertiseService( "is_robot_to_close_to_obstacle", &SafeCmdVel::is_robot_to_close_to_obstacle, this );
-
-		ROS_INFO( "hbrs_safe_cmd_vel successfully initalized" );	
 	}
 
-	~SafeCmdVel()
+	pub_safe_base_cmd_.publish(base_vel_to_set_);
+}
+
+void SafeCmdVel::laserFrontCallback(const sensor_msgs::LaserScan::ConstPtr &scan)
+{
+	double angle = scan->angle_min;
+	double x = 0.0, y = 0.0;
+
+	is_robot_in_soft_padding_front_ = false;
+	is_robot_in_hard_padding_front_ = false;
+
+	for(unsigned int i = 0; i < scan->ranges.size(); i++, angle += scan->angle_increment)
 	{
-		base_velocities_subscriber.shutdown(); 
-		safe_base_velocities_publisher.shutdown(); 
-	}
+		// TODO: check if there is a nicer solution
+		if(scan->ranges[i] <= 0.01)
+			continue;
 
-	bool is_robot_to_close_to_obstacle( raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res )
-  	{
-  		res.value = robot_to_close_to_wall; 
+		// convert Polar to Cartesian coordinates
+		x = scan->ranges[i] * cos(angle);
+		y = scan->ranges[i] * sin(angle);
 
-  		return true; 
-  	}
+		//std::cout << "x: " << x << " y: " << y << " f/2: " << (robot_footprint_width_/2) << " f/2+h: " << ((robot_footprint_width_/2) + hard_padding_distance_)
 
-private:
-
-	void safe_cmd_vel_callback( const geometry_msgs::Twist& twist )
-	{
-		base_velocities = twist; 
-
-		if ( twist.linear.x > 0 ) 
+		// check front area
+		if((y >= -((robot_footprint_width_/2) + hard_padding_distance_)) && (y <= ((robot_footprint_width_/2) + hard_padding_distance_)))
 		{
-			if( robot_to_close_to_wall )
+			if(x <= hard_padding_distance_)
 			{
-				base_velocities.linear.x = 0.0; 
+				//std::cout << "		IN HARD LIMIT" << std::endl;
+				is_robot_in_hard_padding_front_ = true;
+				return;
 			}
 		}
 
-		safe_base_velocities_publisher.publish( base_velocities ); 
-	}
-
-	void laser_scanner_callback( const sensor_msgs::LaserScan &scan )
-	{      
-		double angle = scan.angle_min; 
-		double x, y; 
-		double min_x = DBL_MAX; 
-
-		for( unsigned int i = 0; i < scan.ranges.size(); i++, angle += scan.angle_increment )
+		else if((y >= -((robot_footprint_width_/2) + soft_padding_distance_)) && (y <= ((robot_footprint_width_/2) + soft_padding_distance_)))
 		{
-            if (scan.ranges[ i ] <= 0.01)
-                continue;
-
-			x = scan.ranges[ i ] * cos( angle ); 
-			y = scan.ranges[ i ] * sin( angle ); 
-
-			if( y > -0.20 && y < 0.20 )
+			//std::cout << "check soft padding in front area. hard dist: " << hard_padding_distance_ << " x: " << x << std::endl;
+			if(x <= soft_padding_distance_)
 			{
-     			if( x < min_x )
-				{
-					min_x = x; 
-				}
+				is_robot_in_soft_padding_front_ = true;
 			}
+
 		}
 
-        //std::cout << "min_x: " << min_x << std::endl;
-
-		if( min_x < ALLOWED_DISTANCE )
-		{
-			robot_to_close_to_wall = true;			
-		}
-		else
-		{
-			robot_to_close_to_wall = false; 
-		}
 	}
 
-protected:
+	//if(is_robot_in_soft_padding_front_)
+		//std::cout << "		IN SOFT LIMIT" << std::endl;
 
-	ros::NodeHandle node_handler;
-
-	ros::Subscriber base_velocities_subscriber;
-	ros::Subscriber laser_scanner_subscriber;
-	ros::Publisher safe_base_velocities_publisher;
-
-	// base movement topic.
-	geometry_msgs::Twist base_velocities;
-
-	ros::ServiceServer service; 
-
-	bool robot_to_close_to_wall; 
-};
-  
-int main(int argc, char **argv)
-{  
-	ros::init( argc, argv, "hbrs_safe_cmd_vel" );
-
-	ros::NodeHandle n;
-
-    SafeCmdVel safe_cmd_vel = SafeCmdVel(n);
-
-	ros::Rate looprate(15); 
-	while( ros::ok() )
-	{
-		ros::spinOnce(); 
-		looprate.sleep(); 
-	}
-
-	return 0;
 }
