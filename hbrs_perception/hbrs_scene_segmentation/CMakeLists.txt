@@ -60,7 +60,7 @@ target_link_libraries(scene_segmentation ${POLYCLIPPING_LIBRARY}
 
 #...: workspace_finder
 rosbuild_add_executable(workspace_finder
-  ros/src/workspace_finder_node.cpp
+  ros/nodes/workspace_finder_node.cpp
 )
 target_link_libraries(workspace_finder
   scene_segmentation
@@ -68,7 +68,7 @@ target_link_libraries(workspace_finder
 
 #...: tabletop_cloud_accumulator
 rosbuild_add_executable(tabletop_cloud_accumulator
-  ros/src/tabletop_cloud_accumulator_node.cpp
+  ros/nodes/tabletop_cloud_accumulator_node.cpp
 )
 target_link_libraries(tabletop_cloud_accumulator
   scene_segmentation
@@ -76,7 +76,7 @@ target_link_libraries(tabletop_cloud_accumulator
 
 #...: tabletop_cloud_clusterer
 rosbuild_add_executable(tabletop_cloud_clusterer
-  ros/src/tabletop_cloud_clusterer_node.cpp
+  ros/nodes/tabletop_cloud_clusterer_node.cpp
 )
 target_link_libraries(tabletop_cloud_clusterer
   scene_segmentation
@@ -84,5 +84,5 @@ target_link_libraries(tabletop_cloud_clusterer
 
 #...: bounding_box_maker
 rosbuild_add_executable(bounding_box_maker
-  ros/src/bounding_box_maker_node.cpp
+  ros/nodes/bounding_box_maker_node.cpp
 )

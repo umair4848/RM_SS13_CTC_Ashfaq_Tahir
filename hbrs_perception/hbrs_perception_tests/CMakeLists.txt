@@ -35,7 +35,7 @@ add_definitions(-Wno-deprecated)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/ros/include/impl)
 
 #...: vtk libraries for pcl visualization  :....................................
 
@@ -55,7 +55,7 @@ gencfg()
 
 #...: offline_plane_extraction_test
 rosbuild_add_executable(offline_plane_extraction_test
-  src/offline_plane_extraction_test.cpp
+  ros/src/offline_plane_extraction_test.cpp
 )
 target_link_libraries(offline_plane_extraction_test
   scene_segmentation
@@ -67,7 +67,7 @@ rosbuild_link_boost(offline_plane_extraction_test
 
 #...: online_plane_extraction_test
 rosbuild_add_executable(online_plane_extraction_test
-  src/online_plane_extraction_test.cpp
+  ros/src/online_plane_extraction_test.cpp
 )
 target_link_libraries(online_plane_extraction_test
   scene_segmentation
