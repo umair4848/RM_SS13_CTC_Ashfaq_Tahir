@@ -1,8 +1,3 @@
-- git:
-    local-name: third-party-software
-    uri: git@github.com:b-it-bots/third-party-software.git
-    version: master
-
 - svn:
     local-name: pcl_trunk
     uri: http://svn.pointclouds.org/ros/trunk/perception_pcl_electric_unstable/
