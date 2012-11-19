@@ -33,8 +33,11 @@ add_definitions(-fpermissive)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-include_directories(${PROJECT_SOURCE_DIR}/common/include)
-include_directories(${PROJECT_SOURCE_DIR}/ros/include)
+include_directories(
+    ${PROJECT_SOURCE_DIR}/common/include
+    ${PROJECT_SOURCE_DIR}/ros/include/impl
+)
+
 
 #...: target libraries :........................................................
 
