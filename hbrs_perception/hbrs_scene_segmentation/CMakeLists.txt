@@ -29,16 +29,6 @@ add_definitions(-Wno-unknown-pragmas)
 add_definitions(-Wno-deprecated)
 add_definitions(-fpermissive)
 
-#...: libpolyclipping :.........................................................
-
-find_path(POLYCLIPPING_INCLUDE_DIR polyclipping/clipper.hpp
-    /usr/local/include
-)
-find_library(POLYCLIPPING_LIBRARY polyclipping
-    /usr/local/lib
-)
-include_directories(${POLYCLIPPING_INCLUDE_DIR})
-
 #...: default paths  :..........................................................
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
@@ -53,7 +43,7 @@ rosbuild_add_library(scene_segmentation
   common/src/cloud_accumulation.cpp
   common/src/polyclipping.cpp
 )
-target_link_libraries(scene_segmentation ${POLYCLIPPING_LIBRARY}
+target_link_libraries(scene_segmentation polyclipping}
 )
 
 #...: target executables :......................................................

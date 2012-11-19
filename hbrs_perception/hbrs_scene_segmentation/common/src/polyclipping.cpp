@@ -1,6 +1,5 @@
 #include <algorithm>
-
-#include <polyclipping/clipper.hpp>
+#include <clipper.hpp>
 
 #include "polyclipping.h"
 
