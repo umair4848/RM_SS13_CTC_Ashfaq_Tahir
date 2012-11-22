@@ -1,4 +1,4 @@
 - svn:
     local-name: pcl_trunk
-    uri: http://svn.pointclouds.org/ros/trunk/perception_pcl_electric_unstable/
-    version: -r283
+    uri: http://svn.pointclouds.org/ros/branches/electric/perception_pcl_unstable/
+    version: -r345
