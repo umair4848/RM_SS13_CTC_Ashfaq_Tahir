@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     MyFunctionalClass* my_func_class = new MyFunctionalClass();
 
     /* init ROS node with a name and a node handle*/	
-    ros::init(argc, argv, "raw_ros_node_example");
+    ros::init(argc, argv, "hbrs_ros_node_example");
     ros::NodeHandle nh("~");
 
     /* create a Publisher and a Subscriber */

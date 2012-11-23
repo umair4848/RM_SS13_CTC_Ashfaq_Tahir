@@ -8,7 +8,7 @@
 #include <geometry_msgs/Twist.h>
 
 // RAW 
-#include <raw_srvs/ReturnBool.h>
+#include <hbrs_srvs/ReturnBool.h>
 
 class SafeCmdVel
 {
@@ -17,7 +17,7 @@ public:
 	SafeCmdVel(ros::NodeHandle &n);
 	~SafeCmdVel();
 
-	bool is_robot_to_close_to_obstacle(raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res);
+	bool is_robot_to_close_to_obstacle(hbrs_srvs::ReturnBool::Request &req, hbrs_srvs::ReturnBool::Response &res);
 
 private:
 	void baseCommandCallback(const geometry_msgs::Twist& desired_velocities);
