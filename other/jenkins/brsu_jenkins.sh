@@ -30,7 +30,6 @@ rosinstall $WORKSPACE/../ext_pkgs $WORKSPACE/repository.rosinstall --delete-chan
 
 # define amount of ros prozesses during build for multi-prozessor machines
 COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
-COUNT=$(echo "$COUNT*2" | bc)
 export ROS_PARALLEL_JOBS=-j$COUNT
 
 # add whole directory of the job the the ROS package path
