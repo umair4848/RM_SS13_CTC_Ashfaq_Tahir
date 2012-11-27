@@ -45,7 +45,7 @@ SafeCmdVel::~SafeCmdVel()
 	srv_close_to_obstacle_.shutdown();
 }
 
-bool SafeCmdVel::is_robot_to_close_to_obstacle(raw_srvs::ReturnBool::Request &req, raw_srvs::ReturnBool::Response &res)
+bool SafeCmdVel::is_robot_to_close_to_obstacle(hbrs_srvs::ReturnBool::Request &req, hbrs_srvs::ReturnBool::Response &res)
 {
 	res.value = is_robot_in_hard_padding_back_ || is_robot_in_hard_padding_front_ || is_robot_in_hard_padding_left_ || is_robot_in_hard_padding_right_;
 

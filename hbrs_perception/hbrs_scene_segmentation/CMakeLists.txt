@@ -46,7 +46,8 @@ rosbuild_add_library(scene_segmentation
   common/src/cloud_accumulation.cpp
   common/src/polyclipping.cpp
 )
-target_link_libraries(scene_segmentation polyclipping}
+target_link_libraries(scene_segmentation 
+  polyclipping
 )
 
 #...: target executables :......................................................
