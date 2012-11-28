@@ -29,8 +29,9 @@ sudo apt-get autoremove -y
 rosinstall $WORKSPACE/../ext_pkgs $WORKSPACE/repository.rosinstall --delete-changed-uris --rosdep-yes
 
 # define amount of ros prozesses during build for multi-prozessor machines
-COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
-export ROS_PARALLEL_JOBS=-j$COUNT
+#COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
+#COUNT=$(echo "$COUNT*2" | bc)
+export ROS_PARALLEL_JOBS=-j1
 
 # add whole directory of the job the the ROS package path
 export ROS_PACKAGE_PATH=$WORKSPACE/..:$ROS_PACKAGE_PATH
@@ -48,7 +49,7 @@ echo ""
 export USE_NORMAL_SUDO=1    # for youbot_oodl
 cd $WORKSPACE
 rosdep install * -y
-rosmake -r * --skip-blacklist --profile
+rosmake -r * --skip-blacklist --profile --status-rate=1
 
 # check if building is succesfull, otherwise don't perform test and exit
 if [ $? != "0" ]; then
