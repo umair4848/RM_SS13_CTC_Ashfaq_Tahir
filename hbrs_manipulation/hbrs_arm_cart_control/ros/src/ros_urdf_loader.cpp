@@ -1,11 +1,11 @@
 /*
- * ROSURDFLoader.cpp
+ * ros_urdf_loader.cpp
  *
  *  Created on: Nov 29, 2012
  *      Author: matthias
  */
 
-#include "ROSURDFLoader.h"
+#include "ros_urdf_loader.h"
 
 #include <kdl_parser/kdl_parser.hpp>
 

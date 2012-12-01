@@ -5,23 +5,16 @@
  *      Author: matthias
  */
 
-#include "ROSURDFLoader.h"
+#include "ros_urdf_loader.h"
+#include "arm_cartesian_control.h"
 
-#include "sensor_msgs/JointState.h"
-
-#include "kdl/kdl.hpp"
-
-#include "geometry_msgs/Twist.h"
-
-#include "arm_cart_control/ArmCartesianControl.h"
-
-#include "ros/ros.h"
-
-#include "kdl/chainiksolvervel_wdls.hpp"
-
-#include "brics_actuator/JointVelocities.h"
-
-#include "urdf/joint.h"
+#include <sensor_msgs/JointState.h>
+#include <kdl/kdl.hpp>
+#include <geometry_msgs/Twist.h>
+#include <ros/ros.h>
+#include <kdl/chainiksolvervel_wdls.hpp>
+#include <brics_actuator/JointVelocities.h>
+#include <urdf_interface/joint.h>
 
 KDL::Chain arm_chain;
 std::vector<boost::shared_ptr<urdf::JointLimits> > joint_limits;

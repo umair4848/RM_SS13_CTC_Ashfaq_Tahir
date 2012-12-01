@@ -1,5 +1,5 @@
 /*
- * ROSURDFLoader.h
+ * ros_urdf_loader.h
  *
  *  Created on: Nov 29, 2012
  *      Author: matthias
@@ -12,8 +12,8 @@
 #include <kdl/tree.hpp>
 #include <kdl/chain.hpp>
 
-#include "ros/ros.h"
-#include "urdf/joint.h"
+#include <ros/ros.h>
+#include <urdf_interface/joint.h>
 
 namespace arm_cc {
 

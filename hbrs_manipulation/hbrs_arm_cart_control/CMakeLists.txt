@@ -11,6 +11,7 @@ set(ROS_BUILD_TYPE Debug)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/ros/include
+    ${PROJECT_SOURCE_DIR}/common/include
 )
 
 rosbuild_init()
@@ -31,8 +32,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 rosbuild_add_executable(arm_cart_control
-    ros/src/ros_arm_cartesian_control.cpp
-    ros/src/ROSURDFLoader.cpp
-    src/arm_cart_control/ArmCartesianControl.cpp)
+    ros/nodes/arm_cartesian_control_node.cpp
+    ros/src/ros_urdf_loader.cpp
+    common/src/arm_cartesian_control.cpp)
     
 target_link_libraries(arm_cart_control tinyxml orocos-kdl)

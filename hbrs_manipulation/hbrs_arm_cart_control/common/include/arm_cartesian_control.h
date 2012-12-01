@@ -1,5 +1,5 @@
 /*
- * ArmCartesianControl.h
+ * arm_cartesian_control.h
  *
  *  Created on: Nov 29, 2012
  *      Author: matthias

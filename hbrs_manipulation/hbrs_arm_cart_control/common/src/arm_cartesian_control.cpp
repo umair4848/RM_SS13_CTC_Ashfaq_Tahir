@@ -1,11 +1,11 @@
 /*
- * ArmCartesianControl.cpp
+ * arm_cartesian_control.cpp
  *
  *  Created on: Nov 29, 2012
  *      Author: matthias
  */
 
-#include "arm_cart_control/ArmCartesianControl.h"
+#include "arm_cartesian_control.h"
 
 #include <iostream>
 
