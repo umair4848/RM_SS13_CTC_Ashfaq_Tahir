@@ -136,7 +136,7 @@ def create_package(package, author, depends, uses_roscpp=False, uses_rospy=False
         f.write("#compile the class(es) into a library\n")
         f.write("rosbuild_add_library(my_functionality_lib common/src/my_functional_class.cpp)\n\n")
         f.write("#create an executable for your ros node\n")
-        f.write("rosbuild_add_executable(" + pkg_name_without_prefix + " ros/src/" + pkg_name_without_prefix + ".cpp)\n\n")
+        f.write("rosbuild_add_executable(" + pkg_name_without_prefix + " ros/nodes/" + pkg_name_without_prefix + ".cpp)\n\n")
         f.write("#link a executable against the previously created library\n")
         f.write("target_link_libraries(" + pkg_name_without_prefix + " my_functionality_lib)\n")
         f.write("\n\n")
