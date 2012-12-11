@@ -33,7 +33,7 @@ void Arm_Cartesian_Control::checkLimits(
 
 	double limit_range = 0.1;
 
-	for (unsigned int i=0; i<jntVel.data.rows(); i++) {
+	for (int i=0; i<jntVel.data.rows(); i++) {
 		double pos = joint_positions.data(i);
 		double vel = jntVel.data(i);
 
@@ -77,7 +77,7 @@ void Arm_Cartesian_Control::process(
 	out_jnt_velocities.q.data = joint_positions.data;
 
 	double max_lin_frame_velocitiy = 0.1;  // m/s
-	double max_joint_vel = 0.05; // radian/s
+	double max_joint_vel = 0.1; // radian/s
 	double eps_velocity = 0.0001;
 
 	// calc Jacobian
@@ -94,7 +94,6 @@ void Arm_Cartesian_Control::process(
 	}
 
 
-
 	if (linear_frame_vel > max_lin_frame_velocitiy) {
 		//reduce target velocity to maximum limit
 		targetVelocity.vel.data[0] *= (max_lin_frame_velocitiy / linear_frame_vel) ;
@@ -102,16 +101,20 @@ void Arm_Cartesian_Control::process(
 		targetVelocity.vel.data[2] *= (max_lin_frame_velocitiy / linear_frame_vel) ;
 	}
 
+
 	// calc joint velocitites
 	KDL::JntArray jntVel(arm_chain->getNrOfJoints());
-	ik_solver->CartToJnt(joint_positions, targetVelocity, jntVel);
 
+        ik_solver->CartToJnt(joint_positions, targetVelocity, jntVel);
 
 
 	// limit joint velocitied
 	if (jntVel.data.norm() > 0.01) {
-		jntVel.data /= (jntVel.data.norm());
-		jntVel.data *= linear_frame_vel*5;
+		double max_velocity = jntVel.data.cwiseAbs().maxCoeff();
+		if (max_velocity > max_joint_vel) {
+			jntVel.data /= max_velocity;
+			jntVel.data *= max_joint_vel;
+		}
 	} else {
 		jntVel.data.Zero(arm_chain->getNrOfJoints());
 	}

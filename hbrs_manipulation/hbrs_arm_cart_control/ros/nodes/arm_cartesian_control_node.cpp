@@ -10,16 +10,18 @@
 
 #include <sensor_msgs/JointState.h>
 #include <kdl/kdl.hpp>
-#include <geometry_msgs/Twist.h>
+#include <geometry_msgs/TwistStamped.h>
+#include <geometry_msgs/Vector3Stamped.h>
 #include <ros/ros.h>
 #include <kdl/chainiksolvervel_wdls.hpp>
 #include <brics_actuator/JointVelocities.h>
-#include <urdf_interface/joint.h>
+#include <tf/transform_listener.h>
 
 KDL::Chain arm_chain;
 std::vector<boost::shared_ptr<urdf::JointLimits> > joint_limits;
 
 KDL::JntArray joint_positions;
+std::vector<bool> joint_positions_initialized;
 
 KDL::Twist targetVelocity;
 
@@ -28,11 +30,14 @@ Eigen::MatrixXd weight_ts;
 Eigen::MatrixXd weight_js;
 
 ros::Publisher cmd_vel_publisher;
+tf::TransformListener *tf_listener;
 
 bool active = false;
 ros::Time t_last_command;
 
 brics_actuator::JointVelocities jointMsg;
+
+std::string root_name = "DEFAULT_CHAIN_ROOT";
 
 
 void jointstateCallback(sensor_msgs::JointStateConstPtr joints) {
@@ -47,22 +52,45 @@ void jointstateCallback(sensor_msgs::JointStateConstPtr joints) {
 
 			if (chainjoint != 0 && strcmp(chainjoint, joint_uri) == 0) {
 				joint_positions.data[j] = joints->position[i];
+				joint_positions_initialized[j] = true;
 			}
 		}
 	}
 }
 
-void ccCallback(geometry_msgs::TwistConstPtr desiredVelocity) {
+void ccCallback(geometry_msgs::TwistStampedConstPtr desiredVelocity) {
 
-	targetVelocity.vel.data[0] = desiredVelocity->linear.x;
-	targetVelocity.vel.data[1] = desiredVelocity->linear.y;
-	targetVelocity.vel.data[2] = desiredVelocity->linear.z;
+	for (size_t i = 0; i < joint_positions_initialized.size(); i++) {
+		if (!joint_positions_initialized[i]) {
+			std::cout << "joints not initialized" << std::endl;
+			return;
+		}
+	}
 
-	targetVelocity.rot.data[0] = desiredVelocity->angular.x;
-	targetVelocity.rot.data[1] = desiredVelocity->angular.y;
-	targetVelocity.rot.data[2] = desiredVelocity->angular.z;
+	if (!tf_listener) return;
+
+	geometry_msgs::Vector3Stamped linear_in;
+	geometry_msgs::Vector3Stamped linear_out;
+	linear_in.header = desiredVelocity->header;
+	linear_in.vector = desiredVelocity->twist.linear;
+	tf_listener->transformVector(root_name, linear_in, linear_out);
+
+	geometry_msgs::Vector3Stamped angular_in;
+	geometry_msgs::Vector3Stamped angular_out;
+	angular_in.header = desiredVelocity->header;
+	angular_in.vector = desiredVelocity->twist.angular;
+	tf_listener->transformVector(root_name, angular_in, angular_out);
+
+	targetVelocity.vel.data[0] = linear_out.vector.x;
+	targetVelocity.vel.data[1] = linear_out.vector.y;
+	targetVelocity.vel.data[2] = linear_out.vector.z;
+
+	targetVelocity.rot.data[0] = angular_out.vector.x;
+	targetVelocity.rot.data[1] = angular_out.vector.y;
+	targetVelocity.rot.data[2] = angular_out.vector.z;
 
 	t_last_command = ros::Time::now();
+
 	active = true;
 }
 
@@ -93,9 +121,13 @@ void init_ik_solver() {
 	//weight_js(3,3) = 1;
 	//weight_js(4,4) = 0.1;
 	//((KDL::ChainIkSolverVel_wdls*) ik_solver)->setWeightJS(weight_js);
+
+
+	((KDL::ChainIkSolverVel_wdls*) ik_solver)->setLambda(10000.0);
 }
 
 void init_joint_msgs() {
+	joint_positions_initialized.resize(arm_chain.getNrOfJoints(), false);
 	jointMsg.velocities.resize(arm_chain.getNrOfJoints());
 	for (unsigned int i = 0; i < arm_chain.getNrOfSegments(); i++) {
 		jointMsg.velocities[i].joint_uri =
@@ -106,11 +138,18 @@ void init_joint_msgs() {
 
 void publishJointVelocities(KDL::JntArrayVel& joint_velocities) {
 
-
 	for (unsigned int i=0; i<joint_velocities.qdot.rows(); i++) {
 		jointMsg.velocities[i].value = joint_velocities.qdot(i);
+		ROS_DEBUG("%s: %.5f %s", jointMsg.velocities[i].joint_uri, jointMsg.velocities[i].value, jointMsg.velocities[i].unit);
+		if (isnan(jointMsg.velocities[i].value)) {
+			ROS_ERROR("invalid joint velocity: nan");
+			return;
+		}
+		if (fabs(jointMsg.velocities[i].value) > 1.0) {
+			ROS_ERROR("invalid joint velocity: too fast");
+			return;
+		}
 	}
-
 	cmd_vel_publisher.publish(jointMsg);
 }
 
@@ -148,20 +187,29 @@ bool watchdog() {
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "arm_cartesian_control");
-	ros::NodeHandle node_handle;
+	ros::NodeHandle node_handle("~");
+	tf_listener = new tf::TransformListener();
 
-
-	double rate = 25;
+	double rate = 50;
 
 	//TODO: read from param
-	std::string velocity_command_topic =
-			"/arm_1/arm_controller/velocity_command";
+ 	std::string velocity_command_topic = "joint_velocity_command";
 	std::string joint_state_topic = "/joint_states";
-	std::string cart_control_topic =
-			"/arm_1/arm_controller/cartesian_velocity_command";
+	std::string cart_control_topic = "cartesian_velocity_command";
 
-	std::string root_name = "arm_link_0";
-	std::string tooltip_name = "arm_link_5";
+	std::string tooltip_name = "DEFAULT_CHAIN_TIP";
+
+	if (!node_handle.getParam("root_name", root_name)) {
+		ROS_ERROR("No parameter for root_name specified");
+		return -1;
+        }
+	ROS_INFO("Using %s as chain root [param: root_name]", root_name.c_str());
+
+	if (!node_handle.getParam("tip_name", tooltip_name)) {
+		ROS_ERROR("No parameter for tip_name specified");
+		return -1;
+	}
+	ROS_INFO("Using %s as tool tip [param: tip_name]", tooltip_name.c_str());
 
 
 	//load URDF model
@@ -189,8 +237,8 @@ int main(int argc, char **argv) {
 
 	//register subscriber
 	ros::Subscriber sub_joint_states = node_handle.subscribe(joint_state_topic,
-			1000, jointstateCallback);
-	ros::Subscriber sub_cc = node_handle.subscribe(cart_control_topic, 1000,
+			1, jointstateCallback);
+	ros::Subscriber sub_cc = node_handle.subscribe(cart_control_topic, 1,
 			ccCallback);
 
 
@@ -222,6 +270,8 @@ int main(int argc, char **argv) {
 
 		loop_rate.sleep();
 	}
+
+	delete tf_listener;
 
 	return 0;
 }

@@ -15,6 +15,7 @@
   <depend package="eigen_conversions"/>
   <depend package="urdf"/>
   <depend package="sensor_msgs"/>
+  <depend package="tf"/>
 
 </package>
 
