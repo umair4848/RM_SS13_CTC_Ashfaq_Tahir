@@ -3,3 +3,4 @@
 cfg/cpp/
 docs/
 src/hbrs_perception_tests/cfg/
+__init__.py
