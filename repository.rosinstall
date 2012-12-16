@@ -1,7 +1,12 @@
 - svn:
-    local-name: pcl_trunk
-    uri: http://svn.pointclouds.org/ros/branches/electric/perception_pcl_unstable/
-    version: -r345
+    local-name: pcl16_ros
+    uri: http://svn.pointclouds.org/ros/branches/fuerte/perception_pcl_unstable/pcl16_ros/
+    version: -r347
+
+- svn:
+    local-name: pcl16
+    uri: http://svn.pointclouds.org/ros/branches/fuerte/perception_pcl_unstable/pcl16
+    version: -r347
 
 - git:
     local-name: third-party-software
