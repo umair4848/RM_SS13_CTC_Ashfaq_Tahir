@@ -50,11 +50,11 @@ public:
 	{
 		vecSegmentIndices.clear();
 
-		typedef KdTreeFLANN<PointT> KdTreeFLANN;
-		typedef typename KdTreeFLANN::Ptr KdTreeFLANNPtr;
+		typedef pcl::search::KdTree<PointT> KdTree;
+		typedef typename KdTree::Ptr KdTreePtr;
 
 		EuclideanClusterExtraction<PointT> cluster;
-		KdTreeFLANNPtr cluster_tree = boost::make_shared<pcl::KdTreeFLANN<PointT> > ();
+		KdTreePtr cluster_tree = boost::make_shared<pcl::KdTree<PointT> > ();
 		cluster.setInputCloud(cloudPCLInput);
 		cluster.setClusterTolerance(dClusterTolerance);
 		cluster.setMinClusterSize(unMinClusterSize);
@@ -67,11 +67,11 @@ public:
 	{
 		PointCloud mls_points;
 
-		typedef KdTreeFLANN<PointT> KdTreeFLANN;
-		typedef typename KdTreeFLANN::Ptr KdTreeFLANNPtr;
+		typedef pcl::search::KdTree<PointT> KdTree;
+		typedef typename KdTree::Ptr KdTreePtr;
 
 		// Create a KD-Tree
-		KdTreeFLANNPtr tree = boost::make_shared<pcl::KdTreeFLANN<PointT> >();
+		KdTreePtr tree = boost::make_shared<pcl::search::KdTree<PointT> >();
 		MovingLeastSquares<PointT, Normal> mls;
 
 		tree->setInputCloud(pcl_cloud_input);
