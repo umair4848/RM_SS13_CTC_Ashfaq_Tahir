@@ -17,6 +17,8 @@ echo ""
 # installing ROS release
 sudo apt-get autoclean
 sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get dist-upgrade -y
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
 sudo apt-get install ros-$RELEASE-* -y
