@@ -46,8 +46,8 @@ import sys
 import roslib.packages
 import shutil
 
-
-from roscreate.core import read_template, author_name, on_ros_path
+from roscreate.core import read_template, author_name
+from rospkg import on_ros_path, RosPack, ResourceNotFound
 
 def get_templates():
     templates = {}
