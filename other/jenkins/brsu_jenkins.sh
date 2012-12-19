@@ -15,40 +15,47 @@ echo ""
 
 
 # installing ROS release
-echo -e "\napt autoclean, update, upgrade and dist-upgrade"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "apt autoclean, update, upgrade and dist-upgrade"
+echo "##################################################"
 sudo apt-get autoclean
 sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 
-echo -e "\ninstall python-setuptools, rosinstall and vcstools"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "install python-setuptools, rosinstall and vcstools"
+echo "##################################################"
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
 
-echo -e "\ninstall python-setuptools, rosinstall and vcstools"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "install python-setuptools, rosinstall and vcstools"
+echo "##################################################"
 $WORKSPACE/repository.debs -y
 
-echo -e "\nros-$RELEASE-*"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "ros-$RELEASE-*"
+echo "##################################################"
 sudo apt-get install ros-$RELEASE-* -y
 
-echo -e "\nremove moveit packages in fuerte"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "remove moveit packages in fuerte"
+echo "##################################################"
 sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
 
-echo -e "\nautoremove"
-echo -e "##################################################\n"
+echo -e "\n##################################################"
+echo "autoremove"
+echo "##################################################"
 sudo apt-get autoremove -y
 
 # setup ROS environment
 . /opt/ros/$RELEASE/setup.bash
 
 # execute repository.rosinstall of each repository
-echo -e "\nrosinstall"
-echo -e"##################################################\n"
+echo -e "\n##################################################"
+echo "rosinstall"
+echo "##################################################"
 rm -rf $WORKSPACE/../ext_pkgs/.rosinstall
 rosinstall $WORKSPACE/../ext_pkgs /opt/ros/$RELEASE $WORKSPACE/repository.rosinstall --delete-changed-uris --rosdep-yes
 
