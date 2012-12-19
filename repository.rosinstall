@@ -1,10 +1,10 @@
 - svn:
-    local-name: pcl_ros
+    local-name: pcl16_ros
     uri: http://svn.pointclouds.org/ros/branches/fuerte/perception_pcl_unstable/pcl16_ros/
     version: -r347
 
 - svn:
-    local-name: pcl
+    local-name: pcl16
     uri: http://svn.pointclouds.org/ros/branches/fuerte/perception_pcl_unstable/pcl16
     version: -r347
 
