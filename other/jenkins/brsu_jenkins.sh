@@ -15,40 +15,40 @@ echo ""
 
 
 # installing ROS release
-echo "\n apt autoclean, update, upgrade and dist-upgrade"
-echo "##################################################\n"
+echo -e "\napt autoclean, update, upgrade and dist-upgrade"
+echo -e "##################################################\n"
 sudo apt-get autoclean
 sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 
-echo "\n install python-setuptools, rosinstall and vcstools"
-echo "##################################################\n"
+echo -e "\ninstall python-setuptools, rosinstall and vcstools"
+echo -e "##################################################\n"
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
 
-echo "\n install python-setuptools, rosinstall and vcstools"
-echo "##################################################\n"
+echo -e "\ninstall python-setuptools, rosinstall and vcstools"
+echo -e "##################################################\n"
 $WORKSPACE/repository.debs -y
 
-echo "\n ros-$RELEASE-*"
-echo "##################################################\n"
+echo -e "\nros-$RELEASE-*"
+echo -e "##################################################\n"
 sudo apt-get install ros-$RELEASE-* -y
 
-echo "\n remove moveit packages in fuerte"
-echo "##################################################\n"
+echo -e "\nremove moveit packages in fuerte"
+echo -e "##################################################\n"
 sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
 
-echo "\n autoremove"
-echo "##################################################\n"
+echo -e "\nautoremove"
+echo -e "##################################################\n"
 sudo apt-get autoremove -y
 
 # setup ROS environment
 . /opt/ros/$RELEASE/setup.bash
 
 # execute repository.rosinstall of each repository
-echo "\n rosinstall"
-echo "##################################################\n"
+echo -e "\nrosinstall"
+echo -e"##################################################\n"
 rm -rf $WORKSPACE/../ext_pkgs/.rosinstall
 rosinstall $WORKSPACE/../ext_pkgs /opt/ros/$RELEASE $WORKSPACE/repository.rosinstall --delete-changed-uris --rosdep-yes
 
