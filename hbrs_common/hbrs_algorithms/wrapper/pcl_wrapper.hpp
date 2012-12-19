@@ -54,7 +54,7 @@ public:
 		typedef typename KdTree::Ptr KdTreePtr;
 
 		EuclideanClusterExtraction<PointT> cluster;
-		KdTreePtr cluster_tree = boost::make_shared<pcl::KdTree<PointT> > ();
+		KdTreePtr cluster_tree = boost::make_shared<pcl::search::KdTree<PointT> > ();
 		cluster.setInputCloud(cloudPCLInput);
 		cluster.setClusterTolerance(dClusterTolerance);
 		cluster.setMinClusterSize(unMinClusterSize);
