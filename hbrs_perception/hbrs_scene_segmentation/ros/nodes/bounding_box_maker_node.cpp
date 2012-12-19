@@ -3,6 +3,8 @@
 #include <ros/topic.h>
 #include <sensor_msgs/PointCloud2.h>
 
+#include <pcl16/ros/conversions.h>
+
 #include <hbrs_srvs/MakeBoundingBoxes.h>
 #include <hbrs_msgs/BoundingBox.h>
 #include <bounding_box_visualizer.h>
@@ -51,8 +53,8 @@ private:
     for (size_t i = 0; i < request.clouds.size(); i++)
     {
       PointCloud::Ptr cloud(new PointCloud);
-      pcl::fromROSMsg(request.clouds[i], *cloud);
-      BoundingBox box = BoundingBox::create<PointT>(cloud->points, normal);
+      pcl16::fromROSMsg(request.clouds[i], *cloud);
+      BoundingBox box = BoundingBox::create(cloud->points, normal);
       convertBoundingBox(box, response.bounding_boxes[i]);
     }
     bounding_box_visualizer_.publish(response.bounding_boxes);

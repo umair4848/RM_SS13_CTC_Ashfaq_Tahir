@@ -1,7 +1,7 @@
 #ifndef CLOUD_ACCUMULATION_H
 #define CLOUD_ACCUMULATION_H
 
-#include <pcl/octree/octree_pointcloud_occupancy.h>
+#include <pcl16/octree/octree_pointcloud_occupancy.h>
 
 #include "aliases.h"
 #include "octree_pointcloud_occupancy_colored.h"

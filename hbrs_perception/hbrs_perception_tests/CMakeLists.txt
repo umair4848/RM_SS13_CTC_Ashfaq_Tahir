@@ -30,12 +30,21 @@ add_definitions(-Wno-error=unused-variable)
 add_definitions(-Wno-error=unknown-pragmas)
 add_definitions(-Wno-unknown-pragmas)
 add_definitions(-Wno-deprecated)
+add_definitions(-Wno-deprecated-declarations)
 
 #...: default paths  :..........................................................
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 include_directories(${PROJECT_SOURCE_DIR}/ros/include/impl)
+
+#...: eigen :...................................................................
+# eigen in needed by PCL, but for some reason this dependency is not propagated
+# to the packages that depend on pcl
+find_package(Eigen REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS})
+find_package(VTK REQUIRED)
+include_directories(${VTK_INCLUDE_DIRS})
 
 #...: vtk libraries for pcl visualization  :....................................
 

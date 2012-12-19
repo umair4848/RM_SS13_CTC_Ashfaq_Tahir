@@ -22,16 +22,16 @@ ClusteredPointCloudVisualizer::ClusteredPointCloudVisualizer(const std::string& 
 }
 
 template<typename PointT>
-void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl::PointCloud<PointT>::Ptr>& clusters)
+void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl16::PointCloud<PointT>::Ptr>& clusters)
 {
   if (cloud_publisher_.getNumSubscribers() == 0) return;
-  pcl::PointCloud<pcl::PointXYZRGB> composite;
+  pcl16::PointCloud<pcl16::PointXYZRGB> composite;
   size_t color = 0;
   for (const auto& cloud : clusters)
   {
     for (const auto& point : cloud->points)
     {
-      pcl::PointXYZRGB pt;
+      pcl16::PointXYZRGB pt;
       pt.x = point.x;
       pt.y = point.y;
       pt.z = point.z;
@@ -44,7 +44,7 @@ void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl::Poin
   composite.width = composite.points.size();
   composite.height = 1;
   sensor_msgs::PointCloud2 cloud_msg;
-  pcl::toROSMsg(composite, cloud_msg);
+  pcl16::toROSMsg(composite, cloud_msg);
   cloud_publisher_.publish(cloud_msg);
 }
 

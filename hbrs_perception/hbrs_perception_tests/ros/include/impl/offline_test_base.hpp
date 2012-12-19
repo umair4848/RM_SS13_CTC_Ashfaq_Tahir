@@ -2,9 +2,9 @@
 #define OFFLINE_TEST_BASE_HPP_
 
 #include <ros/ros.h>
-#include <pcl/io/io.h>
-#include <pcl/io/pcd_io.h>
-#include <pcl/visualization/pcl_visualizer.h>
+#include <pcl16/io/io.h>
+#include <pcl16/io/pcd_io.h>
+#include <pcl16/visualization/pcl_visualizer.h>
 
 #include "test_base.hpp"
 
@@ -37,7 +37,7 @@ public:
   void loadCloud(const char* name)
   {
     cloud_.reset(new PointCloud);
-    pcl::io::loadPCDFile(name, *cloud_);
+    pcl16::io::loadPCDFile(name, *cloud_);
     applyPassThroughFilter(cloud_);
   }
 
@@ -45,14 +45,14 @@ protected:
 
   void displayCloud()
   {
-    pcl::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
+    pcl16::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
     viewer_.addPointCloud<PointT>(cloud_, single_color, "cloud");
   }
 
   void displayNormal(Eigen::Vector3f normal, Eigen::Vector3f start = Eigen::Vector3f::Zero())
   {
-    pcl::PointXYZ pt1 = pcl::PointXYZ(start[0], start[1], start[2]);
-    pcl::PointXYZ pt2 = pcl::PointXYZ(start[0] + (0.5 * normal[0]),
+    pcl16::PointXYZ pt1 = pcl16::PointXYZ(start[0], start[1], start[2]);
+    pcl16::PointXYZ pt2 = pcl16::PointXYZ(start[0] + (0.5 * normal[0]),
                                       start[1] + (0.5 * normal[1]),
                                       start[2] + (0.5 * normal[2]));
     viewer_.addArrow(pt2, pt1, 1.0, 0, 0, false, "normal");
@@ -71,9 +71,10 @@ protected:
     std::string polygon_name = "polygon" + boost::lexical_cast<std::string>(id);
     std::string points_name = polygon_name + "_points";
     viewer_.addPolygon<PointT>(contour, r, g, b, polygon_name);
-    pcl::visualization::PointCloudColorHandlerCustom<PointT> color(contour, r, g, b);
+    pcl16::visualization::PointCloudColorHandlerCustom<PointT> color(contour, r, g, b);
     viewer_.addPointCloud(contour, color, points_name);
-    viewer_.setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 6, points_name);
+    // Temporary commented out to prevent compiler errors
+    // viewer_.setPointCloudRenderingProperties(pcl16::visualization::PCL_VISUALIZER_POINT_SIZE, 6, points_name);
   }
 
   void displayPlanarPolygons(const PlanarPolygonVector& polygons)
@@ -86,7 +87,7 @@ protected:
     }
   }
 
-  pcl::visualization::PCLVisualizer viewer_;
+  pcl16::visualization::PCLVisualizer viewer_;
   PointCloud::Ptr cloud_;
 
 };

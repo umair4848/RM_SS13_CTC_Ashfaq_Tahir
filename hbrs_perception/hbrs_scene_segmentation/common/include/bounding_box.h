@@ -1,7 +1,8 @@
 #ifndef BOUNDING_BOX_H_
 #define BOUNDING_BOX_H_
 
-#include <pcl/point_cloud.h>
+#include <pcl16/point_cloud.h>
+#include <pcl16/point_types.h>
 
 class BoundingBox
 {
@@ -9,7 +10,7 @@ class BoundingBox
   public:
 
     typedef Eigen::Vector3f Point;
-    typedef std::vector<Point, Eigen::aligned_allocator<Point>> Points;
+    typedef std::vector<Point, Eigen::aligned_allocator<Point> > Points;
 
     inline const Point& getCenter() const { return center_; }
 
@@ -21,14 +22,12 @@ class BoundingBox
 
     /** Create a bounding box around the cloud, restricting it to be parallel to
       * the plane defined by the normal. */
-    template<typename PointT>
-    static BoundingBox create(const typename pcl::PointCloud<PointT>::ConstPtr& cloud,
+    static BoundingBox create(const typename pcl16::PointCloud<pcl16::PointXYZRGB>::ConstPtr& cloud,
                               const Eigen::Vector3f& normal);
 
     /** Create a bounding box around the point vector, restricting it to be
       * parallel to the plane defined by the normal. */
-    template<typename PointT>
-    static BoundingBox create(const typename pcl::PointCloud<PointT>::VectorType& points,
+    static BoundingBox create(const typename pcl16::PointCloud<pcl16::PointXYZRGB>::VectorType& points,
                               const Eigen::Vector3f& normal);
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -40,7 +39,5 @@ class BoundingBox
     Eigen::Vector3f dimensions_;
 
 };
-
-#include "impl/bounding_box.hpp"
 
 #endif

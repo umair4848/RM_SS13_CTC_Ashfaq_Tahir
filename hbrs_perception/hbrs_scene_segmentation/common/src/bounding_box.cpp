@@ -1,21 +1,19 @@
-#ifndef BOUNDING_BOX_HPP_
-#define BOUNDING_BOX_HPP_
-
-#include <pcl/common/transforms.h>
+#include <pcl16/common/transforms.h>
 #include <opencv/cv.h>
 
-template<typename PointT>
-BoundingBox BoundingBox::create(const typename pcl::PointCloud<PointT>::ConstPtr& cloud,
+#include "bounding_box.h"
+
+BoundingBox BoundingBox::create(const pcl16::PointCloud<pcl16::PointXYZRGB>::ConstPtr& cloud,
                                 const Eigen::Vector3f& normal)
 {
   BoundingBox box;
 
   // Step 1: transform the cloud so that z-axis as aligned with plane normal.
   Eigen::Vector3f perpendicular(-normal[1], normal[0], normal[2]);
-  Eigen::Affine3f transform = pcl::getTransFromUnitVectorsZY(normal, perpendicular);
+  Eigen::Affine3f transform = pcl16::getTransFromUnitVectorsZY(normal, perpendicular);
   Eigen::Affine3f inverse_transform = transform.inverse(Eigen::Isometry);
-  typename pcl::PointCloud<PointT> cloud_transformed;
-  pcl::transformPointCloud(*cloud, cloud_transformed, transform);
+  pcl16::PointCloud<pcl16::PointXYZRGB> cloud_transformed;
+  pcl16::transformPointCloud(*cloud, cloud_transformed, transform);
 
   // Step 2: project cloud onto the plane and calculate bounding box for the projected points.
   // Have no idea how this "mem storage" and "seq" beasts work.
@@ -28,8 +26,9 @@ BoundingBox BoundingBox::create(const typename pcl::PointCloud<PointT>::ConstPtr
   float min_z = std::numeric_limits<float>::max();
   float max_z = -1 * std::numeric_limits<float>::max();
 
-  for (const PointT& pt : cloud_transformed.points)
+  for (size_t i = 0; i < cloud_transformed.points.size(); i++)
   {
+    const pcl16::PointXYZRGB& pt = cloud_transformed.points[i];
     if (!isnan(pt.z))
     {
       CvPoint p;
@@ -72,15 +71,13 @@ BoundingBox BoundingBox::create(const typename pcl::PointCloud<PointT>::ConstPtr
   return box;
 }
 
-template<typename PointT>
-BoundingBox BoundingBox::create(const typename pcl::PointCloud<PointT>::VectorType& points,
+BoundingBox BoundingBox::create(const pcl16::PointCloud<pcl16::PointXYZRGB>::VectorType& points,
                                 const Eigen::Vector3f& normal)
 {
-  typename pcl::PointCloud<PointT>::Ptr cloud(new typename pcl::PointCloud<PointT>);
+  pcl16::PointCloud<pcl16::PointXYZRGB>::Ptr cloud(new pcl16::PointCloud<pcl16::PointXYZRGB>);
   cloud->points = points;
   cloud->width = points.size();
   cloud->height = 1;
-  return create<PointT>(cloud, normal);
+  return create(cloud, normal);
 }
 
-#endif

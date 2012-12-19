@@ -1,9 +1,9 @@
 #ifndef PLANE_EXTRACTION_H_
 #define PLANE_EXTRACTION_H_
 
-#include <pcl/features/integral_image_normal.h>
-#include <pcl/filters/project_inliers.h>
-#include <pcl/segmentation/organized_multi_plane_segmentation.h>
+#include <pcl16/features/integral_image_normal.h>
+#include <pcl16/filters/project_inliers.h>
+#include <pcl16/segmentation/organized_multi_plane_segmentation.h>
 
 #include "aliases.h"
 
@@ -93,9 +93,9 @@ private:
 
   PointCloud::ConstPtr input_;
 
-  pcl::IntegralImageNormalEstimation<PointT, PointNT> ne_;
-  pcl::OrganizedMultiPlaneSegmentation<PointT, PointNT, PointLT> mps_;
-  pcl::ProjectInliers<PointT> pi_;
+  pcl16::IntegralImageNormalEstimation<PointT, PointNT> ne_;
+  pcl16::OrganizedMultiPlaneSegmentation<PointT, PointNT, PointLT> mps_;
+  pcl16::ProjectInliers<PointT> pi_;
 
   double angular_threshold_;
   double distance_threshold_;

@@ -1,7 +1,7 @@
-#include <pcl/ModelCoefficients.h>
-#include <pcl/common/angles.h>
-#include <pcl/console/print.h>
-#include <pcl/surface/convex_hull.h>
+#include <pcl16/ModelCoefficients.h>
+#include <pcl16/common/angles.h>
+#include <pcl16/console/print.h>
+#include <pcl16/surface/convex_hull.h>
 
 #include "plane_extraction.h"
 #include "helpers.hpp"
@@ -17,11 +17,11 @@ PlaneExtraction::PlaneExtraction()
   ne_.setNormalSmoothingSize(12.0);
   // Setup OrganizedMultiPlaneSegmentation
   mps_.setMinInliers(1000);
-  mps_.setAngularThreshold(pcl::deg2rad(3.0));
+  mps_.setAngularThreshold(pcl16::deg2rad(3.0));
   mps_.setDistanceThreshold(0.02);
   mps_.setMaximumCurvature(0.005);
   // Setup ProjectInliers
-  pi_.setModelType(pcl::SACMODEL_NORMAL_PLANE);
+  pi_.setModelType(pcl16::SACMODEL_NORMAL_PLANE);
 }
 
 PlaneExtraction::PlaneExtraction(double normal_max_depth_change_factor,
@@ -44,11 +44,11 @@ PlaneExtraction::PlaneExtraction(double normal_max_depth_change_factor,
   mps_.setAngularThreshold(angular_threshold);
   mps_.setDistanceThreshold(distance_threshold);
   mps_.setMaximumCurvature(maximum_curvature);
-  pcl::PlaneRefinementComparator<PointT, PointNT, PointLT>::Ptr refinement_compare(new pcl::PlaneRefinementComparator<PointT, PointNT, PointLT>());
+  pcl16::PlaneRefinementComparator<PointT, PointNT, PointLT>::Ptr refinement_compare(new pcl16::PlaneRefinementComparator<PointT, PointNT, PointLT>());
   refinement_compare->setDistanceThreshold(refinement_threshold, refinement_depth_dependent);
   mps_.setRefinementComparator(refinement_compare);
   // Setup ProjectInliers
-  pi_.setModelType(pcl::SACMODEL_NORMAL_PLANE);
+  pi_.setModelType(pcl16::SACMODEL_NORMAL_PLANE);
 }
 
 void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
@@ -57,12 +57,12 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
 
   // Step 1: perform multiplanar segmentation
   PointCloudN::Ptr normals(new PointCloudN);
-  std::vector<pcl::PlanarRegion<PointT>, Eigen::aligned_allocator<pcl::PlanarRegion<PointT>>> regions;
-  std::vector<pcl::ModelCoefficients> model_coefficients;
-  std::vector<pcl::PointIndices> inlier_indices;
+  PlanarRegionVector regions;
+  std::vector<pcl16::ModelCoefficients> model_coefficients;
+  std::vector<pcl16::PointIndices> inlier_indices;
   PointCloudL::Ptr labels(new PointCloudL);
-  std::vector<pcl::PointIndices> label_indices;
-  std::vector<pcl::PointIndices> boundary_indices;
+  std::vector<pcl16::PointIndices> label_indices;
+  std::vector<pcl16::PointIndices> boundary_indices;
   // Estimate normals
   ne_.setInputCloud(input_);
   ne_.compute(*normals);
@@ -102,11 +102,11 @@ void PlaneExtraction::extract(PlanarPolygonVector& planar_polygons)
     PointCloud::Ptr region_cloud(new PointCloud);
     PointCloud::Ptr region_hull(new PointCloud);
     // Project boundary points onto the plane
-    pi_.setIndices(boost::make_shared<pcl::PointIndices>(boundary_indices.at(i)));
-    pi_.setModelCoefficients(boost::make_shared<pcl::ModelCoefficients>(model_coefficients.at(i)));
+    pi_.setIndices(boost::make_shared<pcl16::PointIndices>(boundary_indices.at(i)));
+    pi_.setModelCoefficients(boost::make_shared<pcl16::ModelCoefficients>(model_coefficients.at(i)));
     pi_.filter(*region_cloud);
     // Compute convex hull around boundary points
-    pcl::ConvexHull<PointT> convex_hull;
+    pcl16::ConvexHull<PointT> convex_hull;
     convex_hull.setDimension(2);
     convex_hull.setInputCloud(region_cloud);
     convex_hull.reconstruct(*region_hull);

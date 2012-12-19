@@ -24,7 +24,7 @@ protected:
   {
     header_ = ros_cloud->header;
     cloud_.reset(new PointCloud);
-    pcl::fromROSMsg(*ros_cloud, *cloud_);
+    pcl16::fromROSMsg(*ros_cloud, *cloud_);
     applyPassThroughFilter(cloud_);
     process();
   }

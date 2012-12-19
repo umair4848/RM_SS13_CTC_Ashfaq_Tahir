@@ -1,7 +1,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include <pcl/point_types.h>
+#include <pcl16/point_types.h>
 #include <std_msgs/ColorRGBA.h>
 
 namespace hbrs
@@ -57,7 +57,7 @@ struct Color
 
   operator float() const
   {
-    pcl::PointXYZRGB point(r, g, b);
+    pcl16::PointXYZRGB point(r, g, b);
     return point.rgb;
   }
 

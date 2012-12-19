@@ -37,7 +37,7 @@ private:
     plane_extraction_ptr.reset(new PlaneExtraction(config.normal_max_depth_change_factor,
                                                    config.normal_smoothing_size,
                                                    config.min_inliers,
-                                                   pcl::deg2rad(config.angular_threshold),
+                                                   pcl16::deg2rad(config.angular_threshold),
                                                    config.distance_threshold,
                                                    config.maximum_curvature,
                                                    config.refinement_threshold,
@@ -46,7 +46,7 @@ private:
     {
       plane_normal_ptr.reset(new Eigen::Vector3f(config.constraint_normal_x, config.constraint_normal_y, config.constraint_normal_z));
       plane_normal_ptr->normalize();
-      double threshold = pcl::deg2rad(config.constraint_angular_threshold);
+      double threshold = pcl16::deg2rad(config.constraint_angular_threshold);
       if (config.apply_distance_constraints)
       {
         plane_extraction_ptr->setPlaneConstraints(*plane_normal_ptr, threshold, config.constraint_distance, config.constraint_distance_threshold);

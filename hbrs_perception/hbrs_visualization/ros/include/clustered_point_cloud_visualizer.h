@@ -5,7 +5,7 @@
 
 #include <ros/ros.h>
 
-#include <pcl/point_cloud.h>
+#include <pcl16/point_cloud.h>
 
 #include "color.h"
 
@@ -25,12 +25,12 @@ public:
                                 bool check_subscribers = true);
 
   template<typename PointT>
-  void publish(const std::vector<typename pcl::PointCloud<PointT>::Ptr>& clusters);
+  void publish(const std::vector<typename pcl16::PointCloud<PointT>::Ptr>& clusters);
 
   /** Fill the fields of the marker object so that it visualizes the provided
     * vector of points by drawing a polyline through them. */
   //template<typename PointT>
-  //void buildPolygonMarker(const typename pcl::PointCloud<PointT>::VectorType& points,
+  //void buildPolygonMarker(const typename pcl16::PointCloud<PointT>::VectorType& points,
                           //visualization_msgs::Marker& marker,
                           //int id = 1);
 

@@ -27,6 +27,7 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 add_definitions(-Wall)
 add_definitions(-Wno-unknown-pragmas)
 add_definitions(-Wno-deprecated)
+add_definitions(-Wno-deprecated-declarations)
 add_definitions(-fpermissive)
 
 #...: default paths  :..........................................................

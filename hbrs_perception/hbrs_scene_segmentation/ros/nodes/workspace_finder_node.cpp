@@ -3,7 +3,7 @@
 #include <ros/topic.h>
 #include <sensor_msgs/PointCloud2.h>
 
-#include <pcl/filters/passthrough.h>
+#include <pcl16/filters/passthrough.h>
 
 #include <hbrs_srvs/FindWorkspace.h>
 #include <planar_polygon_visualizer.h>
@@ -70,7 +70,7 @@ private:
     // Prepare point cloud: convert from ROS message and run pasthrough filter.
     PointCloud::Ptr cloud(new PointCloud);
     PointCloud::Ptr cloud_filtered(new PointCloud);
-    pcl::fromROSMsg(*ros_cloud, *cloud);
+    pcl16::fromROSMsg(*ros_cloud, *cloud);
     pass_through_->setInputCloud(cloud);
     pass_through_->filter(*cloud_filtered);
 
@@ -105,7 +105,7 @@ private:
     ros::NodeHandle pn("~");
 
     // Passthrough filter
-    pass_through_.reset(new pcl::PassThrough<PointT>);
+    pass_through_.reset(new pcl16::PassThrough<PointT>);
     pass_through_->setKeepOrganized(true);
     double min_x, max_x;
     if (pn.getParam("min_x", min_x) && pn.getParam("max_x", max_x))
@@ -134,9 +134,9 @@ private:
       Eigen::Vector3f normal(normal_x, normal_y, normal_z);
       normal.normalize();
       if (pn.getParam("distance", distance))
-        plane_extraction_.setPlaneConstraints(normal, pcl::deg2rad(20.0f), distance, 0.05);
+        plane_extraction_.setPlaneConstraints(normal, pcl16::deg2rad(20.0f), distance, 0.05);
       else
-        plane_extraction_.setPlaneConstraints(normal, pcl::deg2rad(20.0f));
+        plane_extraction_.setPlaneConstraints(normal, pcl16::deg2rad(20.0f));
     }
     else
     {
@@ -149,7 +149,7 @@ private:
   }
 
   PlaneExtraction plane_extraction_;
-  std::unique_ptr<pcl::PassThrough<PointT>> pass_through_;
+  std::unique_ptr<pcl16::PassThrough<PointT>> pass_through_;
 
   ros::ServiceServer find_workspace_server_;
 
