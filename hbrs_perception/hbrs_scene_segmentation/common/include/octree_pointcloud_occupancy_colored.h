@@ -1,14 +1,14 @@
 #ifndef OCTREE_POINTCLOUD_OCCUPANCY_COLORED_H
 #define OCTREE_POINTCLOUD_OCCUPANCY_COLORED_H
 
-#include <pcl/point_types.h>
-#include <pcl/point_cloud.h>
-#include <pcl/octree/octree_pointcloud.h>
-#include <pcl/octree/octree_base.h>
+#include <pcl16/point_types.h>
+#include <pcl16/point_cloud.h>
+#include <pcl16/octree/octree_pointcloud.h>
+#include <pcl16/octree/octree_base.h>
 
-using namespace pcl::octree;
+using namespace pcl16::octree;
 
-template<typename PointT = pcl::PointXYZRGB, typename LeafContainerT = OctreeContainerDataT<uint32_t>, typename BranchContainerT = OctreeContainerEmpty<uint32_t>>
+template<typename PointT = pcl16::PointXYZRGB, typename LeafContainerT = OctreeContainerDataT<uint32_t>, typename BranchContainerT = OctreeContainerEmpty<uint32_t>>
 class OctreePointCloudOccupancyColored : public OctreePointCloud<PointT, LeafContainerT, BranchContainerT, OctreeBase<uint32_t, LeafContainerT, BranchContainerT>>
 {
 
@@ -29,7 +29,7 @@ public:
     this->addData(key, point.rgba);
   }
 
-  void setOccupiedVoxelsAtPointsFromCloud(const typename pcl::PointCloud<PointT>::ConstPtr& cloud)
+  void setOccupiedVoxelsAtPointsFromCloud(const typename pcl16::PointCloud<PointT>::ConstPtr& cloud)
   {
     for (size_t i = 0; i < cloud->points.size(); i++)
       if (isFinite(cloud->points[i]))
@@ -45,7 +45,7 @@ public:
     return color;
   }
 
-  void getOccupiedVoxelCentersWithColor(typename pcl::PointCloud<PointT>::VectorType& points)
+  void getOccupiedVoxelCentersWithColor(typename pcl16::PointCloud<PointT>::VectorType& points)
   {
     this->getOccupiedVoxelCenters(points);
     for (size_t i = 0; i < points.size(); i++)

@@ -6,8 +6,8 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
 
-#include <pcl/point_cloud.h>
-#include <pcl/geometry/planar_polygon.h>
+#include <pcl16/point_cloud.h>
+#include <pcl16/geometry/planar_polygon.h>
 
 #include "color.h"
 
@@ -28,12 +28,12 @@ public:
                           bool check_subscribers = true);
 
   template<typename PointT>
-  void publish(const pcl::PlanarPolygon<PointT>& polygon);
+  void publish(const pcl16::PlanarPolygon<PointT>& polygon);
 
   /** Fill the fields of the marker object so that it visualizes the provided
     * vector of points by drawing a polyline through them. */
   template<typename PointT>
-  void buildPolygonMarker(const typename pcl::PointCloud<PointT>::VectorType& points,
+  void buildPolygonMarker(const typename pcl16::PointCloud<PointT>::VectorType& points,
                           visualization_msgs::Marker& marker,
                           int id = 1);
 

@@ -13,7 +13,7 @@
   <depend package="roscpp"/>
   <depend package="rospy"/>
   <depend package="dynamic_reconfigure"/>
-  <depend package="pcl_ros"/>
+  <depend package="pcl16_ros"/>
   <depend package="visualization_msgs"/>
 
   <depend package="hbrs_scene_segmentation"/>

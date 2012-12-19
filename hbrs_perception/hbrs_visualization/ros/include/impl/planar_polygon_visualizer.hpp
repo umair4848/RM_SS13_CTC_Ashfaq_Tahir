@@ -17,7 +17,7 @@ PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, 
 }
 
 template<typename PointT>
-void PlanarPolygonVisualizer::publish(const pcl::PlanarPolygon<PointT>& polygon)
+void PlanarPolygonVisualizer::publish(const pcl16::PlanarPolygon<PointT>& polygon)
 {
   if (marker_publisher_.getNumSubscribers() == 0) return;
   visualization_msgs::Marker marker;
@@ -26,7 +26,7 @@ void PlanarPolygonVisualizer::publish(const pcl::PlanarPolygon<PointT>& polygon)
 }
 
 template<typename PointT>
-void PlanarPolygonVisualizer::buildPolygonMarker(const typename pcl::PointCloud<PointT>::VectorType& points, visualization_msgs::Marker& marker, int id)
+void PlanarPolygonVisualizer::buildPolygonMarker(const typename pcl16::PointCloud<PointT>::VectorType& points, visualization_msgs::Marker& marker, int id)
 {
   if (!points.size()) return;
 

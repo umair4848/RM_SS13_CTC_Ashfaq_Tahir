@@ -4,15 +4,15 @@
 #include <iostream>
 
 #include <boost/lexical_cast.hpp>
-#include <pcl/common/time.h>
-#include <pcl/filters/passthrough.h>
+#include <pcl16/common/time.h>
+#include <pcl16/filters/passthrough.h>
 #include <ros/console.h>
 
 #define MEASURE_RUNTIME(function, description) \
         { \
-          double ts1 = pcl::getTime(); \
+          double ts1 = pcl16::getTime(); \
           (function); \
-          double ts2 = pcl::getTime(); \
+          double ts2 = pcl16::getTime(); \
           std::cout << (description) << " took " << ts2 - ts1 << " seconds." << std::endl; \
         }
 
@@ -32,7 +32,7 @@ public:
 
   void setupPassThroughFilter(float min_z, float max_z)
   {
-    pass_through_.reset(new pcl::PassThrough<PointT>);
+    pass_through_.reset(new pcl16::PassThrough<PointT>);
     pass_through_->setFilterFieldName("z");
     pass_through_->setFilterLimits(min_z, max_z);
     pass_through_->setKeepOrganized(true);
@@ -52,7 +52,7 @@ protected:
     }
   }
 
-  std::unique_ptr<pcl::PassThrough<PointT>> pass_through_;
+  std::unique_ptr<pcl16::PassThrough<PointT>> pass_through_;
 
 };
 

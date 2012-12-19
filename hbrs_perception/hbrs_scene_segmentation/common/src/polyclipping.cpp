@@ -10,7 +10,7 @@ void clipPlanarPolygon(PlanarPolygon& planar_polygon, double clip_by)
   // Step 1: prepare a transformation to align the z-axis with plane normal.
   Eigen::Vector3f normal = planar_polygon.getCoefficients().head<3>();
   Eigen::Vector3f perpendicular(-normal[1], normal[0], normal[2]);
-  Eigen::Affine3f transform = pcl::getTransFromUnitVectorsZY(normal, perpendicular);
+  Eigen::Affine3f transform = pcl16::getTransFromUnitVectorsZY(normal, perpendicular);
   Eigen::Affine3f inverse_transform = transform.inverse(Eigen::Isometry);
 
   // Step 2: iterate through points transforming them, projecting on the plane

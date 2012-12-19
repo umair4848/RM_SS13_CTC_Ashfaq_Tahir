@@ -4,7 +4,7 @@
 #include <boost/lexical_cast.hpp>
 #include <ros/ros.h>
 #include <ros/console.h>
-#include <pcl/filters/passthrough.h>
+#include <pcl16/filters/passthrough.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 

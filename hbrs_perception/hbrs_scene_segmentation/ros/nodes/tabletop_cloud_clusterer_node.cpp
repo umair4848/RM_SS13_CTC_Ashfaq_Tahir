@@ -5,9 +5,9 @@
 #include <ros/topic.h>
 #include <sensor_msgs/PointCloud2.h>
 
-#include <pcl/common/centroid.h>
-#include <pcl/segmentation/extract_clusters.h>
-#include <pcl/filters/radius_outlier_removal.h>
+#include <pcl16/common/centroid.h>
+#include <pcl16/segmentation/extract_clusters.h>
+#include <pcl16/filters/radius_outlier_removal.h>
 
 #include <clustered_point_cloud_visualizer.h>
 #include <hbrs_srvs/ClusterTabletopCloud.h>
@@ -62,7 +62,7 @@ private:
     // Convert request fields into ROS datatypes
     PointCloud::Ptr cloud(new PointCloud);
     PlanarPolygon polygon;
-    pcl::fromROSMsg(request.cloud, *cloud);
+    pcl16::fromROSMsg(request.cloud, *cloud);
     convertPlanarPolygon(request.polygon, polygon);
 
     // Step 1: radius outlier removal
@@ -70,23 +70,23 @@ private:
     ror_.filter(*cloud);
 
     // Step 2: euclidean clustering
-    std::vector<pcl::PointIndices> clusters_indices;
+    std::vector<pcl16::PointIndices> clusters_indices;
     ece_.setInputCloud(cloud);
     ece_.extract(clusters_indices);
 
     std::vector<PointCloud::Ptr> clusters;
     size_t rejected_count = 0;
-    for (const pcl::PointIndices& cluster_indices : clusters_indices)
+    for (const pcl16::PointIndices& cluster_indices : clusters_indices)
     {
       PointCloud::Ptr cluster(new PointCloud);
-      pcl::copyPointCloud(*cloud, cluster_indices, *cluster);
+      pcl16::copyPointCloud(*cloud, cluster_indices, *cluster);
       if (getClusterCentroidHeight(*cluster, polygon) < object_min_height_)
       {
         rejected_count++;
         continue;
       }
       sensor_msgs::PointCloud2 ros_cluster;
-      pcl::toROSMsg(*cluster, ros_cluster);
+      pcl16::toROSMsg(*cluster, ros_cluster);
       response.clusters.push_back(ros_cluster);
       clusters.push_back(cluster);
     }
@@ -102,7 +102,7 @@ private:
   static double getClusterCentroidHeight(const PointCloud& cluster, const PlanarPolygon& polygon)
   {
     Eigen::Vector4f centroid;
-    pcl::compute3DCentroid(cluster, centroid);
+    pcl16::compute3DCentroid(cluster, centroid);
     centroid[3] = 1;
     return centroid.dot(polygon.getCoefficients());
   }
@@ -118,7 +118,7 @@ private:
     pn.param("cluster_tolerance", cluster_tolerance, 0.01);
     pn.param("min_cluster_size", min_cluster_size, 25);
     pn.param("max_cluster_size", max_cluster_size, 5000);
-    ece_.setSearchMethod(boost::make_shared<pcl::search::KdTree<PointT>>());
+    ece_.setSearchMethod(boost::make_shared<pcl16::search::KdTree<PointT>>());
     ece_.setClusterTolerance(cluster_tolerance);
     ece_.setMinClusterSize(min_cluster_size);
     ece_.setMaxClusterSize(max_cluster_size);
@@ -137,8 +137,8 @@ private:
 
   ros::ServiceServer cluster_server_;
 
-  pcl::RadiusOutlierRemoval<PointT> ror_;
-  pcl::EuclideanClusterExtraction<PointT> ece_;
+  pcl16::RadiusOutlierRemoval<PointT> ror_;
+  pcl16::EuclideanClusterExtraction<PointT> ece_;
 
   double object_min_height_;
 

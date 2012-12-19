@@ -26,7 +26,7 @@ void convertPlanarPolygon(const PlanarPolygon& polygon, hbrs_msgs::PlanarPolygon
 /** Convert from ROS message to PCL PlanarPolygon. */
 void convertPlanarPolygon(const hbrs_msgs::PlanarPolygon& polygon_msg, PlanarPolygon& polygon)
 {
-  PointCloud contour;
+  PointCloud::VectorType contour;
   Eigen::Vector4f coefficients(polygon_msg.coefficients.elems);
   for (const auto& point : polygon_msg.contour)
   {
@@ -34,10 +34,9 @@ void convertPlanarPolygon(const hbrs_msgs::PlanarPolygon& polygon_msg, PlanarPol
     pt.x = point.x;
     pt.y = point.y;
     pt.z = point.z;
-    contour.points.push_back(pt);
+    contour.push_back(pt);
   }
-  polygon.setContour(contour);
-  polygon.setCoefficients(coefficients);
+  polygon = PlanarPolygon(contour, coefficients);
 }
 
 double computePlanarPolygonArea(const PlanarPolygon& polygon)

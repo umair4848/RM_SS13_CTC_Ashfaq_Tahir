@@ -27,6 +27,7 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 add_definitions(-Wall)
 add_definitions(-Wno-unknown-pragmas)
 add_definitions(-Wno-deprecated)
+add_definitions(-Wno-deprecated-declarations)
 add_definitions(-fpermissive)
 
 #...: default paths  :..........................................................
@@ -38,16 +39,33 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/ros/include/impl
 )
 
+#...: eigen :...................................................................
+# eigen in needed by PCL, but for some reason this dependency is not propagated
+# to the packages that depend on pcl
+find_package(Eigen REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS})
 
 #...: target libraries :........................................................
 
+#...: scene_segmentation
 rosbuild_add_library(scene_segmentation
   common/src/plane_extraction.cpp
   common/src/cloud_accumulation.cpp
   common/src/polyclipping.cpp
 )
-target_link_libraries(scene_segmentation 
+target_link_libraries(scene_segmentation
   polyclipping
+)
+
+#...: bounding_box
+# the reason why we compile bounding box into a separate library is that it
+# uses opencv, which in turn uses flann, which fails to compile with the
+# -std=gnu++0x flag
+rosbuild_add_library(bounding_box
+  common/src/bounding_box.cpp
+)
+set_target_properties(bounding_box
+  PROPERTIES COMPILE_FLAGS "-std=c++03"
 )
 
 #...: target executables :......................................................
@@ -79,4 +97,7 @@ target_link_libraries(tabletop_cloud_clusterer
 #...: bounding_box_maker
 rosbuild_add_executable(bounding_box_maker
   ros/nodes/bounding_box_maker_node.cpp
+)
+target_link_libraries(bounding_box_maker
+  bounding_box
 )

@@ -2,7 +2,7 @@
 #include <ros/console.h>
 #include <sensor_msgs/PointCloud2.h>
 
-#include <pcl/segmentation/extract_polygonal_prism_data.h>
+#include <pcl16/segmentation/extract_polygonal_prism_data.h>
 
 #include <hbrs_srvs/AccumulateTabletopCloud.h>
 
@@ -72,7 +72,7 @@ private:
     cloud.header.frame_id = frame_id_;
     cloud.header.stamp = ros::Time::now();
     ca_->getAccumulatedCloud(cloud);
-    pcl::toROSMsg(cloud, response.cloud);
+    pcl16::toROSMsg(cloud, response.cloud);
 
     // Forward to the "accumulated_cloud" topic (if there are subscribers)
     if (accumulated_cloud_publisher_.getNumSubscribers())
@@ -84,10 +84,10 @@ private:
   void cloudCallback(const sensor_msgs::PointCloud2::ConstPtr &ros_cloud)
   {
     PointCloud::Ptr cloud(new PointCloud);
-    pcl::fromROSMsg(*ros_cloud, *cloud);
+    pcl16::fromROSMsg(*ros_cloud, *cloud);
     frame_id_ = ros_cloud->header.frame_id;
 
-    pcl::PointIndices::Ptr tabletop_indices(new pcl::PointIndices);
+    pcl16::PointIndices::Ptr tabletop_indices(new pcl16::PointIndices);
     eppd_.setInputCloud(cloud);
     eppd_.segment(*tabletop_indices);
 
@@ -98,7 +98,7 @@ private:
     }
 
     PointCloud::Ptr tabletop_cloud(new PointCloud);
-    pcl::copyPointCloud(*cloud, *tabletop_indices, *tabletop_cloud);
+    pcl16::copyPointCloud(*cloud, *tabletop_indices, *tabletop_cloud);
     ca_->addCloud(tabletop_cloud);
   }
 
@@ -118,7 +118,7 @@ private:
     pn.param("octree_resolution", octree_resolution_, 0.0025);
   }
 
-  pcl::ExtractPolygonalPrismData<PointT> eppd_;
+  pcl16::ExtractPolygonalPrismData<PointT> eppd_;
   CloudAccumulation::UPtr ca_;
 
   ros::ServiceServer accumulate_service_;

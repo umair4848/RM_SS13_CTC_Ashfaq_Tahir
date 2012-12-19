@@ -4,9 +4,9 @@
 #include <boost/lexical_cast.hpp>
 #include <ros/ros.h>
 #include <ros/console.h>
-#include <pcl/io/io.h>
-#include <pcl/io/pcd_io.h>
-#include <pcl/filters/passthrough.h>
+#include <pcl16/io/io.h>
+#include <pcl16/io/pcd_io.h>
+#include <pcl16/filters/passthrough.h>
 #include <dynamic_reconfigure/server.h>
 
 #include "hbrs_perception_tests/PlaneExtractionTestConfig.h"
@@ -47,7 +47,7 @@ protected:
       viewer_.removeAllPointClouds(0);
       viewer_.removeAllShapes(0);
 
-      pcl::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
+      pcl16::visualization::PointCloudColorHandlerCustom<PointT> single_color(cloud_, 0, 255, 0);
       viewer_.addPointCloud<PointT>(cloud_, single_color, "cloud");
 
       if (plane_normal_)
@@ -61,7 +61,7 @@ protected:
       pe_.reset(new PlaneExtraction(config.normal_max_depth_change_factor,
                                     config.normal_smoothing_size,
                                     config.min_inliers,
-                                    pcl::deg2rad(config.angular_threshold),
+                                    pcl16::deg2rad(config.angular_threshold),
                                     config.distance_threshold,
                                     config.maximum_curvature,
                                     config.refinement_threshold,
@@ -70,7 +70,7 @@ protected:
       {
         plane_normal_.reset(new Eigen::Vector3f(config.constraint_normal_x, config.constraint_normal_y, config.constraint_normal_z));
         plane_normal_->normalize();
-        double threshold = pcl::deg2rad(config.constraint_angular_threshold);
+        double threshold = pcl16::deg2rad(config.constraint_angular_threshold);
         if (config.apply_distance_constraints)
         {
           pe_->setPlaneConstraints(*plane_normal_, threshold, config.constraint_distance, config.constraint_distance_threshold);
@@ -107,13 +107,13 @@ int main (int argc, char** argv)
   }
 
   PointCloud::Ptr cloud(new PointCloud);
-  pcl::io::loadPCDFile(argv[1], *cloud);
+  pcl16::io::loadPCDFile(argv[1], *cloud);
 
   if (argc == 4)
   {
     float min_z = boost::lexical_cast<float>(argv[3]);
     float max_z = boost::lexical_cast<float>(argv[4]);
-    pcl::PassThrough<PointT> pass_through;
+    pcl16::PassThrough<PointT> pass_through;
     pass_through.setFilterFieldName("z");
     pass_through.setFilterLimits(min_z, max_z);
     pass_through.setKeepOrganized(true);
