@@ -29,6 +29,7 @@ sudo apt-get autoremove -y
 . /opt/ros/$RELEASE/setup.bash
 
 # execute repository.rosinstall of each repository
+rm -rf $WORKSPACE/../ext_pkgs/.rosinstall
 rosinstall $WORKSPACE/../ext_pkgs $WORKSPACE/repository.rosinstall --delete-changed-uris --rosdep-yes
 
 # define amount of ros prozesses during build for multi-prozessor machines
