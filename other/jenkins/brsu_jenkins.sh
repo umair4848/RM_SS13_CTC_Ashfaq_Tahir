@@ -30,7 +30,7 @@ sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
 
 echo -e "\n\n##################################################"
-echo "install python-setuptools, rosinstall and vcstools"
+echo "execute repository.debs script"
 echo "##################################################"
 $WORKSPACE/repository.debs -y
 
