@@ -15,7 +15,7 @@ echo ""
 
 
 # installing ROS release
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "apt autoclean, update, upgrade and dist-upgrade"
 echo "##################################################"
 sudo apt-get autoclean
@@ -23,28 +23,28 @@ sudo apt-get update
 sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "install python-setuptools, rosinstall and vcstools"
 echo "##################################################"
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
 
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "install python-setuptools, rosinstall and vcstools"
 echo "##################################################"
 $WORKSPACE/repository.debs -y
 
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "ros-$RELEASE-*"
 echo "##################################################"
 sudo apt-get install ros-$RELEASE-* -y
 
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "remove moveit packages in fuerte"
 echo "##################################################"
 sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
 
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "autoremove"
 echo "##################################################"
 sudo apt-get autoremove -y
@@ -53,7 +53,7 @@ sudo apt-get autoremove -y
 . /opt/ros/$RELEASE/setup.bash
 
 # execute repository.rosinstall of each repository
-echo -e "\n##################################################"
+echo -e "\n\n##################################################"
 echo "rosinstall"
 echo "##################################################"
 rm -rf $WORKSPACE/../ext_pkgs/.rosinstall
