@@ -11,4 +11,4 @@
 - git:
     local-name: third-party-software
     uri: https://github.com/b-it-bots/third-party-software.git
-    version: fuerte
+    version: master
