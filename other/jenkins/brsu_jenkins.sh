@@ -21,7 +21,7 @@ sudo apt-get upgrade -y
 sudo apt-get dist-upgrade -y
 sudo apt-get install python-setuptools -y
 sudo easy_install -U rosinstall vcstools
-/opt/ros/$RELEASE $WORKSPACE/repository.debs -y
+$WORKSPACE/repository.debs -y
 sudo apt-get install ros-$RELEASE-* -y
 sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
 sudo apt-get autoremove -y
