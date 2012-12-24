@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# get the name of ROSRELEASE, GITHUBUSER and REPOSITORY from JOB_NAME
+# get the name of ROSRELEASE
 RELEASE=$1
-GITHUBUSER=$2
-REPOSITORY=$3
 
 echo ""
 echo "-------------------------------------------------------"
 echo "==> RELEASE =" $RELEASE
-echo "==> GITHUBUSER =" $GITHUBUSER
-echo "==> REPOSITORY =" $REPOSITORY
 echo "-------------------------------------------------------"
 echo ""
 
@@ -87,13 +83,3 @@ if [ $? != "0" ]; then
 	echo "rosmake failed, skipping tests"
 	exit 1
 fi
-
-# do rostests
-echo ""
-echo "--------------------------------------------------------------------------------"
-echo "Rostest for $REPOSITORY"
-
-mkdir -p $WORKSPACE/../test_results # create test_results directory
-
-echo "--------------------------------------------------------------------------------"
-echo ""
