@@ -1,0 +1,93 @@
+////////////////////////////////////////////////////////////////////////////////
+// BRSU materials
+material BRSU/Wall
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture wall.jpg
+      }
+    }
+  }
+}
+
+material BRSU/Wall2
+{
+	technique
+	{
+    pass
+    {
+      scene_blend alpha_blend
+      depth_write off
+
+      ambient 0.725 0.865 0.605
+      diffuse 0 1 0
+
+      texture_unit
+      {
+        colour_op_ex source1 src_current src_current 1.0 1.0 1.0
+        alpha_op_ex source1 src_manual src_current 0.5
+      }
+    }
+	}
+}
+
+material BRSU/Cabinet_Wood
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture cabinet_wood.jpg
+      }
+    }
+  }
+}
+
+material BRSU/Cabinet_White
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture cabinet_white.jpg
+      }
+    }
+  }
+}
+
+material BRSU/Grey
+{
+  receive_shadows on
+
+	technique
+	{
+		pass
+		{
+			ambient 0.2 0.2 0.2 1
+			diffuse 0.2 0.2 0.2 1
+		}
+	}
+}
+
+material BRSU/Grey2
+{
+  receive_shadows on
+
+	technique
+	{
+		pass
+		{
+			ambient 0.1 0.1 0.1 1
+			diffuse 0.1 0.1 0.1 1
+		}
+	}
+}
+
