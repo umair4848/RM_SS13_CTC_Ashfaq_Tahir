@@ -3,7 +3,8 @@
 
 	<arg name="robot_env" default="$(optenv ROBOT_ENV !!NO_ROBOT_ENV_SET!!)"/>
 
-	<!-- send ROBOT_ENV parameters to parameter server -->
-	<rosparam command="load" ns="/script_server/base" file="$(find hbrs_default_env_config)/$(arg robot_env)/navigation_goals.yaml"/>
+	<!-- include environment specific launch file -->
+	<rosparam command="load" ns="/script_server/base" file="$(find hbrs_default_env_config)/$(arg robot_env)/upload_param_$(arg robot_env).yaml"/>
+    <include file="$(find hbrs_default_env_config)/$(arg robot_env)/upload_param_$(arg robot_env).launch" />
 
 </launch>
