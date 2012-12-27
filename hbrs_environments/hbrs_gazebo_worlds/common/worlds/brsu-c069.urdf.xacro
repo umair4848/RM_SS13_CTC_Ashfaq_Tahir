@@ -203,7 +203,7 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<!-- <mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/kitchen_counter_1.dae" /> -->
+				<!-- <mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/kitchen_counter_1.dae" /> -->
 				<box size="0.62 2.01 0.89" />
 			</geometry>
 		</visual>
@@ -234,7 +234,7 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<!-- <mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/kitchen_counter_2.dae" /> -->
+				<!-- <mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/kitchen_counter_2.dae" /> -->
 				<!-- <box size="0.82 0.53 0.89" /> -->
 				<box size="0.82 0.58 0.89" />
 			</geometry>
@@ -266,7 +266,7 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<!-- <mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/kitchen_counter_3.dae" /> -->
+				<!-- <mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/kitchen_counter_3.dae" /> -->
 				<box size="1.915 0.62 0.89" />
 			</geometry>
 		</visual>
@@ -297,14 +297,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/kitchen_fridge.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/kitchen_fridge.dae" />
 				<!-- <box size="0.63 0.62 2.325" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/kitchen_fridge.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/kitchen_fridge.dae" />
 				<!-- <box size="0.65 0.64 2.34" /> -->
 			</geometry>
 		</collision>
@@ -332,14 +332,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
 				<!-- <box size="1.84 0.39 1.84" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
 				<!-- <box size="1.86 0.41 1.86" /> -->
 			</geometry>
 		</collision>
@@ -364,14 +364,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
 				<!-- <box size="1.84 0.39 1.84" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_shelf.dae" />
 				<!-- <box size="1.86 0.41 1.86" /> -->
 			</geometry>
 		</collision>
@@ -396,14 +396,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
 				<!-- <box size="0.45 0.45 0.50" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
 				<!-- <box size="0.47 0.47 0.52" /> -->
 			</geometry>
 		</collision>
@@ -428,14 +428,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
 				<!-- <cylinder radius="0.45" length="0.64" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
 				<!-- <cylinder radius="0.377" length="0.69" /> -->
 			</geometry>
 		</collision>
@@ -460,14 +460,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
 				<!-- <cylinder radius="0.45" length="0.64" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair.dae" />
 				<!-- <cylinder radius="0.377" length="0.69" /> -->
 			</geometry>
 		</collision>
@@ -492,14 +492,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair_2.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair_2.dae" />
 				<!-- <box size="0.9 0.9 0.65" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/lounge_armchair_2.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/lounge_armchair_2.dae" />
 				<!-- <box size="0.92 0.92 0.67" /> -->
 			</geometry>
 		</collision>
@@ -527,14 +527,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_shelf.dae" />
 				<!-- <box size="2.40 0.43 1.28" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_shelf.dae" />
 				<!-- <box size="2.42 0.45 1.30" /> -->
 			</geometry>
 		</collision>
@@ -559,14 +559,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_1.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_1.dae" />
 				<!-- <box size="0.98 2.20 0.66" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_1.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_1.dae" />
 				<!-- <box size="1.00 2.22 0.68" /> -->
 			</geometry>
 		</collision>
@@ -591,14 +591,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_2.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_2.dae" />
 				<!-- <box size="2.81 0.93 0.66" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_2.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_2.dae" />
 				<!-- <box size="2.83 0.95 0.68" /> -->
 			</geometry>
 		</collision>
@@ -623,14 +623,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_3.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_3.dae" />
 				<!-- <box size="0.93 1.55 0.66" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_couch_3.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_couch_3.dae" />
 				<!-- <box size="0.95 1.57 0.68" /> -->
 			</geometry>
 		</collision>
@@ -655,14 +655,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_coffeetable.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_coffeetable.dae" />
 				<!-- <box size="1.205 0.582 0.40" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/livingroom_coffeetable.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/livingroom_coffeetable.dae" />
 				<!-- <box size="1.225 0.602 0.42" /> -->
 			</geometry>
 		</collision>
@@ -687,14 +687,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/desk.dae" />
 				<!-- <box size="1.60 0.80 0.72" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/desk.dae" />
 				<!-- <box size="1.62 0.82 0.74" /> -->
 			</geometry>
 		</collision>
@@ -719,14 +719,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
 				<!-- <box size="0.45 0.45 0.50" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/charger_desk.dae" />
 				<!-- <box size="0.47 0.47 0.52" /> -->
 			</geometry>
 		</collision>
@@ -754,13 +754,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_table.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_table.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_table.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_table.dae" />
 				<!-- <box size="2.21 1.02 0.76" /> -->
 			</geometry>
 		</collision>
@@ -785,13 +785,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 				<!-- <box size="0.547 0.52 0.99" /> -->
 			</geometry>
 		</collision>
@@ -816,13 +816,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 				<!-- <box size="0.547 0.52 0.99" /> -->
 			</geometry>
 		</collision>
@@ -847,13 +847,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 				<!-- <box size="0.547 0.52 0.99" /> -->
 			</geometry>
 		</collision>
@@ -878,13 +878,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 				<!-- <box size="0.547 0.52 0.99" /> -->
 			</geometry>
 		</collision>
@@ -909,13 +909,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/diningroom_chair.dae" />
 				<!-- <box size="0.547 0.52 0.99" /> -->
 			</geometry>
 		</collision>
@@ -943,14 +943,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.44 2.42 0.80" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.46 2.44 0.82" /> -->
 			</geometry>
 		</collision>
@@ -975,14 +975,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.44 2.42 0.80" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.46 2.44 0.82" /> -->
 			</geometry>
 		</collision>
@@ -1007,14 +1007,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.44 2.42 0.80" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.46 2.44 0.82" /> -->
 			</geometry>
 		</collision>
@@ -1039,14 +1039,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.44 2.42 0.80" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.46 2.44 0.82" /> -->
 			</geometry>
 		</collision>
@@ -1071,14 +1071,14 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.44 2.42 0.80" /> -->
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/brsu_home/middle_shelf.dae" />
 				<!-- <box size="0.46 2.44 0.82" /> -->
 			</geometry>
 		</collision>

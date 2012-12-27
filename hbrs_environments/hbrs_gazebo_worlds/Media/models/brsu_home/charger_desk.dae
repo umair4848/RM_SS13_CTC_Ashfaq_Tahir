@@ -6,7 +6,7 @@
 			<authoring_tool>Blender v:249 - Illusoft Collada Exporter v:0.3.162</authoring_tool>
 			<comments></comments>
 			<copyright></copyright>
-			<source_data>file:///home/sven/ros/RoboCupAtHome/brsu_simulation/brsu_gazebo_worlds/Media/models/charger_desk.blend</source_data>
+			<source_data>file:///home/sven/ros/RoboCupAtHome/brsu_simulation/hbrs_gazebo_worlds/Media/models/charger_desk.blend</source_data>
 		</contributor>
 		<created>2011-06-21T12:58:56.185771</created>
 		<modified>2011-06-21T12:58:56.185804</modified>

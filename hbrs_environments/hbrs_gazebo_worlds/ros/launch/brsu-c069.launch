@@ -2,11 +2,11 @@
 <launch>
 
 	<!-- start gazebo world from .world file -->
-	<!-- <include file="$(find brsu_gazebo_worlds)/ros/launch/world.launch" /> -->
+	<!-- <include file="$(find hbrs_gazebo_worlds)/ros/launch/world.launch" /> -->
 
 	<!-- OR -->
 
 	<!-- start gazebo world from .urdf file -->
-	<include file="$(find brsu_gazebo_worlds)/ros/launch/world_urdf.launch" />
+	<include file="$(find hbrs_gazebo_worlds)/ros/launch/world_urdf.launch" />
 
 </launch>

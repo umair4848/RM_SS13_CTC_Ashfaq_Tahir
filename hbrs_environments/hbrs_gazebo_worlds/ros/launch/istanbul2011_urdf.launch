@@ -2,10 +2,10 @@
 <launch>
 
 	<!-- start gazebo with empty world -->
-	<include file="$(find brsu_gazebo_worlds)/ros/launch/empty-world.launch" />
+	<include file="$(find hbrs_gazebo_worlds)/ros/launch/empty-world.launch" />
 
 	<!-- send world urdf to param server -->
-	<param name="world_description" command="$(find xacro)/xacro.py $(find brsu_gazebo_worlds)/common/worlds/$(env ROBOT_ENV)$(optenv ENV_MODE).urdf.xacro" />
+	<param name="world_description" command="$(find xacro)/xacro.py $(find hbrs_gazebo_worlds)/common/worlds/$(env ROBOT_ENV)$(optenv ENV_MODE).urdf.xacro" />
 
 	<!-- push world_description to factory and spawn robot in gazebo -->
 	<!-- start in front of door -->

@@ -1537,13 +1537,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/bookshelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/bookshelf.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/bookshelf.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/bookshelf.dae" />
 			</geometry>
 		</collision>
 	</link>
@@ -1567,13 +1567,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/bed.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/bed.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/bed.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/bed.dae" />
 			</geometry>
 		</collision>
 	</link>
@@ -1597,13 +1597,13 @@
 		<visual>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/table.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/table.dae" />
 			</geometry>
 		</visual>
 		<collision>
 			<origin xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://brsu_gazebo_worlds/Media/models/istanbul2011/table.dae" />
+				<mesh filename="package://hbrs_gazebo_worlds/Media/models/istanbul2011/table.dae" />
 			</geometry>
 		</collision>
 	</link>
