@@ -4,13 +4,15 @@ import sys
 import os, fnmatch
 import re
 import roslib
+from os.path import basename
 
-def find_files(directory, pattern):
+def find_files(directory, pattern_list):
     for root, dirs, files in os.walk(directory):
         for basename in files:
-            if fnmatch.fnmatch(basename, pattern):
-                filename = os.path.join(root, basename)
-                yield filename
+            for pattern in pattern_list:
+                if fnmatch.fnmatch(basename, pattern):
+                    filename = os.path.join(root, basename)
+                    yield filename
 
 
 def get_pkg_names_used_in_launch_file(pkg_name):
@@ -23,7 +25,10 @@ def get_pkg_names_used_in_launch_file(pkg_name):
         return -1;
 
     # find recursivly all launch files from the given location
-    for filename in find_files(pkg_location, '*.launch'):
+    for filename in find_files(pkg_location, ['*.launch', '*.xml', '*.urdf', '*.xacro']):
+        
+        if basename(filename) == "manifest.xml" or basename(filename) == "stack.xml":
+            continue
 
         #open file
         f = file(filename)
@@ -37,8 +42,12 @@ def get_pkg_names_used_in_launch_file(pkg_name):
                 dependency_list.append(dependency_name)
             # look for pkg tages used in <node>
             elif 'pkg' in line:
-                #extract package name                
-                dependency_name = re.search(r'.*pkg=\"(\w+)\".*', line, re.M|re.I).group(1)
+                #extract package name              
+                search_result = re.search(r'.*pkg=\"(\w+)\".*', line, re.M|re.I)
+                if search_result == None:
+                    continue
+
+                dependency_name = search_result.group(1)
                 dependency_list.append(dependency_name)
 
     #remove duplicates
@@ -75,7 +84,12 @@ def cross_check_with_manifest(pkg_name, launch_dep_list):
         # look for depend tags
         if 'depend' in line:
             #extract package name                
-            manifest_dependency_name = re.search(r'.*package=\"(\w+)\".*', line, re.M|re.I).group(1)
+            search_result = re.search(r'.*package=\"(\w+)\".*', line, re.M|re.I)
+
+            if search_result == None:
+                continue
+
+            manifest_dependency_name = search_result.group(1)
 
             if not manifest_dependency_name in launch_dep_list:
                 print_dependency(manifest_dependency_name)
