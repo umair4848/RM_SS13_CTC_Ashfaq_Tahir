@@ -56,10 +56,6 @@
 		</collision>
 	</link>
 	
-	<gazebo reference="north_wall">
-		<material>BRSU/Wall</material>
-	</gazebo>
-
 	<joint name="joint_north_wall" type="fixed">
 		<origin xyz="-0.25 4.06 1.30" rpy="0 0 0" />
 		<parent link="dummy_link" />
@@ -87,10 +83,6 @@
 		</collision>
 	</link>
 	
-	<gazebo reference="east_wall">
-		<material>BRSU/Wall</material>
-	</gazebo>
-
 	<joint name="joint_east_wall" type="fixed">
 		<origin xyz="7.40 0.59 1.30" rpy="0 0 0" />
 		<parent link="dummy_link" />
@@ -118,10 +110,6 @@
 		</collision>
 	</link>
 	
-	<gazebo reference="south_wall">
-		<material>BRSU/Wall</material>
-	</gazebo>
-
 	<joint name="joint_south_wall" type="fixed">
 		<origin xyz="-0.25 -2.88 1.30" rpy="0 0 0" />
 		<parent link="dummy_link" />
@@ -149,10 +137,6 @@
 		</collision>
 	</link>
 	
-	<gazebo reference="west_wall">
-		<material>BRSU/Wall</material>
-	</gazebo>
-
 	<joint name="joint_west_wall" type="fixed">
 		<origin xyz="-7.90 0.59 1.30" rpy="0 0 0" />
 		<parent link="dummy_link" />
@@ -179,10 +163,6 @@
 			</geometry>
 		</collision>
 	</link>
-	
-	<gazebo reference="west_divider">
-		<material>BRSU/Wall</material>
-	</gazebo>
 
 	<joint name="joint_west_divider" type="fixed">
 		<origin xyz="-5.84 0.218 1.30" rpy="0 0 0" />
@@ -1096,6 +1076,6 @@
 
 </xacro:macro>
 
-<xacro:brsu_home name="brsu_home" />
+<xacro:brsu-c069 name="brsu-c069" />
 
 </robot>
