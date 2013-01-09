@@ -30,15 +30,15 @@ echo "execute repository.debs script"
 echo "##################################################"
 $WORKSPACE/repository.debs -y
 
-echo -e "\n\n##################################################"
-echo "ros-$RELEASE-*"
-echo "##################################################"
-sudo apt-get install ros-$RELEASE-* -y
+#echo -e "\n\n##################################################"
+#echo "ros-$RELEASE-*"
+#echo "##################################################"
+#sudo apt-get install ros-$RELEASE-* -y
 
-echo -e "\n\n##################################################"
-echo "remove moveit packages in fuerte"
-echo "##################################################"
-sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
+#echo -e "\n\n##################################################"
+#echo "remove moveit packages in fuerte"
+#echo "##################################################"
+#sudo apt-get remove ros-fuerte-moveit-core  ros-fuerte-moveit-msgs -y
 
 echo -e "\n\n##################################################"
 echo "autoremove"
