@@ -32,7 +32,7 @@
 //Above planar surface
 #define MAX_ROI_HEIGHT 5
 
-#define DO_MULTI_PLANE false
+#define DO_MULTI_PLANE true
 
 #define NORMAL_THRESHOLD 0.5
 //lab 0.9
