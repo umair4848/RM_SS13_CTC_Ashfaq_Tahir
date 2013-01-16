@@ -9,6 +9,7 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/hbrs_gazebo_objects</url>
 
+  <depend package="gazebo" />
 </package>
 
 
