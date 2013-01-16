@@ -24,7 +24,7 @@ if __name__ == "__main__":
             res = srv_world_infos(req)
     
             for item in res.model_names:
-                if item == 'arena':
+                if item == 'world':
                     world_loaded = True
                     break
         except rospy.ServiceException, e:
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         object_pose.orientation.z = quaternion[2]
         object_pose.orientation.w = quaternion[3]
 
-        file_localition = roslib.packages.get_pkg_dir('hbrs_gazebo_objects') + '/' + object_type + '.' + model_type
+        file_localition = roslib.packages.get_pkg_dir('hbrs_gazebo_objects') + '/urdf/' + object_type + '.' + model_type
 
         # call gazebo service to spawn model (see http://ros.org/wiki/gazebo)
         if model_type == "urdf":
