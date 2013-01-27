@@ -1,13 +1,13 @@
 <package>
-  <description brief="brsu_object_finder">
+  <description brief="hbrs_object_finder">
 
-     brsu_object_finder_node
+     hbrs_object_finder_node
 
   </description>
   <author>Christian Mueller</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/brsu_object_finder</url>
+  <url>http://ros.org/wiki/hbrs_object_finder</url>
   <depend package="roscpp"/>
   <depend package="tf"/>
   <depend package="image_transport" />

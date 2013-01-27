@@ -1,0 +1,10 @@
+<package>
+  <description brief="hbrs_sound_localization">
+
+  </description>
+  <author>Zha Jin</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_sound_localization</url>
+
+</package>
