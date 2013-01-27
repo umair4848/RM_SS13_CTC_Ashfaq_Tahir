@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="hbrs_text_extraction" type="atie_old_node" name="text_extraction" ns="text_extraction" output="screen">
+		<remap from="image" to="/stereo/left/image_raw"/>
+	</node>
+	<!--<node pkg="hbrs_text_extraction" type="textClassification.py" name="text_classification" ns="text_extraction" output="screen" />-->
+</launch>

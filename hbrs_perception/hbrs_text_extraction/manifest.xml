@@ -1,0 +1,24 @@
+<package>
+  <description brief="hbrs_text_extraction">
+
+     hbrs_text_extraction
+
+  </description>
+  <author>b-it-bots</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <depend package="opencv2"/>
+  <depend package="roscpp"/>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+  <depend package="cv_bridge"/>
+  <depend package="image_transport"/>
+  <depend package="std_srvs"/>
+  <depend package="dynamic_reconfigure"/>
+  <depend package="libsvm"/>
+  <rosdep name="python-levenshtein"/>
+  <url>http://ros.org/wiki/hbrs_text_extraction</url>
+
+</package>
+
+

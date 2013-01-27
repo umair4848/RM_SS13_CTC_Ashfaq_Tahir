@@ -1,0 +1,9 @@
+/build
+/bin
+/lib
+/srv_gen
+/srv/lisp
+/ros/bin
+ros/src/stringMatching.pyc
+/src/hbrs_text_extraction
+
