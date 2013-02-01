@@ -149,7 +149,7 @@ pcl::PointCloud<pcl::PointXYZRGB> CPlaneExtraction::extractHorizontalSurfaceFrom
 std::vector<StructPlanarSurface*> CPlaneExtraction::extractMultiplePlanes(
 		pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud_normal,
 		pcl::PointCloud<pcl::PointXYZRGBNormal> &planar_point_cloud_normal,
-		std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > &clustered_planes,
+		std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > &clustered_planes,
 		int axis) {
 	ROS_DEBUG("[extractMultiplePlanes] extractMultiplePlanes started ... ");
 	ros::Time start, finish;
@@ -232,13 +232,13 @@ bool compareHeights(StructPlanarSurface* i, StructPlanarSurface* j) {
 	return (i->plane_height < j->plane_height);
 }
 std::vector<StructPlanarSurface*> CPlaneExtraction::createPlanarHierarchy(
-		std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > &clustered_planes,
+		std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > &clustered_planes,
 		bool doMultiplane) {
 	ROS_DEBUG("createPlanarHierarch] started ... ");
 	ros::Time start, finish;
 	start = ros::Time::now();
 	pcl::ConvexHull<pcl::PointXYZRGBNormal> convexHullExtractor;
-	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > filtered_clustered_planes;
+	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > filtered_clustered_planes;
 
 	std::vector<StructPlanarSurface*> planarSurfaces;
 	bool isJoined = false; //whether the plane has been merged with an other due to similarity
@@ -256,16 +256,14 @@ std::vector<StructPlanarSurface*> CPlaneExtraction::createPlanarHierarchy(
 		convexHullExtractor.reconstruct(planarSurface->convexHull);
 		//reconstruct does not fill width and height of the pointcloud
 
-		ROS_DEBUG("[createPlanarHierarchy] Surface %d: ConvexHull Size: %d", planarSurface->id, planarSurface->convexHull.points.size());
-		planarSurface->area = toolBox.areaConvexHull2d(
-				planarSurface->convexHull);
+		ROS_INFO("[createPlanarHierarchy] Surface %d: ConvexHull Size: %d", planarSurface->id, planarSurface->convexHull.points.size());
+		planarSurface->area = toolBox.areaConvexHull2d(planarSurface->convexHull);
 		if (planarSurface->area < MIN_PLANAR_AREA_SIZE) //minimum 0.01f area size
 		{
 			ROS_DEBUG("[createPlanarHierarchy] Surface %d skipped -> area=%f < %f (points %d)", iterCluster, planarSurface->area, MIN_PLANAR_AREA_SIZE, planarSurface->pointCloud.points.size());
 			continue;
 		}
-		planarSurface->centroid = toolBox.centroidHull2d(
-				planarSurface->convexHull, planarSurface->area);
+		planarSurface->centroid = toolBox.centroidHull2d(planarSurface->convexHull, planarSurface->area);
 
 		planarSurface->plane_height = toolBox.avgValuePointCloud3d(planarSurface->convexHull, 2);
 		//planarSurface->plane_height = toolBox.maxValuePointCloud3d(planarSurface->convexHull, 2);

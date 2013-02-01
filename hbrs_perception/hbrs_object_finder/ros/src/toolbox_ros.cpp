@@ -787,8 +787,9 @@ int CToolBoxROS::overlapConvexHull2d2(StructPlanarSurface &surface1, StructPlana
 }
 
 //non-self-intersecting polygon
-float CToolBoxROS::areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> hull)
+float CToolBoxROS::areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &hull)
 {
+
 
 	unsigned int sizeHull = hull.points.size();
 	float area = 0;
@@ -952,7 +953,7 @@ pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZRGBNo
 }
 
 //non-self-intersecting polygon
-pcl::PointXYZRGBNormal CToolBoxROS::centroidHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, float area)
+pcl::PointXYZRGBNormal CToolBoxROS::centroidHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, float area)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 
@@ -981,7 +982,7 @@ pcl::PointXYZRGBNormal CToolBoxROS::centroidHull2d(pcl::PointCloud<pcl::PointXYZ
 	return centroid;
 }
 
-float CToolBoxROS::avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis)
+float CToolBoxROS::avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float sumValue = 0;

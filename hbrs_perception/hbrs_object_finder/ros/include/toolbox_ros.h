@@ -94,9 +94,9 @@ public:
 	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud);
 	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> convexHull, pcl::PointXYZ point);
 
-	pcl::PointXYZRGBNormal centroidHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, float area);
-	float areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> hull);
-	float avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis);
+	pcl::PointXYZRGBNormal centroidHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, float area);
+	float areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &hull);
+	float avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis);
 	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis);
 	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis);
 	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis, pcl::PointXYZ &min_point);
