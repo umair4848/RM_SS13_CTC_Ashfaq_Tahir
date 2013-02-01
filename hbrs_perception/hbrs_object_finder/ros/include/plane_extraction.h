@@ -58,10 +58,10 @@ public:
 	std::vector<StructPlanarSurface*> extractMultiplePlanes(
 			pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud_normal,
 			pcl::PointCloud<pcl::PointXYZRGBNormal> &planar_point_cloud_normal,
-			std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > &clustered_planes,
+			std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > &clustered_planes,
 			int axis);
 	std::vector<StructPlanarSurface*> createPlanarHierarchy(
-			std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > &clustered_planes,
+			std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > &clustered_planes,
 			bool doMultiplane = true);
 	void setDistance(float fDistance);
 

@@ -68,8 +68,8 @@ void CObjectCandidateExtraction::extractObjectCandidates(pcl::PointCloud<pcl::Po
 	ROS_DEBUG( "[extractObjectCandidates] extractObjectCandidates started ...");
 	ros::Time start, start2, finish, finish2, start3, finish3;
 	start = ros::Time::now();
-	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > clusteredObjects;
-	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > clusteredPlanes;
+	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > clusteredObjects;
+	std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal>, Eigen::aligned_allocator<pcl::PointCloud<pcl::PointXYZRGBNormal> > > clusteredPlanes;
 	pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud_RGB;
 	pcl::PointIndices inliers, inliersObjects;
 	pcl::PointCloud<pcl::PointXYZRGBNormal> total_point_cloud, point_cloud_normal;
