@@ -124,7 +124,7 @@ bool ObjectSegmentation::GetObjects(
 
 
 				// save all information about the object for publication				
-				segmented_object.cluster = cloud;
+				segmented_object.pointcloud = cloud;
 				segmented_object.pose = centroid;
 				segmented_objects.push_back(segmented_object);
 
