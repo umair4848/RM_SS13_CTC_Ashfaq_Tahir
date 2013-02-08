@@ -13,14 +13,17 @@ string category
 # The object's id in a database
 int32 database_id
 
+# Probability 
+float32 probability
+
 # Extracted RGB image of the image
 sensor_msgs/Image rgb_image
 
 # Segmented cluster that represents the object
-sensor_msgs/PointCloud2 cluster
+sensor_msgs/PointCloud2 pointcloud
 
 # The bounding box of the object
 hbrs_msgs/BoundingBox bounding_box
 
 # The surface that the object was found on
-hbrs_msgs/Plane surface
+hbrs_msgs/Plane related_surface
