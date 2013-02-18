@@ -35,12 +35,12 @@ rosbuild_add_library(hbrs_toolbox_ros ros/src/toolbox_ros.cpp)
 rosbuild_add_library(hbrs_plane_extraction ros/src/plane_extraction.cpp)
 rosbuild_add_library(hbrs_object_candidate_extraction ros/src/object_candidate_extraction.cpp)
 
-rosbuild_add_executable(object_segmentation_node
+rosbuild_add_executable(object_segmentation
 	ros/nodes/object_segmentation_node.cpp
 	ros/src/object_segmentation.cpp
 	ros/src/roi_extraction.cpp
 )
-target_link_libraries(object_segmentation_node
+target_link_libraries(object_segmentation
 	hbrs_toolbox_ros
 	hbrs_plane_extraction
 	hbrs_object_candidate_extraction
