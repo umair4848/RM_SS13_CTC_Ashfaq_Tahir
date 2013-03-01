@@ -4,7 +4,8 @@
 #
 # BE AWARE OF THE ENTRANCE POSITIONS ! ! ! 
 
-rips_public: [5.647, 0.171, -0.818] # rips presentation pose
-rips_registration_table: [5.682, 0.632, 1.558]  # pose to deliver registration sheet
-rips_post_out: [4.473, 2.983, 1.647]  
-rips_out: [4.473, 4.292, 1.611] 
+rips_public: [1.294, -0.655, 1.674] # rips presentation pose
+rips_registration_table: [1.294, -0.655, 1.674]  # pose to deliver registration sheet
+rips_post_out: [1.294, -0.655, 1.674]  
+# Since not used 
+# rips_out: [4.473, 4.292, 1.611] 
