@@ -1,0 +1,38 @@
+<package>
+  <description brief="hbrs_object_categorization">
+
+     hbrs_object_categorization
+
+  </description>
+  <author>mca</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_object_categorization</url>
+
+  <depend package="opencv2" />
+  <depend package="roscpp" />
+  <depend package="pcl" />
+  <depend package="tf" />
+  <depend package="visualization_msgs" />
+  <depend package="image_transport" />
+  <!-- <depend package="log4cpp" /> -->
+  <!-- <depend package="pcl_visualization" /> -->
+  <depend package="image_geometry" />
+  <depend package="image_view" />
+
+  <depend package="std_msgs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="rospy"/>
+  <depend package="pcl_ros"/>
+  <!-- <depend package="eigen"/> -->
+  <depend package="dynamic_reconfigure"/>
+  <depend package="cv_bridge"/>
+  <depend package="hbrs_msgs"/>
+  <depend package="std_srvs"/>
+  <depend package="opende"/>
+  <!-- <depend package="vtk"/> -->
+
+</package>
+
+

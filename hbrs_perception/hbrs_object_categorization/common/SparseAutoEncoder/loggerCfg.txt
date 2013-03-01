@@ -1,0 +1,4 @@
+Priority
+DEBUG
+Output
+log.txt

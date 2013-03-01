@@ -1,0 +1,3 @@
+The trained model files are located ...
+   - on the Backup MAS harddisk
+   - a burned CD in the RoboCup shelfs
