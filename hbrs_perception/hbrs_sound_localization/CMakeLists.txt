@@ -53,16 +53,16 @@ ${ROSLIB_LIB}
 )
 #######################################
 add_executable(hbrs_sound_localization_topic
-${src_folder}ros_t2.cpp 
+${src_folder}/ros/nodesros_t2.cpp 
 ./asio_driver/asio.cpp
 ./asio_driver/asiodrivers.cpp 
-./asio_driver/iasiothiscallresolver.cpp 
+./asio_driver/iasiothiscallresolver.cpp
 ${src_folder}RtAudio.cpp
 ./asio_driver/asiolist.cpp
 )
 
 add_executable(hbrs_sound_localization_service
-${src_folder}ros_t2_service.cpp
+${src_folder}/ros/nodes/ros_t2_service.cpp
 ./asio_driver/asio.cpp
 ./asio_driver/asiodrivers.cpp 
 ./asio_driver/iasiothiscallresolver.cpp 

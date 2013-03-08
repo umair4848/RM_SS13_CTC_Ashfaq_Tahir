@@ -64,7 +64,7 @@ gencfg()
 
 #...: offline_plane_extraction_test
 rosbuild_add_executable(offline_plane_extraction_test
-  ros/src/offline_plane_extraction_test.cpp
+  ros/test/offline_plane_extraction_test.cpp
 )
 target_link_libraries(offline_plane_extraction_test
   scene_segmentation
@@ -76,7 +76,7 @@ rosbuild_link_boost(offline_plane_extraction_test
 
 #...: online_plane_extraction_test
 rosbuild_add_executable(online_plane_extraction_test
-  ros/src/online_plane_extraction_test.cpp
+  ros/test/online_plane_extraction_test.cpp
 )
 target_link_libraries(online_plane_extraction_test
   scene_segmentation
