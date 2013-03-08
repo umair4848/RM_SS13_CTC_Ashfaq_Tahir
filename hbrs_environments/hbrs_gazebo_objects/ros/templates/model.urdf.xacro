@@ -25,7 +25,7 @@
 			<visual>
 				<origin xyz="0 0 ${-size_z/2}" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://hbrs_gazebo_objects/models/${model_filename}" scale="${scale} ${scale} ${scale}" />
+					<mesh filename="package://hbrs_gazebo_objects/common/models/${model_filename}" scale="${scale} ${scale} ${scale}" />
 				</geometry>
 			</visual>
 
