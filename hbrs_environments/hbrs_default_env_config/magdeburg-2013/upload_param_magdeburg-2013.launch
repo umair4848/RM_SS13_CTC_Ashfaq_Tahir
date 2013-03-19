@@ -16,5 +16,12 @@
 	<rosparam command="load" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/brsu_speech_places.yaml"/>
 	<!-- send ACTION parameters to parameter server -->
 	<rosparam command="load" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/brsu_speech_actions.yaml"/>
+
+	<!-- cleanup task parameter -->
+	<group ns="brsu_go213/cleanup">
+	        <rosparam command="load" ns="navigation_goals" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/navigation_goals_cleanup.yaml"/>
+        	<rosparam command="load" ns="delivery_goals" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/cleanup_targetlocations.yaml"/>
+	</group>
+
 	</group>
 </launch>
