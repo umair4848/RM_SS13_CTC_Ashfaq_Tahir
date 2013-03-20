@@ -4,19 +4,46 @@
 #
 
 # grasp poses is executed reverse
-office/4: [4.924, 7.142, -1.640] #grasp_desk_left
-office/3: [5.406, 7.098, -1.625] #grasp_desk_mid
-office/2: [5.948, 7.102, -1.643] #grasp_desk_right
-office/1: [5.406, 7.098, -1.625] #grasp_desk_mid
+#office/4: [4.924, 7.142, -1.640] #grasp_desk_left
+#office/3: [5.406, 7.098, -1.625] #grasp_desk_mid
+#office/2: [5.948, 7.102, -1.643] #grasp_desk_right
+#office/1: [5.406, 7.098, -1.625] #grasp_desk_mid
 
 #office1: [8.515, 7.569, -1.555] #grasp_black_shelf
 
-kitchen/4: [8.459, 5.170, 0.052] #grasp_fridge
-kitchen/3: [8.575, 2.578, 0.083] #grasp_sink
-kitchen/2: [9.711, 5.306, -1.511] #grasp_black_shelf
-kitchen/1: [8.514, 6.229, -3.130] #grasp_dinner_table
+#kitchen/4: [8.459, 5.170, 0.052] #grasp_fridge
+#kitchen/3: [8.575, 2.578, 0.083] #grasp_sink
+#kitchen/2: [9.711, 5.306, -1.511] #grasp_black_shelf
+#kitchen/1: [8.514, 6.229, -3.130] #grasp_dinner_table
 
-living_room/4: [7.678, 0.294, 1.635] #grasp_side_table
-living_room/3: [6.074, 1.200, -1.511] #grasp_couch_table
-living_room/2: [7.678, 0.294, 1.635] #grasp_side_table
-living_room/1: [6.074, 1.200, -1.511] #grasp_couch_table
+#living_room/4: [7.678, 0.294, 1.635] #grasp_side_table
+#living_room/3: [6.074, 1.200, -1.511] #grasp_couch_table
+#living_room/2: [7.678, 0.294, 1.635] #grasp_side_table
+#living_room/1: [6.074, 1.200, -1.511] #grasp_couch_table
+
+
+
+
+# c069
+
+kitchen/1: [4.116, -2.075, 0.115]
+kitchen/2: [3.116, -2.075, 0.115]
+
+living_room/1: [1.294, -0.655, 1.674]
+living_room/2: [1.294, -0.655, 1.674]
+
+dinner_table/1: [1.564, 0.416, -1.497]
+dinner_table/2: [1.564, 0.816, -1.497]
+
+#exit: [0.0, 0.0, 0.0]  
+#charge: [0.0, 0.0, 0.0]  
+
+#kitchen: [4.116, -2.075, 0.115]
+#living_room: [1.294, -0.655, 1.674]
+#dinner_table: [1.564, 0.416, -1.497]
+#couch_table: [1.223, -2.640, 0.056]
+
+
+
+# poses for introduction
+#second_intro: [0.205, 0.486, 0.488]
