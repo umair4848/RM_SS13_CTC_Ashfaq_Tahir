@@ -26,24 +26,13 @@
 
 # c069
 
-kitchen/1: [4.116, -2.075, 0.115]
-kitchen/2: [3.116, -2.075, 0.115]
+kitchen/1: [0.395, -0.198, 3.117] ## next to zero position
+kitchen/2: [1.399, -0.229, 3.108] ## next to zero position
 
-living_room/1: [1.294, -0.655, 1.674]
-living_room/2: [1.294, -0.655, 1.674]
+living_room/1: [1.073, -2.139, 1.557]
+living_room/2: [1.736, -2.022, -3.119]
 
-dinner_table/1: [1.564, 0.416, -1.497]
-dinner_table/2: [1.564, 0.816, -1.497]
-
-#exit: [0.0, 0.0, 0.0]  
-#charge: [0.0, 0.0, 0.0]  
-
-#kitchen: [4.116, -2.075, 0.115]
-#living_room: [1.294, -0.655, 1.674]
-#dinner_table: [1.564, 0.416, -1.497]
-#couch_table: [1.223, -2.640, 0.056]
+dinner_table/1: [1.226, 0.550, -2.334]
+dinner_table/1: [1.526, 0.550, -2.334]
 
 
-
-# poses for introduction
-#second_intro: [0.205, 0.486, 0.488]

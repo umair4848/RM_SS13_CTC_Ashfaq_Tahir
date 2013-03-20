@@ -5,24 +5,14 @@
 
 # [[<base pose(x,y,theta)>],[<placement pose(x,y,z) (base_link)>], [<placement pose(x,y,z)>], [<placement pose(x,y,z)>]]
 
-#food/basepose:    [4.924, 7.142, -1.640]
-#food/placement:   [[-0.70, 0.00, 0.90]]
+garbage/basepose: [0.395, -0.198, 3.117] 
+garbage/placement:   [[-0.70, 0.00, 0.90]]
 
-#dishes/basepose:  [2.000, 2.000, -1.000]
-#dishes/placement: [[-0.70, 0.00, 0.90]]
-
-#garbage/basepose:  [1.000, 1.000, 1.000]
-#garbage/placement: [[-0.70, 0.00, 0.50]]
-
-
-food/basepose: [2.564, 0.816, -1.497]
-food/placement:   [[-0.70, 0.00, 0.90]]
-
-dishes/basepose: [2.564, 0.816, -1.497]
+dishes/basepose: [1.073, -2.139, 1.557]
 dishes/placement:   [[-0.70, 0.00, 0.90]]
 
-garbage/basepose: [2.564, 0.816, -1.497]
-garbage/placement:   [[-0.70, 0.00, 0.90]]
+food/basepose: [1.226, 0.550, -2.334]
+food/placement:   [[-0.70, 0.00, 0.90]]
 
 
 
