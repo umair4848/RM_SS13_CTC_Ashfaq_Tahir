@@ -11,7 +11,7 @@ garbage/placement:   [[-0.70, 0.00, 0.90]]
 dishes/basepose: [1.073, -2.139, 1.557]
 dishes/placement:   [[-0.70, 0.00, 0.90]]
 
-food/basepose: [1.226, 0.550, -2.334]
+food/basepose: [1.226, 0.0, -2.334]
 food/placement:   [[-0.70, 0.00, 0.90]]
 
 

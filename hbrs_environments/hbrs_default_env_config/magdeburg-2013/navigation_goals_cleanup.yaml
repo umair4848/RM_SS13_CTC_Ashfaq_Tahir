@@ -32,7 +32,7 @@ kitchen/2: [1.399, -0.229, 3.108] ## next to zero position
 living_room/1: [1.073, -2.139, 1.557]
 living_room/2: [1.736, -2.022, -3.119]
 
-dinner_table/1: [1.226, 0.550, -2.334]
-dinner_table/1: [1.526, 0.550, -2.334]
+dinner_table/1: [1.226, 0.450, -2.534]
+dinner_table/2: [1.526, 0.450, -2.534] # -2.334
 
 
