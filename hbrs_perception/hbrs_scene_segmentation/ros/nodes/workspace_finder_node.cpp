@@ -21,8 +21,8 @@ using namespace hbrs::visualization;
   * planar surfaces in the scene, the workspace is considered to be the one
   * with the largest area.
   *
-  * In order to avoid detection of floor as a workspace, additional constarints
-  * (normal orientation, and plane elevation) could be supplied via node
+  * In order to avoid detection of floor as a workspace, additional constraints
+  * (normal orientation and plane elevation) could be supplied via node
   * parameters.
   *
   * Provides services:
@@ -34,10 +34,9 @@ using namespace hbrs::visualization;
   *      workspace.
   *
   * Subscribes:
-  *   1) "/camera/rgb/points"
+  *   1) "/camera/depth_registered/points"
   *      The subscription is activated on demand, i.e. when the service is idle
-  *      the node unsubscribes to avoid bandwidth consumption.
-  */
+  *      the node unsubscribes to avoid bandwidth consumption. */
 class WorkspaceFinderNode
 {
 
@@ -60,7 +59,7 @@ private:
     updateConfiguration();
 
     ROS_INFO("Waiting for a point cloud message...");
-    auto ros_cloud = ros::topic::waitForMessage<sensor_msgs::PointCloud2>("/camera/rgb/points", ros::Duration(cloud_timeout_));
+    auto ros_cloud = ros::topic::waitForMessage<sensor_msgs::PointCloud2>("/camera/depth_registered/points", ros::Duration(cloud_timeout_));
     if (!ros_cloud)
     {
       ROS_ERROR("No point cloud messages during last %i seconds, aborting.", cloud_timeout_);
