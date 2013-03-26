@@ -43,7 +43,7 @@ class WorkspaceFinderNode
 public:
 
   WorkspaceFinderNode()
-  : polygon_visualizer_("workspace_polygon", "/openni_rgb_optical_frame", Color::SALMON)
+  : polygon_visualizer_("workspace_polygon", Color::SALMON)
   {
     ros::NodeHandle nh;
     find_workspace_server_ = nh.advertiseService("find_workspace", &WorkspaceFinderNode::findWorkspaceCallback, this);
@@ -95,7 +95,7 @@ private:
     }
     response.stamp = ros_cloud->header.stamp;
     convertPlanarPolygon(polygon, response.polygon);
-    polygon_visualizer_.publish(polygon);
+    polygon_visualizer_.publish(polygon, ros_cloud->header.frame_id);
     return true;
   }
 
