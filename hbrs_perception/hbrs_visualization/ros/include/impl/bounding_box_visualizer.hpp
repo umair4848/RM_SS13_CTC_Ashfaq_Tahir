@@ -17,18 +17,18 @@ BoundingBoxVisualizer::BoundingBoxVisualizer(const std::string& topic_name, Colo
   marker_publisher_ = nh.advertise<visualization_msgs::Marker>(topic_name, 10);
 }
 
-void BoundingBoxVisualizer::publish(const hbrs_msgs::BoundingBox& box)
+void BoundingBoxVisualizer::publish(const hbrs_msgs::BoundingBox& box, const std::string& frame_id)
 {
   std::vector<hbrs_msgs::BoundingBox> boxes;
   boxes.push_back(box);
-  publish(boxes);
+  publish(boxes, frame_id);
 }
 
-void BoundingBoxVisualizer::publish(const std::vector<hbrs_msgs::BoundingBox>& boxes)
+void BoundingBoxVisualizer::publish(const std::vector<hbrs_msgs::BoundingBox>& boxes, const std::string& frame_id)
 {
   if (check_subscribers_ && marker_publisher_.getNumSubscribers() == 0) return;
   visualization_msgs::Marker lines;
-  lines.header.frame_id = "/openni_rgb_optical_frame";
+  lines.header.frame_id = frame_id;
   lines.header.stamp = ros::Time::now();
   lines.type = visualization_msgs::Marker::LINE_LIST;
   lines.action = visualization_msgs::Marker::ADD;
