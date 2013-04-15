@@ -11,18 +11,19 @@ from color import colors
 
 
 class LabelVisualizer:
+
     def __init__(self, topic_name, color, check_subscribers=True):
         self.marker_pub = rospy.Publisher(topic_name, MarkerArray)
         self.check_subs = check_subscribers
         self.color = colors[color].to_msg()
 
-    def publish(self, labels, positions):
+    def publish(self, labels, positions, frame_id='/camera_rgb_optical_frame'):
         if self.check_subs and not self.marker_pub.get_num_connections():
             return
         ma = MarkerArray()
         for i, (l, p) in enumerate(zip(labels, positions)):
             m = Marker()
-            m.header.frame_id = '/openni_rgb_optical_frame'
+            m.header.frame_id = frame_id
             m.type = Marker.TEXT_VIEW_FACING
             m.action = Marker.ADD
             m.scale.z = 0.04
