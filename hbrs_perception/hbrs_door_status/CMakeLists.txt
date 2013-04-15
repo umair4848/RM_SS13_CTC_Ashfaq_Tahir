@@ -5,4 +5,4 @@ rosbuild_init()
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-rosbuild_add_executable(door_status_node ros/src/door_status_node.cpp)
+rosbuild_add_executable(door_status_node ros/nodes/door_status_node.cpp)

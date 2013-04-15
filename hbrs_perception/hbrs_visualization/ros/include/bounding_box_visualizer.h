@@ -23,9 +23,9 @@ public:
                         Color color,
                         bool check_subscribers = true);
 
-  void publish(const hbrs_msgs::BoundingBox& box);
+  void publish(const hbrs_msgs::BoundingBox& box, const std::string& frame_id);
 
-  void publish(const std::vector<hbrs_msgs::BoundingBox>& boxes);
+  void publish(const std::vector<hbrs_msgs::BoundingBox>& boxes, const std::string& frame_id);
 
 private:
 

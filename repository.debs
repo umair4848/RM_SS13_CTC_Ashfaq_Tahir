@@ -1,1 +1,1 @@
-sudo apt-get install -y ros-fuerte-desktop-full ros-fuerte-object-manipulation ros-fuerte-cob-common
+sudo apt-get install -y ros-fuerte-desktop-full ros-fuerte-object-manipulation ros-fuerte-cob-common ros-fuerte-perception-pcl-fuerte-unstable

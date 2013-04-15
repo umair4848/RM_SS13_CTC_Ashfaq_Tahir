@@ -57,7 +57,10 @@ private:
       BoundingBox box = BoundingBox::create(cloud->points, normal);
       convertBoundingBox(box, response.bounding_boxes[i]);
     }
-    bounding_box_visualizer_.publish(response.bounding_boxes);
+    if (request.clouds.size())
+    {
+      bounding_box_visualizer_.publish(response.bounding_boxes, request.clouds[0].header.frame_id);
+    }
     return true;
   }
 
