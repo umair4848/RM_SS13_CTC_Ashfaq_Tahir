@@ -22,17 +22,33 @@
 #living_room/1: [6.074, 1.200, -1.511] #grasp_couch_table
 
 
+kitchen/1: [6.897141, 1.710020, 1.659705]
+kitchen/2: [6.497141, 1.710020, 1.659705]
 
+dinner_table/front: [3.290763, 0.605580, -3.078732]
+dinner_table/side:  [4.216945, 1.828491, 1.638371]
+
+living_room/grasp: [7.246954, -1.078516, -1.526055]
+living_room/vision: [7.263047, -0.738692, -1.525464]
+
+side_table/1: [1.991223, -0.809914, 0.134725]
+
+door_in/in: [1.791307, -0.021439, 0.171295]
+door_in/out: [-0.209638, -0.144447, 0.058782]
+
+door_out/in: [1.791307, -0.021439, 1.671295]
+door_out/out: [-0.209638, -0.144447, 1.558782]
+ 
 
 # c069
 
-kitchen/1: [0.395, -0.198, 3.117] ## next to zero position
-kitchen/2: [1.399, -0.229, 3.108] ## next to zero position
+#kitchen/1: [0.395, -0.198, 3.117] ## next to zero position
+#kitchen/2: [1.399, -0.229, 3.108] ## next to zero position
 
-living_room/1: [1.073, -2.139, 1.557]
-living_room/2: [1.736, -2.022, -3.119]
+#living_room/1: [1.073, -2.139, 1.557]
+#living_room/2: [1.736, -2.022, -3.119]
 
-dinner_table/1: [1.226, 0.550, -2.334]
-dinner_table/1: [1.526, 0.550, -2.334]
+#dinner_table/1: [1.226, 0.550, -2.334]
+#dinner_table/1: [1.526, 0.550, -2.334]
 
 
