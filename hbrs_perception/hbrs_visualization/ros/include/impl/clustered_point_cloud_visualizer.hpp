@@ -9,9 +9,8 @@ namespace hbrs
 namespace visualization
 {
 
-ClusteredPointCloudVisualizer::ClusteredPointCloudVisualizer(const std::string& topic_name, const std::string& frame_id, bool check_subscribers)
-: frame_id_(frame_id)
-, check_subscribers_(check_subscribers)
+ClusteredPointCloudVisualizer::ClusteredPointCloudVisualizer(const std::string& topic_name, bool check_subscribers)
+: check_subscribers_(check_subscribers)
 {
   ros::NodeHandle nh;
   cloud_publisher_ = nh.advertise<sensor_msgs::PointCloud2>(topic_name, 1);
@@ -22,7 +21,7 @@ ClusteredPointCloudVisualizer::ClusteredPointCloudVisualizer(const std::string& 
 }
 
 template<typename PointT>
-void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl16::PointCloud<PointT>::Ptr>& clusters)
+void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl16::PointCloud<PointT>::Ptr>& clusters, const std::string& frame_id)
 {
   if (cloud_publisher_.getNumSubscribers() == 0) return;
   pcl16::PointCloud<pcl16::PointXYZRGB> composite;
@@ -40,7 +39,7 @@ void ClusteredPointCloudVisualizer::publish(const std::vector<typename pcl16::Po
     }
     color++;
   }
-  composite.header.frame_id = frame_id_;
+  composite.header.frame_id = frame_id;
   composite.width = composite.points.size();
   composite.height = 1;
   sensor_msgs::PointCloud2 cloud_msg;
