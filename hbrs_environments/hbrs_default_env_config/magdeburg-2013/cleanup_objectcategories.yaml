@@ -3,6 +3,8 @@
 pringles: food
 ketchup: food
 
+apple_juice: beverage
+
 
 cup: dishes
 
