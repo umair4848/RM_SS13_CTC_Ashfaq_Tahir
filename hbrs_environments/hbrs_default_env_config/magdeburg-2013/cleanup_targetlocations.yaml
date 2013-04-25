@@ -13,6 +13,6 @@ dishes/basepose: [1.087421, 2.855060, 1.608808] # side table
 dishes/placement:   [[-0.70, 0.00, 0.78]]
 
 food/basepose: [1.517752, 1.733962, -1.554007] #registration desk
-food/placement:   [[-0.70, 0.00, 0.75]
+food/placement:   [[-0.70, 0.00, 0.75]]
 
 
