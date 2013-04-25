@@ -69,28 +69,31 @@ void ccCallback(geometry_msgs::TwistStampedConstPtr desiredVelocity) {
 
 	if (!tf_listener) return;
 
-	geometry_msgs::Vector3Stamped linear_in;
-	geometry_msgs::Vector3Stamped linear_out;
-	linear_in.header = desiredVelocity->header;
-	linear_in.vector = desiredVelocity->twist.linear;
-	tf_listener->transformVector(root_name, linear_in, linear_out);
+	try {
+	  geometry_msgs::Vector3Stamped linear_in;
+	  geometry_msgs::Vector3Stamped linear_out;
+	  linear_in.header = desiredVelocity->header;
+	  linear_in.vector = desiredVelocity->twist.linear;
+	  tf_listener->transformVector(root_name, linear_in, linear_out);
 
-	geometry_msgs::Vector3Stamped angular_in;
-	geometry_msgs::Vector3Stamped angular_out;
-	angular_in.header = desiredVelocity->header;
-	angular_in.vector = desiredVelocity->twist.angular;
-	tf_listener->transformVector(root_name, angular_in, angular_out);
+	  geometry_msgs::Vector3Stamped angular_in;
+	  geometry_msgs::Vector3Stamped angular_out;
+	  angular_in.header = desiredVelocity->header;
+	  angular_in.vector = desiredVelocity->twist.angular;
+	  tf_listener->transformVector(root_name, angular_in, angular_out);
 
-	targetVelocity.vel.data[0] = linear_out.vector.x;
-	targetVelocity.vel.data[1] = linear_out.vector.y;
-	targetVelocity.vel.data[2] = linear_out.vector.z;
+	  targetVelocity.vel.data[0] = linear_out.vector.x;
+	  targetVelocity.vel.data[1] = linear_out.vector.y;
+	  targetVelocity.vel.data[2] = linear_out.vector.z;
 
-	targetVelocity.rot.data[0] = angular_out.vector.x;
-	targetVelocity.rot.data[1] = angular_out.vector.y;
-	targetVelocity.rot.data[2] = angular_out.vector.z;
+	  targetVelocity.rot.data[0] = angular_out.vector.x;
+	  targetVelocity.rot.data[1] = angular_out.vector.y;
+	  targetVelocity.rot.data[2] = angular_out.vector.z;
 
-	t_last_command = ros::Time::now();
-
+	  t_last_command = ros::Time::now();
+	} catch(...) {
+	  ROS_ERROR("Could not transform frames %s -> %s", desiredVelocity->header.frame_id.c_str(), root_name.c_str());
+	}
 	active = true;
 }
 
