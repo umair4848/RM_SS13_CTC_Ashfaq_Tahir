@@ -12,10 +12,10 @@ bolt_m20_100_1:
 #                            Workspace S2                             #
 #######################################################################
 
-nut_m30_1:
-  object_type: nut_m30
+aluprofil_f20_100_gray_1:
+  object_type: aluprofil_f20_100_gray
   model_type: urdf.xacro
-  position: [1.7, 0.2, 0.2]
+  position: [1.7, 0.0, 0.2]
   orientation: [0, 1.7, 0]
 
 adapter_sleeve_v20_1:
@@ -27,7 +27,7 @@ adapter_sleeve_v20_1:
 adapter_sleeve_r20_1:
   object_type: adapter_sleeve_r20
   model_type: urdf.xacro
-  position: [1.7, 0.0, 0.2]
+  position: [1.7, 0.3, 0.2]
   orientation: [0, 0, 0]
 
 #######################################################################
@@ -40,8 +40,8 @@ aluprofil_s40_100_gray_1:
   position: [1.7, -0.9, 0.3]
   orientation: [0, 1.7, 0.2]
 
-aluprofil_f20_100_gray_1:
-  object_type: aluprofil_f20_100_gray
+nut_m30_1:
+  object_type: nut_m30
   model_type: urdf.xacro
   position: [1.7, -0.75, 0.3]
   orientation: [0, 1.7, 0.4]
