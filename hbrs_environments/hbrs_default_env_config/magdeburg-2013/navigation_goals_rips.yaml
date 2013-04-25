@@ -4,8 +4,13 @@
 #
 # BE AWARE OF THE ENTRANCE POSITIONS ! ! ! 
 
-rips_public: [1.294, -0.655, 1.674] # rips presentation pose
-rips_registration_table: [1.294, -0.655, 1.674]  # pose to deliver registration sheet
-rips_post_out: [1.294, -0.655, 1.674]  
+#rips_public: [1.294, -0.655, 1.674] # rips presentation pose
+#rips_registration_table: [1.294, -0.655, 1.674]  # pose to deliver registration sheet
+#rips_post_out: [1.294, -0.655, 1.674]  
+
+rips_into_arena: [2.339548, 2.825400, -1.551593] # enter into arena
+rips_public: [1.517752, 1.733962, -1.554007] # rips presentation pose
+rips_registration_table: [1.522732, 1.395480, -1.555424]  # pose to deliver registration sheet
+rips_post_out: [2.211034, 4.763609, -1.509351] 
 # Since not used 
 # rips_out: [4.473, 4.292, 1.611] 
