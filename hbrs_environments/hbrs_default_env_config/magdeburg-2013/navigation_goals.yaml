@@ -1,18 +1,28 @@
 #[x,y,theta]
 
 
-exit: [0.0, 0.0, 0.0]  
-charge: [0.0, 0.0, 0.0]  
+kitchen_dinner_table3: [7.667953, 4.363889, -1.626430] 
+kitchen_dinner_table5: [8.367953, 4.363889, -1.626430]
+kitchen_fridge: [8.709168, 1.949141, -0.131621]
 
-kitchen: [4.116, -2.075, 0.115]
-living_room: [1.294, -0.655, 1.674]
-dinner_table: [1.564, 0.416, -1.497]
-couch_table: [1.223, -2.640, 0.056]
+food_basepose: [5.706530, -1.481354, 1.502879] # side_table
+stuff_basepose: [3.484426, 3.597164, -0.091533] # office
+
+R2: [7.842080, 16.995509, -2.715922]
+
+
+#exit: [0.0, 0.0, 0.0]  
+#charge: [0.0, 0.0, 0.0]  
+
+#kitchen: [4.116, -2.075, 0.115]
+#living_room: [1.294, -0.655, 1.674]
+#dinner_table: [1.564, 0.416, -1.497]
+#couch_table: [1.223, -2.640, 0.056]
 
 
 
 # poses for introduction
-second_intro: [0.205, 0.486, 0.488]
+# second_intro: [0.205, 0.486, 0.488]
 
 
 
