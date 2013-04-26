@@ -6,7 +6,7 @@
 # [[<base pose(x,y,theta)>],[<placement pose(x,y,z) (base_link)>], [<placement pose(x,y,z)>], [<placement pose(x,y,z)>]]
 
 # change 'z' to 5 cm less than real table height
-placement:   [-0.70, 0.00, 0.90]
+placement:   [-0.85, 0.00, 0.90]
 
 
 
