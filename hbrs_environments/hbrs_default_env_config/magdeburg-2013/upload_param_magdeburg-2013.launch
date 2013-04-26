@@ -22,6 +22,7 @@
 	        <rosparam command="load" ns="navigation_goals" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/navigation_goals_cleanup.yaml"/>
         	<rosparam command="load" ns="delivery_goals" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/cleanup_targetlocations.yaml"/>
         	<rosparam command="load" ns="object_categories" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/cleanup_objectcategories.yaml"/>
+            <rosparam command="load" ns="sdh" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/cleanup_sdh_config.yaml"/>
 	</group>
 
 	</group>
