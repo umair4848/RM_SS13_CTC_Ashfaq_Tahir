@@ -8,15 +8,17 @@
 # change only basepose (Jenny's location) and 
 # third parameter (i.e. 'z') of placement, depending on the height of the placement plane
 
-garbage/basepose: [0.925508, -2.558856, -2.988452] #living room
-garbage/placement:   [[-0.80, 0.00, 0.90]]
 
-dishes/basepose: [1.087421, 2.855060, 1.608808] # side table
-dishes/placement:   [[-0.80, 0.00, 0.78]]
+food/basepose: [5.706530, -1.481354, 1.502879] # side_table
+food/placement:   [[-0.80, 0.00, 0.68]] # 'z' to be 5 cm lesser than real.
 
-food/basepose: [1.517752, 1.733962, -1.554007] #registration desk
+stuff/basepose: [3.484426, 3.597164, -0.091533] # office
+stuff/placement:   [[-0.80, 0.00, 0.68]] # 'z' to be 5 cm lesser than real.
 
-food/placement:   [[-0.80, 0.00, 0.75]
 
-beverage/basepose: [1.087421, 2.855060, 1.608808] # side table
-beverage/placement:   [[-0.80, 0.00, 0.75]
+
+
+
+
+
+

@@ -1,11 +1,7 @@
+hazelnuts: food
+cookies: food
+peanuts: food
 
-
-pringles: food
-ketchup: food
-
-apple_juice: beverage
-
-
-cup: dishes
-
+cup: stuff
+cards: stuff
 
