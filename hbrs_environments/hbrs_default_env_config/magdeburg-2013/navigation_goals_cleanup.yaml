@@ -7,9 +7,9 @@
 
 
 
-kitchen/dinner_table3: [7.667953, 4.363889, -1.626430] 
-kitchen/dinner_table5: [8.367953, 4.363889, -1.626430]
-kitchen/fridge: [8.709168, 1.949141, -0.131621]
+kitchen/a_dinner_table5: [8.367953, 4.363889, -1.626430]
+kitchen/b_dinner_table3: [7.667953, 4.363889, -1.626430]
+kitchen/c_fridge: [8.709168, 1.949141, -0.131621]
 
 
 # References!!
