@@ -26,7 +26,7 @@
   *      forwarded to this topic for the visualization purposes.
   *
   * Subscribes:
-  *   1) "/camera/rgb/points"
+  *   1) "/camera/depth_registered/points"
   *      The subscription is activated on demand, i.e. when the service is idle
   *      the node unsubscribes to avoid bandwidth consumption.
   */
@@ -56,7 +56,7 @@ private:
     eppd_.setInputPlanarHull(polygon_cloud);
     ca_ = CloudAccumulation::UPtr(new CloudAccumulation(octree_resolution_));
     ros::NodeHandle nh;
-    ros::Subscriber subscriber = nh.subscribe("/camera/rgb/points", 1, &TabletopCloudAccumulatorNode::cloudCallback, this);
+    ros::Subscriber subscriber = nh.subscribe("/camera/depth_registered/points", 1, &TabletopCloudAccumulatorNode::cloudCallback, this);
 
     // Wait some time while data is being accumulated.
     ros::Time start = ros::Time::now();

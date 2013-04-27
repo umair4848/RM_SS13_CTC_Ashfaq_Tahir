@@ -45,7 +45,7 @@ class TabletopCloudClustererNode
 public:
 
   TabletopCloudClustererNode()
-  : cluster_visualizer_("tabletop_clusters", "/openni_rgb_optical_frame")
+  : cluster_visualizer_("tabletop_clusters")
   {
     ros::NodeHandle nh;
     cluster_server_ = nh.advertiseService("cluster_tabletop_cloud", &TabletopCloudClustererNode::clusterCallback, this);
@@ -92,7 +92,7 @@ private:
     }
     ROS_INFO("Found %zu clusters, but rejected %zu due to low height.", clusters_indices.size(), rejected_count);
 
-    cluster_visualizer_.publish<PointT>(clusters);
+    cluster_visualizer_.publish<PointT>(clusters, request.cloud.header.frame_id);
 
     return true;
   }

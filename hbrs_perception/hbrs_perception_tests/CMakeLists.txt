@@ -69,6 +69,7 @@ rosbuild_add_executable(offline_plane_extraction_test
 target_link_libraries(offline_plane_extraction_test
   scene_segmentation
   ${VTK_LIBS}
+  pcl16pcl_visualization
 )
 rosbuild_link_boost(offline_plane_extraction_test
   system

@@ -1,0 +1,18 @@
+# [x,y,theta]
+#
+# Clean up scenario
+#
+
+# [[<base pose(x,y,theta)>],[<placement pose(x,y,z) (base_link)>], [<placement pose(x,y,z)>], [<placement pose(x,y,z)>]]
+
+
+garbage/basepose: [0.925508, -2.558856, -2.988452] #living room
+garbage/placement:   [[-0.70, 0.00, 0.90]]
+
+dishes/basepose: [1.087421, 2.855060, 1.608808] # side table
+dishes/placement:   [[-0.70, 0.00, 0.78]]
+
+food/basepose: [1.517752, 1.733962, -1.554007] #registration desk
+food/placement:   [[-0.70, 0.00, 0.75]
+
+
