@@ -92,11 +92,11 @@ void SafeCmdVel::laserFrontCallback(const sensor_msgs::LaserScan::ConstPtr &scan
 		//std::cout << "x: " << x << " y: " << y << " f/2: " << (robot_footprint_width_/2) << " f/2+h: " << ((robot_footprint_width_/2) + hard_padding_distance_)
 
 		// check front area
-		if((y >= -((robot_footprint_width_/2) + hard_padding_distance_)) && (y <= ((robot_footprint_width_/2) + hard_padding_distance_)))
+		if((y >= -(robot_footprint_width_/2)) && (y <= (robot_footprint_width_/2)))
 		{
 			if(x <= hard_padding_distance_)
 			{
-				//std::cout << "		IN HARD LIMIT" << std::endl;
+				//std::cout << "		IN HARD LIMIT -> x: " << x << " y: " << y << std::endl;
 				is_robot_in_hard_padding_front_ = true;
 				return;
 			}
@@ -107,6 +107,7 @@ void SafeCmdVel::laserFrontCallback(const sensor_msgs::LaserScan::ConstPtr &scan
 			//std::cout << "check soft padding in front area. hard dist: " << hard_padding_distance_ << " x: " << x << std::endl;
 			if(x <= soft_padding_distance_)
 			{
+				//std::cout << "		IN SOFT LIMIT -> x: " << x << " y: " << y << std::endl;
 				is_robot_in_soft_padding_front_ = true;
 			}
 
