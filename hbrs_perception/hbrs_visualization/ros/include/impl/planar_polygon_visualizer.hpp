@@ -7,9 +7,10 @@ namespace hbrs
 namespace visualization
 {
 
-PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, Color color, bool check_subscribers)
+PlanarPolygonVisualizer::PlanarPolygonVisualizer(const std::string& topic_name, Color color, bool check_subscribers, double thickness)
 : color_(color)
 , check_subscribers_(check_subscribers)
+, thickness_(thickness)
 {
   ros::NodeHandle nh;
   marker_publisher_ = nh.advertise<visualization_msgs::Marker>(topic_name, 1);
@@ -32,8 +33,8 @@ void PlanarPolygonVisualizer::buildPolygonMarker(const typename pcl16::PointClou
   marker.type = visualization_msgs::Marker::LINE_LIST;
   marker.action = visualization_msgs::Marker::ADD;
   marker.header.frame_id = frame_id;
-  marker.scale.x = 0.005;
-  marker.scale.y = 0.005;
+  marker.scale.x = thickness_;
+  marker.scale.y = thickness_;
   marker.color.a = 1.0;
   marker.ns = "polygon";
   marker.id = id;
