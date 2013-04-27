@@ -30,5 +30,10 @@
         	<rosparam command="load" ns="place_pose" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/open_challenge_placement_poses.yaml"/>
 	</group>
 
+	<group ns="brsu_go2013/demo_challenge">
+	        <rosparam command="load" ns="navigation_goals" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/navigation_goals_demo_challenge.yaml"/>
+        	<rosparam command="load" ns="poke_pose" file="$(find hbrs_default_env_config)/$(env ROBOT_ENV)/demo_challenge_poke_poses.yaml"/>
+	</group>
+
 	</group>
 </launch>
