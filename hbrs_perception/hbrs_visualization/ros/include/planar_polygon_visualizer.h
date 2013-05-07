@@ -24,7 +24,8 @@ public:
 
   PlanarPolygonVisualizer(const std::string& topic_name,
                           Color color,
-                          bool check_subscribers = true);
+                          bool check_subscribers = true,
+                          double thickness = 0.005);
 
   template<typename PointT>
   void publish(const pcl16::PlanarPolygon<PointT>& polygon,
@@ -45,6 +46,7 @@ private:
   const std::string frame_id_;
   const Color color_;
   bool check_subscribers_;
+  double thickness_;
 
 };
 

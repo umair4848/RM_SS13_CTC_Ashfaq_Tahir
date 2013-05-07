@@ -1,0 +1,7 @@
+buttons: [[T1, move, T1],
+          [S1, move, S1],
+          [S2, move, S2],
+          [S3, move, S3],
+          [D1, move, D1],
+          [D2, move, D2],
+          [EXIT, move, EXIT]]
