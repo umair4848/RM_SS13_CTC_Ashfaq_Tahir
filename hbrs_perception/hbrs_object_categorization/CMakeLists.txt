@@ -160,7 +160,7 @@ rosbuild_add_library(CObjectCategorizationGeometric
 target_link_libraries(CObjectCategorizationGeometric
 	CSvmOneClassClassifier
 	CSvmCascade 
-	toolbox_ros  
+	hbrs_toolbox_ros  
 	CSvmClassifier
 	svmLinearClassifier
 	objectGeometricService
@@ -168,9 +168,6 @@ target_link_libraries(CObjectCategorizationGeometric
 )
 
 ###
-rosbuild_add_library(toolbox_ros 
-	ros/src/toolbox_ros.cpp)
-
 rosbuild_add_library(CSvmClassifier  
 	common/src/Svm/CSvmClassifier.cpp 
 	common/src/Svm/svm.cpp )
@@ -201,7 +198,7 @@ rosbuild_add_library(objectGeometricService
 	common/src/ProbNeuralNetwork/CHPNeuralNetwork.cpp
 	common/src/CPca.cpp)
 target_link_libraries(objectGeometricService 
-	toolbox_ros 
+	hbrs_toolbox_ros 
 	CRTPNeuralNetworkEnsemble 
 	CObjectDecomposition)
 

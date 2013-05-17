@@ -202,7 +202,7 @@ bool ObjectSegmentation::PreparePointCloud(sensor_msgs::PointCloud2::ConstPtr &i
 }
 
 
-geometry_msgs::PoseStamped ObjectSegmentation::ExtractCentroid(const pcl::PointCloud<pcl::PointXYZRGBNormal> &object)
+geometry_msgs::PoseStamped ObjectSegmentation::ExtractCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> &object)
 {
 	pcl::PointXYZ centroid = _tool_box.pointCloudCentroid(object);
 

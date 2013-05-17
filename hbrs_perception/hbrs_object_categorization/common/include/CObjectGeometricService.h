@@ -14,13 +14,14 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 
+#include <toolbox_ros.h>
+
 #include "CNeuralGasNode.h"
 #include "CNeuralGas.h"
 #include "CNeuralGasClassifier.h"
 
 #include <apsp_graph.hpp>
 #include <CKde.h>
-#include "toolbox_ros.h"
 #include <CObjectDecomposition.h>
 #include <SGeometricFeatures.h>
 #include <CFileSettings.h>

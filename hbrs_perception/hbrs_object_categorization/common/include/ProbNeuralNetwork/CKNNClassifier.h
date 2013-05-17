@@ -16,7 +16,8 @@
 #include <SObjectDescription.h>
 #include <CObjectDecomposition.h>
 #include <CLogger.h>
-#include "toolbox_ros.h"
+
+#include <toolbox_ros.h>
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>

@@ -7,7 +7,7 @@
 
 #include "toolbox_ros.h"
 
-double CToolBoxROS::euclDistanceBtwPoints(pcl::PointXYZ p1, pcl::PointXYZ p2)
+double CToolBoxROS::euclDistanceBtwPoints(pcl::PointXYZ &p1, pcl::PointXYZ &p2)
 {
 	double x, y, z;
 
@@ -18,7 +18,7 @@ double CToolBoxROS::euclDistanceBtwPoints(pcl::PointXYZ p1, pcl::PointXYZ p2)
 	return sqrt(x + y + z);
 }
 
-double CToolBoxROS::euclDistanceBtwPoints(pcl::PointXYZRGB p1, pcl::PointXYZRGB p2)
+double CToolBoxROS::euclDistanceBtwPoints(pcl::PointXYZRGB &p1, pcl::PointXYZRGB &p2)
 {
 	double x, y, z;
 
@@ -432,7 +432,7 @@ pcl::PointCloud<pcl::Normal> CToolBoxROS::filterNormals(pcl::PointCloud<pcl::Poi
  return cloudFeatures;
  }*/
 
-double CToolBoxROS::dotProduct(std::vector<double> x, std::vector<double> y)
+double CToolBoxROS::dotProduct(std::vector<double> &x, std::vector<double> &y)
 {
 	double result = 0;
 
@@ -473,7 +473,7 @@ double CToolBoxROS::dotProduct(float* x, float* y)
 	return this->dotProduct(vecX, vecY);
 }
 
-double CToolBoxROS::dotProduct(pcl::PointXYZRGBNormal x, pcl::PointXYZRGBNormal y)
+double CToolBoxROS::dotProduct(pcl::PointXYZRGBNormal &x, pcl::PointXYZRGBNormal &y)
 {
 	std::vector<double> vecX;
 	std::vector<double> vecY;
@@ -492,7 +492,7 @@ double CToolBoxROS::dotProduct(pcl::PointXYZRGBNormal x, pcl::PointXYZRGBNormal 
 	return this->dotProduct(vecX, vecY);
 }
 
-double CToolBoxROS::variance(std::vector<double> histo, double mean)
+double CToolBoxROS::variance(std::vector<double> &histo, double mean)
 {
 	double var = 0;
 
@@ -503,7 +503,7 @@ double CToolBoxROS::variance(std::vector<double> histo, double mean)
 	return (var / (double) histo.size());
 }
 
-double CToolBoxROS::mean(std::vector<double> histo)
+double CToolBoxROS::mean(std::vector<double> &histo)
 {
 	double mean = 0;
 
@@ -528,8 +528,8 @@ void CToolBoxROS::markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::Point
 			color = rand() % 10000;
 
 			////////////////
-			//pcl::KdTreeFLANN<pcl::PointXYZRGBNormal>::Ptr tree = boost::make_shared<pcl::KdTreeFLANN<pcl::PointXYZRGBNormal> >();
-			//tree->setInputCloud(boost::make_shared<pcl::PointCloud<pcl::PointXYZRGBNormal> >(clusteredPointCloud.at(iterCluster)));
+			pcl::KdTreeFLANN<pcl::PointXYZRGBNormal>::Ptr tree = boost::make_shared<pcl::KdTreeFLANN<pcl::PointXYZRGBNormal> >();
+			tree->setInputCloud(boost::make_shared<pcl::PointCloud<pcl::PointXYZRGBNormal> >(clusteredPointCloud.at(iterCluster)));
 
 			//////////////////////
 			for (unsigned int iterPoint = 0; iterPoint < clusteredPointCloud.at(iterCluster).points.size(); iterPoint++)
@@ -540,27 +540,66 @@ void CToolBoxROS::markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::Point
 				pointRGB.rgb = color;
 				///////////////////////////////////////7
 
-				/*int k = 10;
-				 if (clusteredPointCloud.at(iterCluster).size() > k)
-				 {
-				 std::vector<int> k_indicies;
-				 std::vector<float> k_distances;
-				 k_distances.resize(k);
-				 k_indicies.resize(k);
-				 tree->nearestKSearch(pointRGB, k, k_indicies, k_distances);
+				int k = 10; //25; //30
+				if (clusteredPointCloud.at(iterCluster).size() > k)
+				{
 
-				 std::vector<double> neighborCurvaturesDiff;
-				 for (unsigned int iK = 0; iK < k; ++iK)
-				 {
-				 neighborCurvaturesDiff.push_back(pointRGB.curvature - clusteredPointCloud.at(iterCluster).points[k_indicies[iK]].curvature);
-				 }
+					//					int counterK = 0;
+					std::vector<int> k_indicies;
+					std::vector<float> k_distances;
+					k_distances.resize(k);
+					k_indicies.resize(k);
+					tree->nearestKSearch(pointRGB, k, k_indicies, k_distances);
 
-				 double meanCurDiff = mean(neighborCurvaturesDiff);
-				 double stdDevCurDiff = sqrt(this->variance(neighborCurvaturesDiff, meanCurDiff));
+					std::vector<double> neighborCurvaturesDiff;
+					for (unsigned int iK = 0; iK < k; ++iK)
+					{
+						neighborCurvaturesDiff.push_back(pointRGB.curvature - clusteredPointCloud.at(iterCluster).points[k_indicies[iK]].curvature);
+					}
+					//std::cout << pointRGB << std::endl;
+					double meanCurDiff = mean(neighborCurvaturesDiff);
+					double stdDevCurDiff = sqrt(this->variance(neighborCurvaturesDiff, meanCurDiff));
+					//	std::cout << " |->" << stdDevCurDiff << std::endl;
 
-				 if (stdDevCurDiff > 0.4) //0.4
-				 pointRGB.rgb = 100; //color;
-				 }*/
+					//	if(pointRGB.curvature  < 1 && pointRGB.normal[0]!=0)
+					//	pointRGB.rgb = 1000;
+					/*int k = 10;
+					 int counterK = 0;
+					 std::vector<int> k_indicies;
+					 std::vector<float> k_distances;
+					 k_distances.resize(k);
+					 k_indicies.resize(k);
+					 tree->nearestKSearch(pointRGB, k, k_indicies, k_distances);
+
+					 //	std::cout<<pointRGB<<std::endl;
+					 bool found = false;
+					 for (unsigned int iK = 0; iK < k; ++iK) {
+					 if (pointRGB.curvature != 0) {
+					 std::cout<<pointRGB<<std::endl;
+					 std::cout << ">> "
+					 << (dotProduct(
+					 clusteredPointCloud.at(iterCluster).points[k_indicies[iK]].normal,
+					 pointRGB.normal)) << " ";
+					 if (dotProduct(
+					 clusteredPointCloud.at(iterCluster).points[k_indicies[iK]].normal,
+					 pointRGB.normal) < 0.5) {
+
+					 std::cout << "Wooaahh" << std::endl;
+					 counterK++;
+
+					 }
+
+					 }
+					 }
+
+					 if (counterK >=k*0.5 )
+					 pointRGB.rgb = 1000;
+					 else*/
+
+					//if (abs(pointRGB.curvature) < 1.0)
+					if (stdDevCurDiff > 0.4) //0.4
+						pointRGB.rgb = 100;//color;
+				}
 
 				//////////////////////////////////////////
 				markedPointCloud.points.push_back(pointRGB);
@@ -575,15 +614,12 @@ void CToolBoxROS::markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::Point
 
 void CToolBoxROS::markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::PointXYZ> > &clusteredPointCloud, pcl::PointCloud<pcl::PointXYZ> &markedPointCloud)
 {
-	int color = 0;
-
 	if (clusteredPointCloud.size() > 0)
 	{
 		markedPointCloud.points.clear();
 
 		for (unsigned int iterCluster = 0; iterCluster < clusteredPointCloud.size(); iterCluster++)
 		{
-			color = rand() % 10000;
 			for (unsigned int iterPoint = 0; iterPoint < clusteredPointCloud.at(iterCluster).points.size(); iterPoint++)
 			{
 				pcl::PointXYZ pointRGB;
@@ -598,8 +634,7 @@ void CToolBoxROS::markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::Point
 	}
 }
 
-bool CToolBoxROS::transformPointCloud(tf::TransformListener &tfListener, std::string &fromFrame, std::string &toFrame, const sensor_msgs::PointCloud2 &srcPointCloud,
-		sensor_msgs::PointCloud2 &transformedPointCloud, float duration)
+bool CToolBoxROS::transformPointCloud(tf::TransformListener &tfListener, std::string &fromFrame, std::string &toFrame, const sensor_msgs::PointCloud2 &srcPointCloud,	sensor_msgs::PointCloud2 &transformedPointCloud, float duration)
 {
 	bool success_tf = false;
 
@@ -625,7 +660,7 @@ bool CToolBoxROS::transformPointCloud(tf::TransformListener &tfListener, std::st
 }
 
 //1 for interior points and 0 for exterior points
-int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointXYZRGBNormal point)
+int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointXYZRGBNormal &point)
 {
 	unsigned int convexHullSize = convexHull.points.size();
 
@@ -640,7 +675,7 @@ int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal>
 	return c;
 }
 
-int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> convexHull, pcl::PointXYZ point)
+int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> &convexHull, pcl::PointXYZ &point)
 {
 	unsigned int convexHullSize = convexHull.points.size();
 
@@ -655,7 +690,7 @@ int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> convexHu
 	return c;
 }
 
-int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointXYZ point)
+int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointXYZ &point)
 {
 	unsigned int convexHullSize = convexHull.points.size();
 
@@ -671,7 +706,7 @@ int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal>
 }
 
 //1 for interior points and 0 for exterior points
-int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud)
+int CToolBoxROS::pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud)
 {
 	for (unsigned int iter = 0; iter < point_cloud.points.size(); iter++)
 	{
@@ -702,7 +737,7 @@ int CToolBoxROS::overlapConvexHull2d(StructPlanarSurface &surface1, StructPlanar
 
 }
 
-pcl::PointXYZRGBNormal CToolBoxROS::getNearestNeighborPlane(StructPlanarSurface &plane, pcl::PointXYZRGBNormal queryPoint)
+pcl::PointXYZRGBNormal CToolBoxROS::getNearestNeighborPlane(StructPlanarSurface &plane, pcl::PointXYZRGBNormal &queryPoint)
 {
 	//	std::cout<<"ENTER";
 	int k = 1;
@@ -716,7 +751,7 @@ pcl::PointXYZRGBNormal CToolBoxROS::getNearestNeighborPlane(StructPlanarSurface 
 	return plane.pointCloud.points[k_indicies[0]];
 }
 
-void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZRGB> pointCloud, pcl::PointXYZRGB queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
+void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZRGB> &pointCloud, pcl::PointXYZRGB &queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
 {
 
 	pcl::KdTreeFLANN<pcl::PointXYZRGB>::Ptr tree = boost::make_shared<pcl::KdTreeFLANN<pcl::PointXYZRGB> >();
@@ -727,7 +762,7 @@ void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZRGB> pointCloud
 	tree->nearestKSearch(queryPoint, k, k_indicies, k_distances);
 }
 
-void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZ> pointCloud, pcl::PointXYZ queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
+void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZ> &pointCloud, pcl::PointXYZ &queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
 {
 
 	pcl::KdTreeFLANN<pcl::PointXYZ>::Ptr tree = boost::make_shared<pcl::KdTreeFLANN<pcl::PointXYZ> >();
@@ -738,7 +773,7 @@ void CToolBoxROS::getNearestKPoints(pcl::PointCloud<pcl::PointXYZ> pointCloud, p
 	tree->nearestKSearch(queryPoint, k, k_indicies, k_distances);
 }
 
-void CToolBoxROS::getNearestKPoints(pcl::KdTreeFLANN<pcl::PointXYZ> &tree, pcl::PointXYZ queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
+void CToolBoxROS::getNearestKPoints(pcl::KdTreeFLANN<pcl::PointXYZ> &tree, pcl::PointXYZ &queryPoint, int k, std::vector<int> &k_indicies, std::vector<float> &k_distances)
 {
 	k_distances.resize(k);
 	k_indicies.resize(k);
@@ -790,7 +825,6 @@ int CToolBoxROS::overlapConvexHull2d2(StructPlanarSurface &surface1, StructPlana
 float CToolBoxROS::areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &hull)
 {
 
-
 	unsigned int sizeHull = hull.points.size();
 	float area = 0;
 
@@ -807,7 +841,7 @@ float CToolBoxROS::areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &hul
 	return fabs(0.5f * area);
 
 }
-pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> point_cloud)
+pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> &point_cloud)
 {
 
 	unsigned int sizePointCloud = point_cloud.points.size();
@@ -819,9 +853,12 @@ pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> poi
 
 	for (unsigned int iter_point = 0; iter_point < sizePointCloud; iter_point++)
 	{
-		centroid.x += (point_cloud.points[iter_point].x);
-		centroid.y += (point_cloud.points[iter_point].y);
-		centroid.z += (point_cloud.points[iter_point].z);
+		if (!isnan(point_cloud.points[iter_point].x)) 
+		{
+			centroid.x += (point_cloud.points[iter_point].x);
+			centroid.y += (point_cloud.points[iter_point].y);
+			centroid.z += (point_cloud.points[iter_point].z);
+		}
 	}
 
 	centroid.x /= sizePointCloud;
@@ -831,7 +868,7 @@ pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> poi
 	return centroid;
 }
 
-pcl::PointXYZRGB CToolBoxROS::pointCloudCentroid2(pcl::PointCloud<pcl::PointXYZ> point_cloud)
+pcl::PointXYZRGB CToolBoxROS::pointCloudCentroid2(pcl::PointCloud<pcl::PointXYZ> &point_cloud)
 {
 
 	unsigned int sizePointCloud = point_cloud.points.size();
@@ -928,7 +965,7 @@ pcl::PointXYZ CToolBoxROS::pointCloudBoundingBoxCentroid(pcl::PointCloud<pcl::Po
 	return this->pointCloudCentroid(boundingBox);
 }
 
-pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud)
+pcl::PointXYZ CToolBoxROS::pointCloudCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud)
 {
 
 	unsigned int sizePointCloud = point_cloud.points.size();
@@ -1021,7 +1058,7 @@ float CToolBoxROS::avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> 
 	return 0;
 }
 
-float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis)
+float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float minValue = 9999;
@@ -1063,7 +1100,7 @@ float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> 
 	return 0;
 }
 
-float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis)
+float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float minValue = 9999;
@@ -1105,7 +1142,7 @@ float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_clo
 	return 0;
 }
 
-float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis, pcl::PointXYZ &min_point)
+float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis, pcl::PointXYZ &min_point)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float minValue = 9999;
@@ -1156,7 +1193,7 @@ float CToolBoxROS::minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_clo
 	return 0;
 }
 
-float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis)
+float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float maxValue = -999999;
@@ -1197,7 +1234,7 @@ float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> 
 
 	return 0;
 }
-float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis, pcl::PointXYZ &max_point)
+float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis, pcl::PointXYZ &max_point)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float maxValue = -999999;
@@ -1248,7 +1285,7 @@ float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_clo
 	return 0;
 }
 
-float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis)
+float CToolBoxROS::maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis)
 {
 	unsigned int sizePointCloud = point_cloud.points.size();
 	float maxValue = -999999;
@@ -1336,7 +1373,7 @@ bool CToolBoxROS::distanceBetweenPlane2d(StructPlanarSurface &surface1, StructPl
 }
 
 //checks whether an "object" is just a planar surface which is not that interesting, if we a just interested in objects
-bool CToolBoxROS::isObjectPlane(StructPlanarSurface &surface, pcl::PointCloud<pcl::PointXYZRGBNormal> object, float objectHeightThreshold, float objectPlaneHeightDifferenceThreshold)
+bool CToolBoxROS::isObjectPlane(StructPlanarSurface &surface, pcl::PointCloud<pcl::PointXYZRGBNormal> &object, float objectHeightThreshold, float objectPlaneHeightDifferenceThreshold)
 {
 
 	float zMinObject = 5.0f; //min height of the object
@@ -1363,7 +1400,7 @@ bool CToolBoxROS::isObjectPlane(StructPlanarSurface &surface, pcl::PointCloud<pc
 	return true;
 }
 
-pcl::PointCloud<pcl::PointXYZ> CToolBoxROS::normalizePointCloud(pcl::PointCloud<pcl::PointXYZ> point_cloud)
+pcl::PointCloud<pcl::PointXYZ> CToolBoxROS::normalizePointCloud(pcl::PointCloud<pcl::PointXYZ> &point_cloud)
 {
 
 	pcl::PointCloud<pcl::PointXYZ> point_cloudNorm;
@@ -1384,7 +1421,7 @@ pcl::PointCloud<pcl::PointXYZ> CToolBoxROS::normalizePointCloud(pcl::PointCloud<
 	return point_cloudNorm;
 }
 
-std::vector<double> CToolBoxROS::normalizePoint3D(std::vector<double> point)
+std::vector<double> CToolBoxROS::normalizePoint3D(std::vector<double> &point)
 {
 	std::vector<double> normalizedpoint;
 
@@ -1407,7 +1444,7 @@ std::vector<double> CToolBoxROS::normalizePoint3D(std::vector<double> point)
 	return normalizedpoint;
 }
 
-float CToolBoxROS::angleBetweenPoints(std::vector<double> point1, std::vector<double> point2)
+float CToolBoxROS::angleBetweenPoints(std::vector<double> &point1, std::vector<double> &point2)
 {
 	float angle = 0;
 	if (point1.size() != point2.size())
@@ -1454,7 +1491,7 @@ void CToolBoxROS::get3DPointsWithinHull(const pcl::PointCloud<pcl::PointXYZRGBNo
 	extract.filter(cloudPCLSegmentOutput);
 }
 
-std::vector<std::vector<double> > CToolBoxROS::convertPointCloudToStdVec(pcl::PointCloud<pcl::PointXYZ> pointCloud)
+std::vector<std::vector<double> > CToolBoxROS::convertPointCloudToStdVec(pcl::PointCloud<pcl::PointXYZ> &pointCloud)
 {
 	std::vector<std::vector<double> > convCloud;
 

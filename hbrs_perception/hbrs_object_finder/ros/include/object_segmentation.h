@@ -25,7 +25,7 @@ class ObjectSegmentation {
 
 	private:	// functions
 		bool PreparePointCloud(sensor_msgs::PointCloud2::ConstPtr &input, pcl::PointCloud<pcl::PointXYZRGB> &output);
-		geometry_msgs::PoseStamped ExtractCentroid(const pcl::PointCloud<pcl::PointXYZRGBNormal> &object);
+		geometry_msgs::PoseStamped ExtractCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> &object);
 		IplImage *ClusterToImage(sensor_msgs::PointCloud2::ConstPtr &cluster);
 		sensor_msgs::ImagePtr ExtractRegionOfInterest(const sensor_msgs::PointCloud2 &cluster, IplImage *image);
 		void PublishPointClouds(std::vector<pcl::PointCloud<pcl::PointXYZRGBNormal> > &cloud, ros::Publisher &publisher);

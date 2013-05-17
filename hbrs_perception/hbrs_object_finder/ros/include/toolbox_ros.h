@@ -48,7 +48,7 @@
 #include <pcl/ModelCoefficients.h>
 
 
-#include <struct_planar_surface.h> //since we need the StructPlanarSurface
+#include "struct_planar_surface.h" //since we need the StructPlanarSurface
 
 class CToolBoxROS
 {
@@ -60,9 +60,9 @@ public:
 
 	bool filterDistance(pcl::PointCloud<pcl::PointXYZRGB> &cloud, float thresholdDistance);
 
-	double dotProduct(std::vector<double> x, std::vector<double> y);
+	double dotProduct(std::vector<double> &x, std::vector<double> &y);
 	double dotProduct(float* x, float* y);
-	double dotProduct(pcl::PointXYZRGBNormal x, pcl::PointXYZRGBNormal y);
+	double dotProduct(pcl::PointXYZRGBNormal &x, pcl::PointXYZRGBNormal &y);
 
 	pcl::PointCloud<pcl::PointXYZ> filterDistance(pcl::PointCloud<pcl::PointXYZ> &cloud, float minDist, float maxDist, std::string axis);
 	pcl::PointCloud<pcl::PointXYZRGB> filterDistance(pcl::PointCloud<pcl::PointXYZRGB> &cloud, float minDist, float maxDist, std::string axis);
@@ -88,58 +88,58 @@ public:
 	void markClusteredPointCloud(std::vector<pcl::PointCloud<pcl::PointXYZ> > &clusteredPointCloud, pcl::PointCloud<pcl::PointXYZ> &markedPointCloud);
 
 	bool transformPointCloud(tf::TransformListener &tfListener, std::string &fromFrame, std::string &toFrame, const sensor_msgs::PointCloud2 &srcPointCloud,
-			sensor_msgs::PointCloud2 &transformedPointCloud,  float duration = 1.0);
+			sensor_msgs::PointCloud2 &transformedPointCloud, float duration = 1.0);
 
-	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointXYZRGBNormal point);
-	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud);
-	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> convexHull, pcl::PointXYZ point);
+	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointXYZRGBNormal &point);
+	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud);
+	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZ> &convexHull, pcl::PointXYZ &point);
 
 	pcl::PointXYZRGBNormal centroidHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, float area);
 	float areaConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &hull);
 	float avgValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis);
-	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis);
-	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis);
-	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis, pcl::PointXYZ &min_point);
-	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud, int axis);
-	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis);
-	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> point_cloud, int axis, pcl::PointXYZ &max_point);
+	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis);
+	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis);
+	float minValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis, pcl::PointXYZ &min_point);
+	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud, int axis);
+	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis);
+	float maxValuePointCloud3d(pcl::PointCloud<pcl::PointXYZ> &point_cloud, int axis, pcl::PointXYZ &max_point);
 
 	int overlapConvexHull2d(StructPlanarSurface &surface1, StructPlanarSurface &surface2);
 	int overlapConvexHull2d2(StructPlanarSurface &surface1, StructPlanarSurface &surface2);
 
 	bool distanceBetweenPlane2d(StructPlanarSurface &surface1, StructPlanarSurface &surface2, float distanceThreshold);
-	bool isObjectPlane(StructPlanarSurface &surface, pcl::PointCloud<pcl::PointXYZRGBNormal> object, float objectHeightThreshold, float objectPlaneHeightDifferenceThreshold);
+	bool isObjectPlane(StructPlanarSurface &surface, pcl::PointCloud<pcl::PointXYZRGBNormal> &object, float objectHeightThreshold, float objectPlaneHeightDifferenceThreshold);
 
 	pcl::PointCloud<pcl::Normal> filterNormals(pcl::PointCloud<pcl::PointXYZRGBNormal> &cloud);
 
-	pcl::PointCloud<pcl::PointXYZ> normalizePointCloud(pcl::PointCloud<pcl::PointXYZ> point_cloud);
+	pcl::PointCloud<pcl::PointXYZ> normalizePointCloud(pcl::PointCloud<pcl::PointXYZ> &point_cloud);
 
 	pcl::PointCloud<pcl::Boundary> estimatingBoundaryPoints(pcl::PointCloud<pcl::PointXYZRGB> &cloud);
 
-	pcl::PointXYZ pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> point_cloud);
-	pcl::PointXYZ pointCloudCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> point_cloud);
-	pcl::PointXYZRGB pointCloudCentroid2(pcl::PointCloud<pcl::PointXYZ> point_cloud);
+	pcl::PointXYZ pointCloudCentroid(pcl::PointCloud<pcl::PointXYZ> &point_cloud);
+	pcl::PointXYZ pointCloudCentroid(pcl::PointCloud<pcl::PointXYZRGBNormal> &point_cloud);
+	pcl::PointXYZRGB pointCloudCentroid2(pcl::PointCloud<pcl::PointXYZ> &point_cloud);
 	pcl::PointXYZ pointCloudBoundingBoxCentroid(pcl::PointCloud<pcl::PointXYZ> &pointCloud, pcl::PointCloud<pcl::PointXYZ> &boundingBox);
 
-	std::vector<double> normalizePoint3D(std::vector<double> point);
+	std::vector<double> normalizePoint3D(std::vector<double> &point);
 
-	float angleBetweenPoints(std::vector<double> point1, std::vector<double> point2);
+	float angleBetweenPoints(std::vector<double> &point1, std::vector<double> &point2);
 
 	void get3DPointsWithinHull(const pcl::PointCloud<pcl::PointXYZRGBNormal> &cloudPCLFull, const pcl::PointCloud<pcl::PointXYZRGBNormal> &cloudPCLHull, const double dMinHeight,
 			const double dMaxHeight, pcl::PointCloud<pcl::PointXYZRGBNormal> &cloudPCLSegmentOutput);
 
-	pcl::PointXYZRGBNormal getNearestNeighborPlane(StructPlanarSurface &plane, pcl::PointXYZRGBNormal queryPoint);
+	pcl::PointXYZRGBNormal getNearestNeighborPlane(StructPlanarSurface &plane, pcl::PointXYZRGBNormal &queryPoint);
 
-	double euclDistanceBtwPoints(pcl::PointXYZ p1, pcl::PointXYZ p2);
+	double euclDistanceBtwPoints(pcl::PointXYZ &p1, pcl::PointXYZ &p2);
 
-	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> convexHull, pcl::PointXYZ point);
+	int pointInsideConvexHull2d(pcl::PointCloud<pcl::PointXYZRGBNormal> &convexHull, pcl::PointXYZ &point);
 
-	double mean(std::vector<double> histo);
-	double variance(std::vector<double> histo, double mean);
+	double mean(std::vector<double> &histo);
+	double variance(std::vector<double> &histo, double mean);
 
-	std::vector<std::vector<double> > convertPointCloudToStdVec(pcl::PointCloud<pcl::PointXYZ> pointCloud);
+	std::vector<std::vector<double> > convertPointCloudToStdVec(pcl::PointCloud<pcl::PointXYZ> &pointCloud);
 
-	int findMinValue(std::vector<double> vec)
+	int findMinValue(std::vector<double> &vec)
 	{
 		assert(vec.size()>0);
 		int minIdx = -1;
@@ -157,7 +157,7 @@ public:
 		return minIdx;
 	}
 
-	int findMaxValue(std::vector<double> vec)
+	int findMaxValue(std::vector<double> &vec)
 	{
 		assert(vec.size()>0);
 		int maxIdx = -1;
@@ -175,7 +175,7 @@ public:
 		return maxIdx;
 	}
 
-	double meanSquaredError(std::vector<double> inputVector1, std::vector<double> inputVector2)
+	double meanSquaredError(std::vector<double> &inputVector1, std::vector<double> &inputVector2)
 	{
 		assert(inputVector1.size() == inputVector2.size());
 
@@ -187,7 +187,7 @@ public:
 		return sqrt(sumError / (double) inputVector1.size());
 	}
 
-	double meanSquareError(std::vector<double> inputVector1)
+	double meanSquareError(std::vector<double> &inputVector1)
 	{
 		double sumError = 0.0;
 		for (unsigned int i = 0; i < inputVector1.size(); ++i)
@@ -197,7 +197,7 @@ public:
 		return sqrt(sumError / (double) inputVector1.size());
 	}
 
-	double meanError(std::vector<double> vec)
+	double meanError(std::vector<double> &vec)
 	{
 		double sum = 0;
 
@@ -227,12 +227,12 @@ public:
 
 	double randNumber(double low, double high);
 	void extractHighestLowestPoint(pcl::PointCloud<pcl::PointXYZRGBNormal> &pointCloud, pcl::PointXYZ &highestPoint, pcl::PointXYZ &lowestPoint);
-	double euclDistanceBtwPoints(pcl::PointXYZRGB p1, pcl::PointXYZRGB p2);
+	double euclDistanceBtwPoints(pcl::PointXYZRGB &p1, pcl::PointXYZRGB &p2);
 
 	void enNoisePointCloud(pcl::PointCloud<pcl::PointXYZ> &pointCloud, double addNoise);
-	void getNearestKPoints(pcl::PointCloud<pcl::PointXYZRGB> pointCloud, pcl::PointXYZRGB queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances );
-	void getNearestKPoints(pcl::PointCloud<pcl::PointXYZ> pointCloud, pcl::PointXYZ queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances);
-	void getNearestKPoints(pcl::KdTreeFLANN<pcl::PointXYZ> &tree, pcl::PointXYZ queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances );
+	void getNearestKPoints(pcl::PointCloud<pcl::PointXYZRGB> &pointCloud, pcl::PointXYZRGB &queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances );
+	void getNearestKPoints(pcl::PointCloud<pcl::PointXYZ> &pointCloud, pcl::PointXYZ &queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances);
+	void getNearestKPoints(pcl::KdTreeFLANN<pcl::PointXYZ> &tree, pcl::PointXYZ &queryPoint,int k, std::vector<int> &k_indicies ,std::vector<float> &k_distances );
 };
 
 #endif
