@@ -1,0 +1,9 @@
+<stack>
+  <description brief="hbrs_task_planning">hbrs_task_planning</description>
+  <author>Maintained by Sven Schneider</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_task_planning</url>
+  <depend stack="ros" />
+
+</stack>
