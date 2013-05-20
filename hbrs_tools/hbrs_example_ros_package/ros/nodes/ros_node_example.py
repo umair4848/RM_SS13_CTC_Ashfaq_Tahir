@@ -6,18 +6,12 @@ import std_msgs.msg
 
 pkg_dir = roslib.packages.get_pkg_dir('hbrs_example_ros_package')
 sys.path.append(pkg_dir + '/common/scripts')
-import my_functional_class
+import hbrs_example_ros_package.my_functional_class
 
 class MyNode:
 
 	def __init__(self):
-		self.f = my_functional_class.MyFunctionalClass()
-		
-		'''
-		rospy.loginfo('Waiting for service "dummy"')
-		rospy.wait_for_service('dummy')
-		rospy.loginfo('Found service "dummy"')
-		'''
+		self.f = hbrs_example_ros_package.my_functional_class.MyFunctionalClass()
 		
 		self.publisher = rospy.Publisher('out', std_msgs.msg.Int32)
 		rospy.Subscriber('in', std_msgs.msg.Int32, self.add_callback)
