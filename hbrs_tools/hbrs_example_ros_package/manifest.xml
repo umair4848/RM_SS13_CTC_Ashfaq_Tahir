@@ -10,8 +10,11 @@
   <url>http://ros.org/wiki/hbrs_example_ros_package</url>
 
   <depend package="roscpp" />
+  <depend package="rospy" />
   <depend package="sensor_msgs" />
   <depend package="std_srvs" />
+  <depend package="rosunit" />
+  <depend package="rostest" />
 
 </package>
 
