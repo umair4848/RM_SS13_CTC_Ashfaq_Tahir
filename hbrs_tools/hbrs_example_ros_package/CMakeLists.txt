@@ -37,3 +37,10 @@ rosbuild_add_library(my_functionality_lib common/src/my_functional_class.cpp)
 
 rosbuild_add_executable(ros_node_example ros/nodes/ros_node_example.cpp)
 target_link_libraries(ros_node_example my_functionality_lib)
+
+
+# Unit testing
+rosbuild_add_gtest(test_my_functional_class common/test/test_my_functional_class.cpp)
+target_link_libraries(test_my_functional_class my_functionality_lib gtest)
+
+rosbuild_add_pyunit(common/test/test_my_functional_class.py)
