@@ -9,6 +9,10 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/hbrs_jshop2</url>
 
+  <export>
+    <rosjava-pathelement location="lib/JSHOP2.jar" built="true" />
+  </export>
+
 </package>
 
 
