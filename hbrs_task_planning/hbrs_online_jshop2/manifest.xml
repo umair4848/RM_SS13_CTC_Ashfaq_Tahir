@@ -1,0 +1,18 @@
+<package>
+  <description brief="hbrs_online_jshop2">
+
+     Library to use JSHOP2 online i.e. the domain-dependent planner is generated
+     and compiled in memory.
+
+  </description>
+  <author>Sven Schneider</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_online_jshop2</url>
+
+  <depend package="rosjava_jni" />
+  <depend package="hbrs_jshop2" />
+
+</package>
+
+
