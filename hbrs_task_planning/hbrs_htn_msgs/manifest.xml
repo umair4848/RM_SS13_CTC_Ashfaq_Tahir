@@ -1,0 +1,18 @@
+<package>
+  <description brief="hbrs_htn_msgs">
+
+     Messages to communicate with a hierarchical task network (HTN) planner.
+     Based on Stephane Magnenat's messages described in:
+     http://ros-users.122217.n3.nabble.com/HTN-planning-messages-td3809343.html
+
+  </description>
+  <author>Sven Schneider</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_htn_msgs</url>
+  <depend package="std_msgs" />
+  <depend package="actionlib" />
+
+</package>
+
+
