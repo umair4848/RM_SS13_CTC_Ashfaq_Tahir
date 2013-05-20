@@ -1,0 +1,5 @@
+build/
+lib/
+installed
+rospack_nosubdirs
+

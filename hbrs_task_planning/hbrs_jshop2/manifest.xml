@@ -1,0 +1,14 @@
+<package>
+  <description brief="hbrs_jshop2">
+
+     Wrapper around the JSHOP2 task planner to use it in other ROS packages.
+
+  </description>
+  <author>Sven Schneider</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/hbrs_jshop2</url>
+
+</package>
+
+
