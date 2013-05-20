@@ -35,7 +35,9 @@
 #include <CStackedAutoEncoder.h>
 #include <CSvmClassifier.h>
 #include <CSvmCascade.h>
-#include "toolbox_ros.h"
+
+#include <toolbox_ros.h>
+
 #include <CSvmOneClassClassifier.h>
 #include <CSVMLinearClassifier.h>
 

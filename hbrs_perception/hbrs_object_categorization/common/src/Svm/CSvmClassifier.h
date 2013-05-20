@@ -9,8 +9,8 @@
 #define __CSVMClassifier_H__
 
 #include "svm.h"
-#include "toolbox_ros.h"
 
+#include <toolbox_ros.h>
 
 #include <iostream>
 #include <string>
