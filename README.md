@@ -10,15 +10,15 @@ Further details will be added after project completion.
 
 
 
-Group Members:        Muhammad Umair Tahir
-                      Nasir Ashfaq
+Group Members:				Muhammad Umair Tahir
+											Nasir Ashfaq
 
-Instructer:           Prof. Dr. Erwin Prassler
+Instructer:						Prof. Dr. Erwin Prassler
 
-Teaching Assistant:   Matthias Fueller
+Teaching Assistant:		Matthias Fueller
 
-Course:               Robot Manipulation
+Course:								Robot Manipulation
 
-Term:                 Summer Semester 2013
+Term:									Summer Semester 2013
 
-Institute:            Bonn-Rhein-Sieg University of Applied Sciences
+Institute:						Bonn-Rhein-Sieg University of Applied Sciences
